@@ -1,7 +1,6 @@
 "use client";
 
-import { useState } from "react";
-import { createClient } from "../utils/supabase/client";
+import { type FormEvent, useState } from "react";
 
 type Guest = {
     first_name: string | null;
@@ -9,12 +8,8 @@ type Guest = {
     rsvp_status: boolean | null;
 };
 
-const TABLE_NAME = "WEDDING_RSVP";
-
 const getCheckedState = (status: Guest["rsvp_status"]) => {
-    return (
-        status === true
-    );
+    return status === true;
 };
 
 export default function RSVP() {
@@ -23,7 +18,7 @@ export default function RSVP() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
-    const handleSubmit = async (event: SubmitEvent) => {
+    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
         const code = uniqueCode.trim();
@@ -37,11 +32,8 @@ export default function RSVP() {
         setError(null);
         setGuests(null);
 
-        console.log("RSVP submitting code:", code);
-
         try {
-
-            const response = await fetch("/api/guest", {
+            const response = await fetch("/api/guests", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -53,16 +45,13 @@ export default function RSVP() {
 
             const data = await response.json();
 
-            console.log(data);
-
             if (!response.ok) {
-                setError(data.message);
+                setError(data.message || "Unable to load RSVP details.");
                 setGuests([]);
             } else {
-                setGuests(data);
+                setGuests(Array.isArray(data) ? data : []);
             }
-
-        } catch (caught) {
+        } catch {
             setError("An unexpected error occurred while loading RSVP details.");
             setGuests(null);
         } finally {
@@ -81,10 +70,7 @@ export default function RSVP() {
                 </p>
 
                 <form
-                    onSubmit={(event) => {
-                        event.preventDefault();
-                        handleSubmit(event.nativeEvent as unknown as SubmitEvent);
-                    }}
+                    onSubmit={handleSubmit}
                     className="mt-8 grid gap-4 sm:grid-cols-[1fr_auto]"
                 >
                     <label className="sr-only" htmlFor="uniqueCode">
