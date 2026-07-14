@@ -105,21 +105,11 @@ export default function RSVP() {
                 {guests && guests.length > 0 ? (
                     <div className="mt-8 space-y-4">
                         {guests.map((guest, index) => {
-                            const checked = getCheckedState(guest.rsvp_status);
                             const name = [guest.first_name, guest.last_name].filter(Boolean).join(" ") || "Guest";
 
                             return (
-                                <div key={`${guest.first_name}-${guest.last_name}-${index}`} className="flex items-center justify-between rounded-2xl border border-[#E1DBC8] bg-[#FAF7EE] px-5 py-4">
-                                    <div>
-                                        <p className="text-base font-medium text-[#2C2B29]">{name}</p>
-                                        <p className="text-xs uppercase tracking-[0.3em] text-[#7C7664]">Status: {checked ? "Attending" : "Not attending"}</p>
-                                    </div>
-                                    <input
-                                        type="checkbox"
-                                        checked={checked}
-                                        readOnly
-                                        className="h-5 w-5 rounded border-[#C3BFAF] text-[#A8A696] focus:ring-[#A8A696]"
-                                    />
+                                <div key={`${guest.first_name}-${guest.last_name}-${index}`} className="rounded-2xl border border-[#E1DBC8] bg-[#FAF7EE] px-5 py-4">
+                                    <p className="text-base font-medium text-[#2C2B29]">{name}</p>
                                 </div>
                             );
                         })}
