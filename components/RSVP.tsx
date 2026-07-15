@@ -1,125 +1,238 @@
 "use client";
 
 import { useState } from "react";
+import { motion } from "framer-motion";
 
-type Guest = {
-    first_name: string | null;
-    last_name: string | null;
-    rsvp_status: boolean | null;
-};
+interface RSVPSectionProps {
+  guest: {
+    id: string;
+    names: string[];
+  };
+}
 
-const getCheckedState = (status: Guest["rsvp_status"]) => {
-    return status === true;
-};
+export default function RSVPSection({ guest }: RSVPSectionProps) {
+  const [attendance, setAttendance] = useState<Record<string, boolean>>(
+    guest.names.reduce((acc, name) => ({ ...acc, [name]: true }), {})
+  );
 
-export default function RSVP() {
-    const [uniqueCode, setUniqueCode] = useState("");
-    const [guests, setGuests] = useState<Guest[] | null>(null);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState<string | null>(null);
+  const [songRequest, setSongRequest] = useState("");
+  const [dietary, setDietary] = useState("");
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
-    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
+  const handleToggleAttendance = (
+    name: string,
+    attending: boolean
+  ) => {
+    setAttendance((prev) => ({
+      ...prev,
+      [name]: attending,
+    }));
+  };
 
-        const code = uniqueCode.trim();
-        if (!code) {
-            setError("Please enter your unique invitation code.");
-            setGuests(null);
-            return;
-        }
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
 
-        setLoading(true);
-        setError(null);
-        setGuests(null);
+    console.log({
+      guestId: guest.id,
+      attendance,
+      songRequest,
+      dietary,
+    });
 
-        try {
-            const response = await fetch("/api/guests", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    unique_code: code,
-                }),
-            });
+    setIsSubmitted(true);
+  };
 
-            const data = await response.json();
 
-            if (!response.ok) {
-                setError(data.message || "Unable to load RSVP details.");
-                setGuests([]);
-            } else {
-                setGuests(Array.isArray(data) ? data : []);
-            }
-        } catch {
-            setError("An unexpected error occurred while loading RSVP details.");
-            setGuests(null);
-        } finally {
-            setLoading(false);
-        }
-    };
-
+  if (isSubmitted) {
     return (
-        <section className="bg-[#F5F3EC] py-16 px-6 text-[#2C2B29] sm:px-10">
-            <div className="mx-auto max-w-3xl rounded-3xl border border-[#D8D5C8] bg-white/90 p-8 shadow-[0_30px_60px_rgba(0,0,0,0.08)] sm:p-10">
-                <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl" style={{ fontFamily: "var(--font-display)" }}>
-                    RSVP
-                </h2>
-                <p className="mt-3 max-w-2xl text-sm leading-7 text-[#5B5240] sm:text-base">
-                    Enter your invitation code below to load the guest list for your reservation. Each guest will show a read-only checkbox based on the current RSVP status.
-                </p>
+      <section className="flex min-h-screen items-center justify-center bg-[#EFEFE7] px-6 text-center text-[#2C2B29]">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+        >
+          <h2
+            className="text-5xl"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
+            Thank You
+          </h2>
 
-                <form
-                    onSubmit={handleSubmit}
-                    className="mt-8 grid gap-4 sm:grid-cols-[1fr_auto]"
+          <p
+            className="mt-6 text-base text-[#6B705C]"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
+            We cannot wait to celebrate
+            <br />
+            this beautiful day with you.
+          </p>
+        </motion.div>
+      </section>
+    );
+  }
+
+
+  return (
+    <section
+      id="rsvp"
+      className="bg-[#EFEFE7] px-6 py-24 text-[#2C2B29] md:py-32"
+    >
+      <div className="mx-auto max-w-xl">
+
+        <div className="text-center">
+
+          <p
+            className="text-[10px] uppercase tracking-[0.45em] text-[#A8A696]"
+            style={{ fontFamily: "var(--font-sans)" }}
+          >
+            RSVP
+          </p>
+
+          <h2
+            className="mt-6 text-5xl leading-tight"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
+            Will You Join Us?
+          </h2>
+
+          <p
+            className="mt-6 text-xl leading-relaxed text-[#6B705C] md:text-xl"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
+            We would be delighted to celebrate
+            <br />
+            this special day with you.
+          </p>
+
+          <p
+            className="mt-8 text-sm uppercase tracking-[0.25em] text-[#A8A696]"
+            style={{ fontFamily: "var(--font-sans)" }}
+          >
+            Kindly reply by December 1, 2026
+          </p>
+
+        </div>
+
+
+        <form
+          onSubmit={handleSubmit}
+          className="mt-16 space-y-14"
+        >
+
+
+          <div>
+
+            <div className="space-y-8">
+
+              {guest.names.map((name) => (
+
+                <motion.div
+                  key={name}
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  className="border-b border-[#2C2B29]/10 pb-6"
                 >
-                    <label className="sr-only" htmlFor="uniqueCode">
-                        Invitation code
-                    </label>
-                    <input
-                        id="uniqueCode"
-                        value={uniqueCode}
-                        onChange={(event) => {
-                            setUniqueCode(event.target.value);
-                            console.log("RSVP code input:", event.target.value);
-                        }}
-                        placeholder="Enter your unique code"
-                        className="w-full rounded-2xl border border-[#D8D5C8] bg-[#F7F5EF] px-4 py-3 text-sm text-[#2C2B29] outline-none transition focus:border-[#A8A696] focus:ring-2 focus:ring-[#A8A696]/20"
-                    />
+
+                  <h3
+                    className="text-2xl"
+                    style={{
+                      fontFamily: "var(--font-display)",
+                    }}
+                  >
+                    {name}
+                  </h3>
+
+
+                  <div className="mt-4 flex gap-3">
 
                     <button
-                        type="submit"
-                        disabled={loading}
-                        className="rounded-2xl bg-[#A8A696] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#8a7f63] disabled:cursor-not-allowed disabled:bg-[#c2bfae]"
+                      type="button"
+                      onClick={() =>
+                        handleToggleAttendance(name, true)
+                      }
+                      className={`rounded-full border px-5 py-2 text-xs uppercase tracking-[0.2em] transition-all
+                      ${
+                        attendance[name]
+                          ? "border-[#6B705C] bg-[#6B705C] text-[#EFEFE7]"
+                          : "border-[#6B705C]/30 text-[#6B705C]"
+                      }`}
                     >
-                        {loading ? "Searching…" : "Find guests"}
+                      Joyfully Accept
                     </button>
-                </form>
 
-                {error ? (
-                    <p className="mt-4 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
-                        {error}
-                    </p>
-                ) : null}
 
-                {guests && guests.length > 0 ? (
-                    <div className="mt-8 space-y-4">
-                        {guests.map((guest, index) => {
-                            const name = [guest.first_name, guest.last_name].filter(Boolean).join(" ") || "Guest";
+                    <button
+                      type="button"
+                      onClick={() =>
+                        handleToggleAttendance(name, false)
+                      }
+                      className={`rounded-full border px-5 py-2 text-xs uppercase tracking-[0.2em] transition-all
+                      ${
+                        !attendance[name]
+                          ? "border-[#6B705C] bg-[#6B705C] text-[#EFEFE7]"
+                          : "border-[#6B705C]/30 text-[#6B705C]"
+                      }`}
+                    >
+                      Decline
+                    </button>
 
-                            return (
-                                <div key={`${guest.first_name}-${guest.last_name}-${index}`} className="rounded-2xl border border-[#E1DBC8] bg-[#FAF7EE] px-5 py-4">
-                                    <p className="text-base font-medium text-[#2C2B29]">{name}</p>
-                                </div>
-                            );
-                        })}
-                    </div>
-                ) : guests && guests.length === 0 ? (
-                    <p className="mt-8 rounded-2xl border border-[#D8D5C8] bg-[#FCFBF7] px-4 py-4 text-sm text-[#5B5240]">
-                        No guest items were found for that code.
-                    </p>
-                ) : null}
+                  </div>
+
+                </motion.div>
+
+              ))}
+
             </div>
-        </section>
-    );
+
+          </div>
+
+
+
+          <div>
+
+            <label
+              className="text-[10px] uppercase tracking-[0.4em] text-[#A8A696]"
+              style={{ fontFamily: "var(--font-sans)" }}
+            >
+              Our evening's soundtrack
+            </label>
+
+
+            <p
+              className="mt-4 text-sm leading-relaxed text-[#6B705C]"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              Our special day will be accompanied by a live ensemble of strings and saxophone, creating the soundtrack to our celebration. Have a song that holds a special place in your heart?
+Share it with us, and it may become part of our evening's soundtrack.
+            </p>
+
+
+            <input
+              value={songRequest}
+              onChange={(e)=>setSongRequest(e.target.value)}
+              placeholder="Song title & artist"
+              className="mt-6 w-full border-b border-[#2C2B29]/30 bg-transparent py-3 text-base outline-none placeholder:text-[#A8A696]"
+              style={{fontFamily:"var(--font-display)"}}
+            />
+
+          </div>
+
+
+          <div className="flex justify-center pt-6">
+
+            <button
+              type="submit"
+              className="rounded-full bg-[#6B705C] px-12 py-4 text-xs uppercase tracking-[0.35em] text-[#EFEFE7] transition hover:bg-[#4A3B33]"
+            >
+              Send With Love
+            </button>
+
+          </div>
+
+
+        </form>
+
+      </div>
+
+    </section>
+  );
 }

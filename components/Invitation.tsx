@@ -1,98 +1,125 @@
 "use client";
 
+import { useRef } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 
 export default function Invitation() {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"],
+  });
+
+  const photoY = useTransform(scrollYProgress, [0, 1], ["0vh", "-110vh"]);
+  const photoX = useTransform(scrollYProgress, [0, 1], ["-2vw", "-15vw"]);
+  const photoRotate = useTransform(scrollYProgress, [0, 1], ["-10deg", "-25deg"]);
+  const photoShadow = useTransform(
+    scrollYProgress, 
+    [0, 1], 
+    ["0px 20px 40px rgba(44,43,41,0.15)", "0px 40px 60px rgba(44,43,41,0.3)"]
+  );
+
+  const letterScale = useTransform(scrollYProgress, [0, 1], [0.85, 1]);
+  const letterRotate = useTransform(scrollYProgress, [0, 1], ["4deg", "0deg"]);
+  const letterOpacity = useTransform(scrollYProgress, [0, 0.4], [0.4, 1]);
+
   return (
-    <section className="flex flex-col items-center justify-center bg-[#EFEFE7] py-24 px-6 text-center md:py-32">
-      
-      <motion.h2 
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 1 }}
-        className="text-[2.75rem] leading-[1.1] tracking-tight text-[#A8A696] md:text-6xl lg:text-7xl"
-        style={{ fontFamily: "var(--font-display)" }}
-      >
-        Our journey <br /> to forever begins..
-      </motion.h2>
+    <section ref={containerRef} className="relative h-[250vh] bg-[#EAE5DB]">
+      <div className="sticky top-0 flex h-[100dvh] w-full items-center justify-center overflow-hidden px-5 sm:px-8">
 
-      <motion.div 
-        initial={{ opacity: 0, scale: 0.95 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 1, delay: 0.2 }}
-        className="relative mt-3 mb-3 aspect-[3/4] w-full max-w-[280px] border border-[#2C2B29] bg-stone-200 sm:max-w-[320px] md:max-w-[400px]"
-      >
-        <Image
-          src="/images/invite.PNG"
-          alt="couple"
-          fill
-          className="object-cover"
-        />
-      </motion.div>
-
-      <motion.h3 
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 1, delay: 0.3 }}
-        className="text-[2.5rem] leading-[1.15] tracking-tight text-[#A8A696] md:text-5xl lg:text-6xl"
-        style={{ fontFamily: "var(--font-display)" }}
-      >
-        ...and we want to celebrate <br />
-        it <br />
-        <span className="italic">with you</span>
-      </motion.h3>
-
-      <motion.p 
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 1, delay: 0.4 }}
-        className="mt-5 max-w-lg text-[12px] uppercase leading-loose tracking-[0.25em] text-[#2C2B29] sm:text-sm"
-        style={{ fontFamily: "var(--font-sans)" }}
-      >
-        We can&apos;t imagine this day without you. <br className="hidden sm:block" />
-        Please join us as we begin our next <br className="hidden sm:block" />
-        chapter together.
-      </motion.p>
-
-      <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 1, delay: 0.5 }}
-        className="mt-2.5 text-[2.75rem] tracking-tight text-[#A8A696] md:text-6xl lg:text-7xl"
-        style={{ fontFamily: "var(--font-display)" }}
-      >
-        27<sup className="text-2xl md:text-4xl -top-[0.4em] relative">th</sup> of February 2027
-      </motion.div>
-
-      <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 1, delay: 0.6 }}
-        className="mt-5 flex flex-col items-center"
-      >
-        <span 
-          className="text-[12px] uppercase tracking-[0.25em] text-[#2C2B29] sm:text-sm"
-          style={{ fontFamily: "var(--font-sans)" }}
+        <motion.div
+          style={{ 
+            scale: letterScale, 
+            rotate: letterRotate, 
+            opacity: letterOpacity,
+            boxShadow: "0px 25px 50px rgba(44,43,41,0.1)"
+          }}
+          className="absolute z-10 flex w-full max-w-[340px] flex-col justify-between bg-[#FCFBF7] p-6 sm:max-w-[420px] sm:p-10 aspect-[3/4] border border-[#2C2B29]/10"
         >
-          With love,
-        </span>
-        
-        {/* Names in Script Font */}
-        <span 
-          className="mt-6 text-5xl text-[#2C2B29] md:text-6xl"
-          style={{ fontFamily: "var(--font-script), cursive" }} 
-        >
-          Pia and JJ
-        </span>
-      </motion.div>
+          <div className="absolute top-6 right-6 flex w-12 h-14 border border-dashed border-[#A8A696]/60 flex-col items-center justify-center text-[7px] uppercase tracking-[0.2em] text-[#A8A696] rotate-12">
+            <span>Feb</span>
+            <span className="text-[10px] font-semibold my-0.5">27</span>
+            <span>2027</span>
+          </div>
 
+<div className="mt-4 space-y-5 pr-12">
+  <span
+    className="text-[9px] uppercase tracking-[0.35em] text-[#A8A696]"
+    style={{ fontFamily: "var(--font-sans)" }}
+  >
+    Invitation
+  </span>
+
+  <h2
+    className="text-3xl leading-[1.1] tracking-tight text-[#2C2B29] sm:text-4xl"
+    style={{ fontFamily: "var(--font-display)" }}
+  >
+    Every love story
+    <br />
+    begins with a moment...
+  </h2>
+</div>
+
+<div className="space-y-5">
+  <h3
+    className="text-xl leading-relaxed tracking-tight text-[#A8A696] sm:text-2xl"
+    style={{ fontFamily: "var(--font-display)" }}
+  >
+    Ours has led us here,
+    <br />
+    to a day we&apos;ve always dreamed of.
+  </h3>
+
+  <p
+    className="text-sm leading-relaxed text-[#2C2B29]/75 sm:text-base"
+    style={{ fontFamily: "var(--font-display)" }}
+  >
+    We would be honored to celebrate
+    <br />
+    this beautiful beginning with you.
+  </p>
+</div>
+
+          <div className="mt-4 pt-4 border-t border-[#2C2B29]/10 flex flex-col items-start">
+            <span 
+              className="text-[9px] uppercase tracking-[0.25em] text-[#2C2B29]"
+              style={{ fontFamily: "var(--font-sans)" }}
+            >
+              With love,
+            </span>
+            <span 
+              className="mt-2 text-4xl text-[#2C2B29] sm:text-5xl"
+              style={{ fontFamily: "var(--font-script), cursive" }} 
+            >
+              Pia and JJ
+            </span>
+          </div>
+        </motion.div>
+
+
+        <motion.div
+          style={{ 
+            y: photoY, 
+            x: photoX, 
+            rotate: photoRotate,
+            boxShadow: photoShadow
+          }}
+          className="absolute z-20 w-full max-w-[340px] bg-[#FCFBF7] p-3 sm:max-w-[420px] sm:p-5 aspect-[3/4] border border-[#2C2B29]/10 transform-gpu"
+        >
+          <div className="relative w-full h-full border border-[#2C2B29]/10 overflow-hidden">
+            <Image
+              src="/images/invite.PNG"
+              alt="Pia and JJ"
+              fill
+              priority
+              className="object-cover"
+            />
+          </div>
+        </motion.div>
+
+      </div>
     </section>
   );
 }

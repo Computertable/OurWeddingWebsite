@@ -2,16 +2,22 @@ import Hero from "../components/Hero";
 import Countdown from "../components/Countdown";
 import Venue from "../components/Venue";
 import Invitation from "../components/Invitation";
-import RSVP from "../components/RSVP";
+import RSVPSection from "../components/RSVP";
+import StorySection from "../components/Story";
 
 export default function Home() {
   return (
     <main>
       <Hero />
       <Invitation />
-      <RSVP />
-      <Countdown />
+      <StorySection />
+      
       <Venue />
+      <Countdown />
+      <RSVPSection guest={{
+        id: "",
+        names: ["Pia", "JJ"]
+      }} />
     </main>
   );
 }
