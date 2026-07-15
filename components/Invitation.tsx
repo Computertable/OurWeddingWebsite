@@ -111,7 +111,7 @@ export default function Invitation() {
           <div className="relative w-full h-full border border-[#2C2B29]/10 overflow-hidden">
             <Image
               src="/images/invite.PNG"
-              alt="Pia and JJ"
+              alt="Pia and JJ Forever"
               fill
               priority
               className="object-cover"
