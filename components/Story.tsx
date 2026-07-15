@@ -1,156 +1,201 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef, useState } from "react";
+import Image from "next/image";
+import { motion, useScroll, useTransform, useMotionValueEvent, AnimatePresence } from "framer-motion";
 
-const storyEvents = [
-  {
-    date: "Before Us",
-    title: "It Started at Sun Life",
-    body: "We first met as colleagues at Sun Life. At the time, we were simply two people pursuing our own careers, unaware that life was quietly preparing our paths to cross again.",
-    image: "/images/story/sun-life.jpg",
-    align: "left",
-  },
-  {
-    date: "Dec 15, 2023",
-    title: "Long Distance, One Decision",
-    body: "As first-time expats living in different countries, Sofia in Malaysia and JJ in Singapore, we learned how to make every visit count. Distance was not always easy, but it taught us to choose each other again and again.",
-    image: "/images/story/long-distance.jpg",
-    align: "right",
-  },
-  {
-    date: "2024-2025",
-    title: "Adventures Everywhere",
-    body: "From motorcycle rides in the Philippines to holidays in Dubai, island escapes in Tioman, and travels across Vietnam and Thailand, we filled our passports with memories. Somewhere between airport departures and new destinations, we realized our favorite adventures were never about the places. We simply loved experiencing them together.",
-    image: "/images/story/adventures.jpg",
-    align: "left",
-  },
-  {
-    date: "Feb 20, 2026",
-    title: "The Easiest Yes",
-    body: "While exploring South Korea, JJ asked Sofia to spend forever with him. After all the miles, flights, and adventures, the answer came easily.",
-    image: "/images/story/proposal.jpg",
-    quote: "Yes.",
-    align: "right",
-  },
-];
-
-function StoryMoment({ event, index }: { event: any; index: number }) {
-  const ref = useRef<HTMLDivElement>(null);
+export default function StorySection() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [activeTrack, setActiveTrack] = useState(0);
 
   const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"],
+    target: containerRef,
+    offset: ["start start", "end end"],
   });
 
-  const imageY = useTransform(scrollYProgress, [0, 1], ["-8%", "8%"]);
-  const textY = useTransform(scrollYProgress, [0, 1], ["4%", "-4%"]);
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
 
-  const reverse = event.align === "right";
-
-  return (
-    <motion.article
-      ref={ref}
-      initial={{ opacity: 0, y: 56 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-120px" }}
-      transition={{ duration: 0.9, ease: "easeOut", delay: index * 0.06 }}
-      className={`grid items-center gap-10 md:grid-cols-2 md:gap-16 ${
-        reverse ? "md:[&>*:first-child]:order-2" : ""
-      }`}
-    >
-      <div className="relative">
-        <div className="absolute -inset-3 border border-[#d7b98e]/35" />
-        <div className="relative aspect-[4/5] overflow-hidden bg-[#26311f]">
-          <motion.img
-            src={event.image}
-            alt={event.title}
-            style={{ y: imageY }}
-            className="h-[116%] w-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#1f281a]/40 via-transparent to-transparent" />
-        </div>
-
-        <div className="absolute -bottom-5 -right-5 hidden h-28 w-28 border-b border-r border-[#d7b98e]/70 md:block" />
-      </div>
-
-      <motion.div style={{ y: textY }} className="relative">
-        <p className="mb-5 text-xs uppercase tracking-[0.38em] text-[#d7b98e]">
-          {event.date}
-        </p>
-
-        <h3 className="mb-6 font-serif text-4xl leading-tight text-[#fff9ef] md:text-6xl">
-          {event.title}
-        </h3>
-
-        <p className="max-w-xl text-base leading-8 text-[#f4eadb]/82 md:text-lg">
-          {event.body}
-        </p>
-
-        {event.quote && (
-          <blockquote className="mt-8 font-serif text-4xl italic text-[#d7b98e]">
-            "{event.quote}"
-          </blockquote>
-        )}
-      </motion.div>
-    </motion.article>
-  );
-}
-
-export default function OurStory() {
-  const sectionRef = useRef<HTMLElement>(null);
-
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end start"],
+  useMotionValueEvent(scrollYProgress, "change", (latest) => {
+    if (latest < 0.125) setActiveTrack(0);
+    else if (latest >= 0.125 && latest < 0.25) setActiveTrack(1);
+    else if (latest >= 0.25 && latest < 0.375) setActiveTrack(2);
+    else if (latest >= 0.375 && latest < 0.5) setActiveTrack(3);
+    else if (latest >= 0.5 && latest < 0.625) setActiveTrack(4);
+    else if (latest >= 0.625 && latest < 0.75) setActiveTrack(5);
+    else if (latest >= 0.75 && latest < 0.875) setActiveTrack(6);
+    else setActiveTrack(7);
   });
 
-  const orchidY = useTransform(scrollYProgress, [0, 1], [-120, 140]);
-  const lilyY = useTransform(scrollYProgress, [0, 1], [120, -160]);
+  const y1 = useTransform(scrollYProgress, [0.00, 0.16], ["0vh", "-120vh"]);
+  const y2 = useTransform(scrollYProgress, [0.00, 0.12, 0.26], ["100vh", "0vh", "-120vh"]);
+  const y3 = useTransform(scrollYProgress, [0.08, 0.22, 0.36], ["100vh", "0vh", "-120vh"]);
+  const y4 = useTransform(scrollYProgress, [0.18, 0.32, 0.46], ["100vh", "0vh", "-120vh"]);
+  const y5 = useTransform(scrollYProgress, [0.28, 0.42, 0.56], ["100vh", "0vh", "-120vh"]);
+  const y6 = useTransform(scrollYProgress, [0.38, 0.52, 0.66], ["100vh", "0vh", "-120vh"]);
+  const y7 = useTransform(scrollYProgress, [0.46, 0.60, 0.74], ["100vh", "0vh", "-120vh"]);
+  const y8 = useTransform(scrollYProgress, [0.54, 0.68, 0.82], ["100vh", "0vh", "-120vh"]);
+  const y9 = useTransform(scrollYProgress, [0.62, 0.76, 0.88], ["100vh", "0vh", "-120vh"]);
+  const y10 = useTransform(scrollYProgress, [0.70, 0.82, 0.94], ["100vh", "0vh", "-120vh"]);
+  const y11 = useTransform(scrollYProgress, [0.78, 0.88, 0.98], ["100vh", "0vh", "-120vh"]);
+  const y12 = useTransform(scrollYProgress, [0.84, 0.96], ["100vh", "0vh"]);
+
+  const arrowRotate = useTransform(scrollYProgress, [0, 0.88], [0, 180]);
+
+  const handleButtonClick = () => {
+    containerRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  const stories = [
+    "Their story began at Sun Life, where their paths first crossed as colleagues working side by side.",
+    "It wasn't until Sofia's final days with the company that deep conversations revealed an effortless connection neither expected.",
+    "As life opened new opportunities, Sofia pursued her career in Malaysia, while he followed his path to Singapore.",
+    "They refused to let the miles define them—turning the distance into a beautiful reason to explore the world together.",
+    "For two incredible years, aside from visiting each other, they traveled hand in hand, collecting passport stamps and memories across different countries.",
+    "Then came February 20, 2026. On the very day of Sofia’s birthday, under the magical skies of Seoul, South Korea, he went down on one knee.",
+    "Through tears and immense joy, she said yes—transforming an unexpected connection into a permanent promise of a lifetime.",
+    "Now, with the distance finally behind them, they look forward to an endless lifetime of chasing sunsets and traveling the world as one."
+  ];
 
   return (
-    <section
-      ref={sectionRef}
-      className="relative overflow-hidden bg-[#33402b] px-6 py-28 text-[#f7f1e6] md:py-36"
-    >
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_0%,rgba(255,250,239,0.12),transparent_30%),radial-gradient(circle_at_85%_70%,rgba(215,185,142,0.14),transparent_34%)]" />
-
-      <motion.img
-        src="/images/orchid.png"
-        alt=""
-        style={{ y: orchidY }}
-        className="pointer-events-none absolute -left-24 top-20 w-72 opacity-45 md:w-[30rem]"
-      />
-
-      <motion.img
-        src="/images/calla-lily.png"
-        alt=""
-        style={{ y: lilyY }}
-        className="pointer-events-none absolute -right-28 bottom-32 w-72 rotate-12 opacity-35 md:w-[28rem]"
-      />
-
-      <div className="relative z-10 mx-auto max-w-6xl">
-        <div className="mb-20 text-center md:mb-28">
-          <p className="mb-5 text-xs uppercase tracking-[0.45em] text-[#d7b98e]">
-            Our Journey
-          </p>
-
-          <h2 className="font-serif text-5xl text-[#fff9ef] md:text-7xl">
-            Our Story
-          </h2>
-
-          <p className="mx-auto mt-7 max-w-xl text-sm leading-7 text-[#f4eadb]/70 md:text-base">
-            A few chapters from the places, choices, and little miracles that
-            brought us here.
-          </p>
+    <div ref={containerRef} className="relative h-[550vh] md:h-[700vh] bg-[#2B3222]">
+      
+      <div className="sticky top-0 flex h-[100dvh] w-full flex-col justify-between overflow-hidden py-10 px-6 text-[#F9F9F6]">
+        
+        <div className="relative z-30 flex justify-center">
+          <button
+            onClick={handleButtonClick}
+            className="group flex items-center gap-3 border border-[#F9F9F6]/20 bg-[#2B3222]/80 backdrop-blur-md px-6 py-3 text-xs uppercase tracking-[0.25em] text-[#F9F9F6]/80 transition-all hover:border-[#F9F9F6] hover:text-[#F9F9F6]"
+            style={{ fontFamily: "var(--font-sans)" }}
+          >
+            <span>Our Story</span>
+            <motion.svg
+              width="12"
+              height="12"
+              viewBox="0 0 12 12"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              style={{ rotate: arrowRotate }}
+              className="stroke-current"
+            >
+              <path d="M2 4L6 8L10 4" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </motion.svg>
+          </button>
         </div>
 
-        <div className="space-y-24 md:space-y-32">
-          {storyEvents.map((event, index) => (
-            <StoryMoment key={event.title} event={event} index={index} />
-          ))}
+        <div className="absolute inset-0 z-10 pointer-events-none select-none">
+          
+          {/* Photo 1: Left */}
+          <motion.div style={{ y: y1 }} className="transform-gpu absolute left-[3%] top-[16%] h-[270px] w-[43vw] border border-[#F9F9F6]/10 opacity-[0.22] sm:w-60 sm:h-84 md:w-[340px] md:h-[480px] md:left-[8%]">
+            <Image src="/images/story-1.jpg" alt="Memory 1" fill className="object-cover" />
+          </motion.div>
+
+          {/* Photo 2: Right */}
+          <motion.div style={{ y: y2 }} className="transform-gpu absolute right-[2%] top-[16%] h-[270px] w-[43vw] border border-[#F9F9F6]/10 opacity-[0.22] sm:w-60 sm:h-84 md:w-[340px] md:h-[480px] md:right-[6%]">
+            <Image src="/images/story-2.jpg" alt="Memory 2" fill className="object-cover" />
+          </motion.div>
+
+          {/* Photo 3: Left */}
+          <motion.div style={{ y: y3 }} className="transform-gpu absolute left-[2%] top-[16%] h-[270px] w-[43vw] border border-[#F9F9F6]/10 opacity-[0.22] sm:w-60 sm:h-84 md:w-[340px] md:h-[480px] md:left-[6%]">
+            <Image src="/images/story-3.jpg" alt="Memory 3" fill className="object-cover" />
+          </motion.div>
+
+          {/* Photo 4: Right */}
+          <motion.div style={{ y: y4 }} className="transform-gpu absolute right-[4%] top-[16%] h-[270px] w-[43vw] border border-[#F9F9F6]/10 opacity-[0.22] sm:w-60 sm:h-84 md:w-[340px] md:h-[480px] md:right-[9%]">
+            <Image src="/images/story-4.jpg" alt="Memory 4" fill className="object-cover" />
+          </motion.div>
+
+          {/* Photo 5: Left */}
+          <motion.div style={{ y: y5 }} className="transform-gpu absolute left-[4%] top-[16%] h-[270px] w-[43vw] border border-[#F9F9F6]/10 opacity-[0.22] sm:w-60 sm:h-84 md:w-[340px] md:h-[480px] md:left-[9%]">
+            <Image src="/images/story-5.jpg" alt="Memory 5" fill className="object-cover" />
+          </motion.div>
+
+          {/* Photo 6: Right */}
+          <motion.div style={{ y: y6 }} className="transform-gpu absolute right-[1%] top-[16%] h-[270px] w-[43vw] border border-[#F9F9F6]/10 opacity-[0.22] sm:w-60 sm:h-84 md:w-[340px] md:h-[480px] md:right-[5%]">
+            <Image src="/images/story-6.jpg" alt="Memory 6" fill className="object-cover" />
+          </motion.div>
+
+          {/* Photo 7: Left */}
+          <motion.div style={{ y: y7 }} className="transform-gpu absolute left-[1%] top-[16%] h-[270px] w-[43vw] border border-[#F9F9F6]/10 opacity-[0.22] sm:w-60 sm:h-84 md:w-[340px] md:h-[480px] md:left-[5%]">
+            <Image src="/images/story-7.jpg" alt="Memory 7" fill className="object-cover" />
+          </motion.div>
+
+          {/* Photo 8: Right */}
+          <motion.div style={{ y: y8 }} className="transform-gpu absolute right-[3%] top-[16%] h-[270px] w-[43vw] border border-[#F9F9F6]/10 opacity-[0.22] sm:w-60 sm:h-84 md:w-[340px] md:h-[480px] md:right-[8%]">
+            <Image src="/images/story-8.jpg" alt="Memory 8" fill className="object-cover" />
+          </motion.div>
+
+          {/* Photo 9: Left */}
+          <motion.div style={{ y: y9 }} className="transform-gpu absolute left-[3%] top-[16%] h-[270px] w-[43vw] border border-[#F9F9F6]/10 opacity-[0.22] sm:w-60 sm:h-84 md:w-[340px] md:h-[480px] md:left-[7%]">
+            <Image src="/images/story-9.jpg" alt="Memory 9" fill className="object-cover" />
+          </motion.div>
+
+          {/* Photo 10: Right */}
+          <motion.div style={{ y: y10 }} className="transform-gpu absolute right-[2%] top-[16%] h-[270px] w-[43vw] border border-[#F9F9F6]/10 opacity-[0.22] sm:w-60 sm:h-84 md:w-[340px] md:h-[480px] md:right-[6%]">
+            <Image src="/images/story-10.jpg" alt="Memory 10" fill className="object-cover" />
+          </motion.div>
+
+          {/* Photo 11: Left */}
+          <motion.div style={{ y: y11 }} className="transform-gpu absolute left-[2%] top-[16%] h-[270px] w-[43vw] border border-[#F9F9F6]/10 opacity-[0.22] sm:w-60 sm:h-84 md:w-[340px] md:h-[480px] md:left-[6%]">
+            <Image src="/images/story-11.jpg" alt="Memory 11" fill className="object-cover" />
+          </motion.div>
+
+          {/* Photo 12: Right */}
+          <motion.div style={{ y: y12 }} className="transform-gpu absolute right-[4%] top-[16%] h-[270px] w-[43vw] border border-[#F9F9F6]/10 opacity-[0.22] sm:w-60 sm:h-84 md:w-[340px] md:h-[480px] md:right-[8%]">
+            <Image src="/images/story-12.jpg" alt="Memory 12" fill className="object-cover" />
+          </motion.div>
+
         </div>
+
+        {/* LOCKED CLEAN TEXT COLUMN */}
+        <div className="relative z-20 mx-auto flex w-full max-w-[320px] sm:max-w-xl items-center justify-center text-center my-auto px-1 h-[320px]">
+          <div className="relative w-full h-full flex items-center justify-center">
+            
+            <AnimatePresence mode="wait">
+              <motion.p
+                key={activeTrack}
+                initial={{ opacity: 0, y: 14 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -14 }}
+                transition={{ duration: 0.52, ease: "easeInOut" }}
+                className="absolute text-xl sm:text-2xl font-light leading-relaxed tracking-wide md:text-3xl lg:text-4xl drop-shadow-[0_2px_8px_rgba(43,50,34,0.4)]"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                {stories[activeTrack]}
+              </motion.p>
+            </AnimatePresence>
+
+          </div>
+        </div>
+
+
+        <div className="absolute right-4 bottom-8 z-30 flex flex-col gap-2 sm:right-6 sm:bottom-10">
+          
+          <button
+            onClick={() => scrollToSection("hero")}
+            className="flex h-10 w-10 items-center justify-center border border-[#F9F9F6]/20 bg-[#2B3222]/80 pb-0.5 text-xl font-light text-[#F9F9F6]/80 backdrop-blur-md transition-all duration-300 hover:border-[#F9F9F6] hover:bg-[#F9F9F6] hover:text-[#2B3222] active:scale-95"
+            aria-label="Scroll to Hero"
+          >
+            ↑
+          </button>
+
+          <button
+            onClick={() => scrollToSection("rsvp")}
+            className="flex h-10 w-10 items-center justify-center border border-[#F9F9F6]/20 bg-[#2B3222]/80 pt-0.5 text-xl font-light text-[#F9F9F6]/80 backdrop-blur-md transition-all duration-300 hover:border-[#F9F9F6] hover:bg-[#F9F9F6] hover:text-[#2B3222] active:scale-95"
+            aria-label="Scroll to RSVP"
+          >
+            ↓
+          </button>
+
+        </div>
+
+        <div className="h-4 w-full" />
+
       </div>
-    </section>
+    </div>
   );
 }

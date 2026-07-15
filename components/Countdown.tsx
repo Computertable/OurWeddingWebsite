@@ -33,8 +33,14 @@ export default function Countdown() {
   }, []);
 
   return (
-    <section className="relative flex h-[40vh] min-h-[320px] w-full items-center justify-center overflow-hidden bg-stone-900 md:h-[50vh] md:min-h-[400px]">
+    /* 
+      FIX 1: Changed heights from vh/min-h to clean explicit heights (h-[180px]).
+      This forces a perfect horizontal landscape rectangle ratio on mobile devices.
+      Also updated fallback background color to match your dark olive green vibe (#2B3222).
+    */
+    <section className="relative flex h-[185px] w-full items-center justify-center overflow-hidden bg-[#2B3222] sm:h-[240px] md:h-[320px] lg:h-[380px]">
       
+      {/* Background Image Layer */}
       <div className="absolute inset-0 z-0">
         <Image
           src="/images/countdown.JPG"
@@ -43,14 +49,21 @@ export default function Countdown() {
           priority
           className="object-cover"
         />
-        <div className="absolute inset-0 bg-black/40 md:bg-black/35" /> 
+        <div className="absolute inset-0 bg-black/45 md:bg-black/35" /> 
       </div>
 
-      <div className="relative z-10 flex flex-col items-center px-4">
-        <div className="w-full max-w-[290px] sm:max-w-[360px] md:max-w-[460px] lg:max-w-[540px]">
+      {/* Content Layer */}
+      <div className="relative z-10 flex w-full flex-col items-center px-6">
+        
+        {/* 
+          FIX 2: Increased mobile max-width from 290px to 320px.
+          This gives the text columns room to sit nicely without compressing labels.
+        */}
+        <div className="w-full max-w-[320px] sm:max-w-[400px] md:max-w-[500px] lg:max-w-[600px]">
           
+          {/* Numbers Grid */}
           <div 
-            className="whitespace-nowrap text-center text-4xl font-light tracking-tight text-white sm:text-5xl md:text-7xl lg:text-8xl" 
+            className="whitespace-nowrap text-center text-4xl font-light tracking-tight text-[#F9F9F6] sm:text-5xl md:text-7xl lg:text-8xl" 
             style={{ fontFamily: "var(--font-display)" }}
           >
             {String(timeLeft.days).padStart(2, '0')}:
@@ -59,14 +72,18 @@ export default function Countdown() {
             {String(timeLeft.seconds).padStart(2, '0')}
           </div>
           
+          {/* 
+            FIX 3: Polished alignment and added modern text-tracking.
+            Using text-center inside w-1/4 blocks guarantees labels line up directly beneath the numbers.
+          */}
           <div 
-            className="mt-2 flex justify-between px-1 text-[11px] text-white/80 sm:text-xs md:text-base lg:text-lg" 
-            style={{ fontFamily: "var(--font-display)" }}
+            className="mt-2 flex justify-between text-[10px] uppercase tracking-[0.15em] text-[#F9F9F6]/70 sm:text-xs md:text-base lg:text-lg" 
+            style={{ fontFamily: "var(--font-sans)" }}
           >
             <span className="w-1/4 text-center">Days</span>
             <span className="w-1/4 text-center">Hours</span>
-            <span className="w-1/4 text-center">Minutes</span>
-            <span className="w-1/4 text-center">Seconds</span>
+            <span className="w-1/4 text-center">Mins</span>
+            <span className="w-1/4 text-center">Secs</span>
           </div>
 
         </div>

@@ -1,7 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 const venues = [
   {
@@ -9,14 +9,14 @@ const venues = [
     address1: "41 Liwayway,",
     address2: "Taguig, Metro Manila",
     image: "/images/church_venue.png",
-    mapLink: "https://maps.google.com",
+    mapLink: "https://maps.app.goo.gl/NMhXggGj8sFbxC8n8",
   },
   {
     name: "The Blue Leaf Events Pavilion",
     address1: "100 Park Avenue, McKinley Hill Village,",
     address2: "Taguig, Metro Manila",
     image: "/images/reception_venue.png",
-    mapLink: "https://maps.google.com",
+    mapLink: "https://maps.app.goo.gl/GKmmXjtLJxE2KqEeA",
   },
 ];
 
@@ -49,7 +49,7 @@ export default function Venue() {
               transition={{ duration: 1, delay: index * 0.2 }}
               className="flex flex-col items-center text-center md:px-12"
             >
-              <div className="relative aspect-[3/4] w-full max-w-[320px] border border-[#55544E] bg-stone-200">
+              <div className="relative aspect-[3/4] w-full max-w-[250px] border border-[#55544E] bg-stone-200">
                 <Image
                   src={venue.image}
                   alt={venue.name}
@@ -74,7 +74,6 @@ export default function Venue() {
                 {venue.address2}
               </p>
 
-              {/* Google Maps Button */}
               <a
                 href={venue.mapLink}
                 target="_blank"
