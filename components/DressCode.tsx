@@ -23,7 +23,7 @@ export default function DressCode() {
         >
           <div className="relative min-h-[420px] bg-[#e9e1d5] md:min-h-[640px]">
             <Image
-              src="/images/guest-color.png"
+              src="/images/guest-color.PNG"
               alt="Wedding guest dress code color guide"
               fill
               className="object-cover object-center"
