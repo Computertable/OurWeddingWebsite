@@ -52,13 +52,13 @@ export default function StorySection() {
 
 const stories = [
   "They say the sun shines on everyone, but for these two, it shone brightest at Sun Life, where their paths first crossed as colleagues.",
-  "It wasn't until Sofia's final days with the company that deep conversations revealed an effortless connection neither expected.",
-  "When Sofia took a leap of faith and moved to Malaysia to build a better future, JJ found himself beginning a new chapter in Singapore.",
+  "It wasn't until Pia's final days with the company that deep conversations revealed an effortless connection neither expected.",
+  "When Pia took a leap of faith and moved to Malaysia to build a better future, JJ found himself beginning a new chapter in Singapore.",
   "Suddenly, being together meant bus rides, border crossings, late-night video calls, and learning how to love across the miles.",
   "But distance never stopped them from making memories together, turning every reunion into another adventure worth remembering.",
   "Their love story became a whirlwind of new places, shared experiences, and memories made across the world.",
-  "Then came February 20, 2026. On Sofia's birthday, beneath the winter skies of Seoul, JJ asked the question that would change everything.",
-  "After two years of adventures, thousands of miles traveled, and one very important 'Yes,' they were ready for their greatest journey yet—building a life together, without borders."
+  "Then came February 20, 2026. On Pia's birthday, beneath the winter skies of Seoul, JJ asked the question that would change everything.",
+  "And with one heartfelt 'Yes,' their story entered its most beautiful chapter yet, a lifetime of choosing each other wherever life may lead."
 ];
 
   return (
@@ -91,17 +91,17 @@ const stories = [
           
           {/* Photo 1: Left */}
           <motion.div style={{ y: y1 }} className="transform-gpu absolute left-[3%] top-[16%] h-[270px] w-[43vw] border border-[#F9F9F6]/10 opacity-[0.22] sm:w-60 sm:h-84 md:w-[340px] md:h-[480px] md:left-[8%]">
-            <Image src="/images/story-1.jpg" alt="Memory 1" fill className="object-cover" />
+            <Image src="/images/story-1.JPG" alt="Memory 1" fill className="object-cover" />
           </motion.div>
 
           {/* Photo 2: Right */}
           <motion.div style={{ y: y2 }} className="transform-gpu absolute right-[2%] top-[16%] h-[270px] w-[43vw] border border-[#F9F9F6]/10 opacity-[0.22] sm:w-60 sm:h-84 md:w-[340px] md:h-[480px] md:right-[6%]">
-            <Image src="/images/story-2.jpg" alt="Memory 2" fill className="object-cover" />
+            <Image src="/images/story--2.JPG" alt="Memory 2" fill className="object-cover" />
           </motion.div>
 
           {/* Photo 3: Left */}
           <motion.div style={{ y: y3 }} className="transform-gpu absolute left-[2%] top-[16%] h-[270px] w-[43vw] border border-[#F9F9F6]/10 opacity-[0.22] sm:w-60 sm:h-84 md:w-[340px] md:h-[480px] md:left-[6%]">
-            <Image src="/images/story-3.jpg" alt="Memory 3" fill className="object-cover" />
+            <Image src="/images/story-3.jpeg" alt="Memory 3" fill className="object-cover" />
           </motion.div>
 
           {/* Photo 4: Right */}
@@ -136,7 +136,7 @@ const stories = [
 
           {/* Photo 10: Right */}
           <motion.div style={{ y: y10 }} className="transform-gpu absolute right-[2%] top-[16%] h-[270px] w-[43vw] border border-[#F9F9F6]/10 opacity-[0.22] sm:w-60 sm:h-84 md:w-[340px] md:h-[480px] md:right-[6%]">
-            <Image src="/images/story-10.jpg" alt="Memory 10" fill className="object-cover" />
+            <Image src="/images/story-10.JPG" alt="Memory 10" fill className="object-cover" />
           </motion.div>
 
           {/* Photo 11: Left */}

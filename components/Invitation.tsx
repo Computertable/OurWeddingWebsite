@@ -99,7 +99,7 @@ export default function Invitation() {
         >
           <div className="relative aspect-square w-full overflow-hidden bg-[#d8d0c4]">
             <Image
-              src="/images/invite.PNG"
+              src="/images/invite-pic.JPG"
               alt="Sofia and JJ"
               fill
               priority
