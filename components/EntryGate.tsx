@@ -198,7 +198,7 @@ export default function EntryGate({
   return (
     <main className="relative min-h-[100svh] overflow-hidden bg-[#182015] text-[#fffaf0]">
       <Image
-        src="/hero-couple.jpg"
+        src="/hero-couple.JPG"
         alt="Sofia and Joshua"
         fill
         priority
