@@ -91,7 +91,7 @@ const stories = [
           
           {/* Photo 1: Left */}
           <motion.div style={{ y: y1 }} className="transform-gpu absolute left-[3%] top-[16%] h-[270px] w-[43vw] border border-[#F9F9F6]/10 opacity-[0.22] sm:w-60 sm:h-84 md:w-[340px] md:h-[480px] md:left-[8%]">
-            <Image src="/images/story-1.JPG" alt="Memory 1" fill className="object-cover" />
+            <Image src="/images/story--1.JPG" alt="Memory 1" fill className="object-cover" />
           </motion.div>
 
           {/* Photo 2: Right */}
@@ -136,7 +136,7 @@ const stories = [
 
           {/* Photo 10: Right */}
           <motion.div style={{ y: y10 }} className="transform-gpu absolute right-[2%] top-[16%] h-[270px] w-[43vw] border border-[#F9F9F6]/10 opacity-[0.22] sm:w-60 sm:h-84 md:w-[340px] md:h-[480px] md:right-[6%]">
-            <Image src="/images/story-10.JPG" alt="Memory 10" fill className="object-cover" />
+            <Image src="/images/story--10.JPG" alt="Memory 10" fill className="object-cover" />
           </motion.div>
 
           {/* Photo 11: Left */}
@@ -146,7 +146,7 @@ const stories = [
 
           {/* Photo 12: Right */}
           <motion.div style={{ y: y12 }} className="transform-gpu absolute right-[4%] top-[16%] h-[270px] w-[43vw] border border-[#F9F9F6]/10 opacity-[0.22] sm:w-60 sm:h-84 md:w-[340px] md:h-[480px] md:right-[8%]">
-            <Image src="/images/story-12.JPG" alt="Memory 12" fill className="object-cover" />
+            <Image src="/images/story--12.JPG" alt="Memory 12" fill className="object-cover" />
           </motion.div>
 
         </div>
