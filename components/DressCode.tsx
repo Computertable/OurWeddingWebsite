@@ -35,19 +35,19 @@ export default function DressCode() {
               Attire
             </p>
 
-            <h2 className="mt-6 font-serif text-6xl leading-none text-[#2f2b26] md:text-8xl">
+            <h2 className="mt-6 font-script text-6xl leading-none text-[#2f2b26] md:text-8xl">
               Dress Code
             </h2>
 
-            <p className="mt-3 font-script text-4xl text-[#8a7657] md:text-5xl">
+            <p className="mt-3 font-display text-xl text-[#8a7657] md:text-5xl">
               Strictly Formal
             </p>
 
             <div className="mx-auto mt-8 h-px w-24 bg-[#b9976b]/70" />
 
             <div className="mx-auto mt-9 max-w-md space-y-4">
-              <p className="font-serif text-xl leading-8 text-[#4f493f]">
-                We invite our guests to dress in formal attire, Barong and black pants for gentlemen. Long dress or formal attire for ladies.
+              <p className="font-sans text-lg leading-8 text-[#4f493f]">
+                We invite our guests to dress in formal attire, barong and black pants for gentlemen. long dress or formal attire for ladies.
               </p>
 
             </div>

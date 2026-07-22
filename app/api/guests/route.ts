@@ -5,51 +5,45 @@ export async function POST(request: Request) {
   try {
     const body = await request.json().catch(() => null);
 
-    const unique_code =
-      typeof body?.unique_code === "string"
-        ? body.unique_code.trim()
-        : "";
-
-    if (!unique_code) {
+    if (!body || !Array.isArray(body.responses)) {
       return NextResponse.json(
-        {
-          message:
-            "Please provide a valid invitation code.",
-        },
+        { message: "Invalid payload format." },
         { status: 400 }
       );
     }
 
-    const { data, error } = await supabaseService
-      .from("WEDDING_RSVP")
-      .select(
-        "id, first_name, last_name, rsvp_status"
-      )
-      .eq("unique_code", unique_code)
-      .order("first_name", {
-        ascending: true,
-      });
+    const { responses, songRequest } = body;
+    const now = new Date().toISOString();
 
-    if (error) {
-      console.error("Supabase error:", error);
+    // Directly update each guest record by primary key 'id'
+    const updatePromises = responses.map(
+      async (item: { id: number | string; attending: boolean }) => {
+        const { error } = await supabaseService
+          .from("WEDDING_RSVP")
+          .update({
+            rsvp_status: item.attending ? "attending" : "declined",
+            song_request: songRequest?.trim() || null,
+            updated_at: now,
+          })
+          .eq("id", item.id);
 
-      return NextResponse.json(
-        {
-          message: error.message,
-        },
-        { status: 500 }
-      );
-    }
+        if (error) {
+          throw new Error(`Failed to update guest #${item.id}: ${error.message}`);
+        }
+      }
+    );
 
-    return NextResponse.json(data ?? []);
-  } catch (error) {
-    console.error("API error:", error);
+    await Promise.all(updatePromises);
+
+    return NextResponse.json({
+      success: true,
+      message: "RSVP responses updated successfully.",
+    });
+  } catch (error: any) {
+    console.error("Supabase RSVP save error:", error);
 
     return NextResponse.json(
-      {
-        message:
-          "Unable to load RSVP details.",
-      },
+      { message: error?.message || "Unable to save RSVP details." },
       { status: 500 }
     );
   }

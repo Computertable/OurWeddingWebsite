@@ -64,7 +64,7 @@ export default function Countdown() {
           {/* Numbers Grid */}
           <div 
             className="whitespace-nowrap text-center text-4xl font-light tracking-tight text-[#F9F9F6] sm:text-5xl md:text-7xl lg:text-8xl" 
-            style={{ fontFamily: "var(--font-display)" }}
+            style={{ fontFamily: "var(--font-sans)" }}
           >
             {String(timeLeft.days).padStart(2, '0')}:
             {String(timeLeft.hours).padStart(2, '0')}:
@@ -77,13 +77,13 @@ export default function Countdown() {
             Using text-center inside w-1/4 blocks guarantees labels line up directly beneath the numbers.
           */}
           <div 
-            className="mt-2 flex justify-between text-[10px] uppercase tracking-[0.15em] text-[#F9F9F6]/70 sm:text-xs md:text-base lg:text-lg" 
-            style={{ fontFamily: "var(--font-sans)" }}
+            className="mt-2 flex justify-center items-center sm:gap-10 md:gap-6 lg:gap-10 xl:gap-14 text-[10px] uppercase tracking-[0.15em] text-[#F9F9F6]/70 sm:text-xs md:text-base lg:text-lg" 
+            style={{ fontFamily: "var(--font-display)" }}
           >
-            <span className="w-1/4 text-center">Days</span>
-            <span className="w-1/4 text-center">Hours</span>
-            <span className="w-1/4 text-center">Mins</span>
-            <span className="w-1/4 text-center">Secs</span>
+            <span>Days</span>
+            <span>Hours</span>
+            <span>Mins</span>
+            <span>Secs</span>
           </div>
 
         </div>

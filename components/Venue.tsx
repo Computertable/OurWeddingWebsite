@@ -22,7 +22,7 @@ const venues = [
 
 export default function Venue() {
   return (
-    <section className="relative w-full bg-[#EFEFE7] py-20 text-[#55544E] md:py-28">
+    <section id="venue" className="relative w-full bg-[#EFEFE7] py-20 text-[#55544E] md:py-28">
       <div className="mx-auto max-w-6xl px-6">
         
         <motion.h2 
@@ -31,7 +31,7 @@ export default function Venue() {
           viewport={{ once: true }}
           transition={{ duration: 1 }}
           className="mb-16 text-center text-5xl font-light tracking-tight md:text-7xl"
-          style={{ fontFamily: "var(--font-display)" }}
+          style={{ fontFamily: "var(--font-script)" }}
         >
           The Venues
         </motion.h2>
@@ -59,8 +59,8 @@ export default function Venue() {
               </div>
 
               <h3 
-                className="mt-8 text-3xl font-light tracking-tight md:text-4xl"
-                style={{ fontFamily: "var(--font-display)" }}
+                className="mt-8 text-xl font-light tracking-tight md:text-4xl"
+                style={{ fontFamily: "var(--font-sans)" }}
               >
                 {venue.name}
               </h3>

@@ -163,7 +163,7 @@ const stories = [
                 exit={{ opacity: 0, y: -14 }}
                 transition={{ duration: 0.52, ease: "easeInOut" }}
                 className="absolute text-xl sm:text-2xl font-light leading-relaxed tracking-wide md:text-3xl lg:text-4xl drop-shadow-[0_2px_8px_rgba(43,50,34,0.4)]"
-                style={{ fontFamily: "var(--font-display)" }}
+                style={{ fontFamily: "var(--font-sans)" }}
               >
                 {stories[activeTrack]}
               </motion.p>
@@ -176,7 +176,7 @@ const stories = [
         <div className="absolute right-4 bottom-8 z-30 flex flex-col gap-2 sm:right-6 sm:bottom-10">
           
           <button
-            onClick={() => scrollToSection("hero")}
+            onClick={() => scrollToSection("invitation")}
             className="flex h-10 w-10 items-center justify-center border border-[#F9F9F6]/20 bg-[#2B3222]/80 pb-0.5 text-xl font-light text-[#F9F9F6]/80 backdrop-blur-md transition-all duration-300 hover:border-[#F9F9F6] hover:bg-[#F9F9F6] hover:text-[#2B3222] active:scale-95"
             aria-label="Scroll to Hero"
           >
@@ -184,7 +184,7 @@ const stories = [
           </button>
 
           <button
-            onClick={() => scrollToSection("rsvp")}
+            onClick={() => scrollToSection("venue")}
             className="flex h-10 w-10 items-center justify-center border border-[#F9F9F6]/20 bg-[#2B3222]/80 pt-0.5 text-xl font-light text-[#F9F9F6]/80 backdrop-blur-md transition-all duration-300 hover:border-[#F9F9F6] hover:bg-[#F9F9F6] hover:text-[#2B3222] active:scale-95"
             aria-label="Scroll to RSVP"
           >
