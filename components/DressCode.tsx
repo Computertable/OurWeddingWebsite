@@ -47,7 +47,7 @@ export default function DressCode() {
 
             <div className="mx-auto mt-9 max-w-md space-y-4">
               <p className="font-sans text-lg leading-8 text-[#4f493f]">
-                We invite our guests to dress in formal attire, barong and black pants for gentlemen. long dress or formal attire for ladies.
+                We invite our guests to dress in formal attire, barong and black pants for gentlemen and long dress or formal attire for ladies.
               </p>
 
             </div>
