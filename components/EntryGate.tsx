@@ -141,7 +141,7 @@ export default function EntryGate({
       if (!response.ok) {
         setError(
           result.message ||
-            "Unable to verify your invitation."
+          "Unable to verify your invitation."
         );
         return;
       }
@@ -243,18 +243,13 @@ export default function EntryGate({
           }}
           transition={{
             duration: 1.1,
-            ease: [
-              0.16,
-              1,
-              0.3,
-              1,
-            ],
+            ease: [0.16, 1, 0.3, 1],
           }}
-          className="font-script text-[5.8rem] leading-24 text-[#fffaf0] sm:text-[8rem] md:text-[11rem]"
+          className="font-script text-[5.8rem] leading-[0.72] text-[#fffaf0] sm:text-[8rem] sm:leading-[0.72] md:text-[9rem] md:leading-[0.72] lg:text-[11rem]"
         >
           Sofia
 
-          <span className="-mt-5 block sm:-mt-8">
+          <span className="block">
             Joshua
           </span>
         </motion.h1>
