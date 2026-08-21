@@ -50,16 +50,16 @@ export default function StorySection() {
     containerRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
-  const stories = [
-    "Their story began at Sun Life, where their paths first crossed as colleagues working side by side.",
-    "It wasn't until Sofia's final days with the company that deep conversations revealed an effortless connection neither expected.",
-    "As life opened new opportunities, Sofia pursued her career in Malaysia, while he followed his path to Singapore.",
-    "They refused to let the miles define them—turning the distance into a beautiful reason to explore the world together.",
-    "For two incredible years, aside from visiting each other, they traveled hand in hand, collecting passport stamps and memories across different countries.",
-    "Then came February 20, 2026. On the very day of Sofia’s birthday, under the magical skies of Seoul, South Korea, he went down on one knee.",
-    "Through tears and immense joy, she said yes—transforming an unexpected connection into a permanent promise of a lifetime.",
-    "Now, with the distance finally behind them, they look forward to an endless lifetime of chasing sunsets and traveling the world as one."
-  ];
+const stories = [
+  "They say the sun shines on everyone, but for these two, it shone brightest at Sun Life, where their paths first crossed as colleagues.",
+  "It wasn't until Pia's final days with the company that deep conversations revealed an effortless connection neither expected.",
+  "When Pia took a leap of faith and moved to Malaysia to build a better future, JJ found himself beginning a new chapter in Singapore.",
+  "Suddenly, being together meant bus rides, border crossings, late-night video calls, and learning how to love across the miles.",
+  "But distance never stopped them from making memories together, turning every reunion into another adventure worth remembering.",
+  "Their love story became a whirlwind of new places, shared experiences, and memories made across the world.",
+  "Then came February 20, 2026. On Pia's birthday, beneath the winter skies of Seoul, JJ asked the question that would change everything.",
+  "And with one heartfelt 'Yes,' their story entered its most beautiful chapter yet, a lifetime of choosing each other wherever life may lead."
+];
 
   return (
     <div ref={containerRef} className="relative h-[550vh] md:h-[700vh] bg-[#2B3222]">
@@ -91,62 +91,62 @@ export default function StorySection() {
           
           {/* Photo 1: Left */}
           <motion.div style={{ y: y1 }} className="transform-gpu absolute left-[3%] top-[16%] h-[270px] w-[43vw] border border-[#F9F9F6]/10 opacity-[0.22] sm:w-60 sm:h-84 md:w-[340px] md:h-[480px] md:left-[8%]">
-            <Image src="/images/story-1.jpg" alt="Memory 1" fill className="object-cover" />
+            <Image src="/images/story--1.JPG" alt="Memory 1" fill className="object-cover" />
           </motion.div>
 
           {/* Photo 2: Right */}
           <motion.div style={{ y: y2 }} className="transform-gpu absolute right-[2%] top-[16%] h-[270px] w-[43vw] border border-[#F9F9F6]/10 opacity-[0.22] sm:w-60 sm:h-84 md:w-[340px] md:h-[480px] md:right-[6%]">
-            <Image src="/images/story-2.jpg" alt="Memory 2" fill className="object-cover" />
+            <Image src="/images/story--2.JPG" alt="Memory 2" fill className="object-cover" />
           </motion.div>
 
           {/* Photo 3: Left */}
           <motion.div style={{ y: y3 }} className="transform-gpu absolute left-[2%] top-[16%] h-[270px] w-[43vw] border border-[#F9F9F6]/10 opacity-[0.22] sm:w-60 sm:h-84 md:w-[340px] md:h-[480px] md:left-[6%]">
-            <Image src="/images/story-3.jpg" alt="Memory 3" fill className="object-cover" />
+            <Image src="/images/story-3.jpeg" alt="Memory 3" fill className="object-cover" />
           </motion.div>
 
           {/* Photo 4: Right */}
           <motion.div style={{ y: y4 }} className="transform-gpu absolute right-[4%] top-[16%] h-[270px] w-[43vw] border border-[#F9F9F6]/10 opacity-[0.22] sm:w-60 sm:h-84 md:w-[340px] md:h-[480px] md:right-[9%]">
-            <Image src="/images/story-4.jpg" alt="Memory 4" fill className="object-cover" />
+            <Image src="/images/story--4.jpg" alt="Memory 4" fill className="object-cover" />
           </motion.div>
 
           {/* Photo 5: Left */}
           <motion.div style={{ y: y5 }} className="transform-gpu absolute left-[4%] top-[16%] h-[270px] w-[43vw] border border-[#F9F9F6]/10 opacity-[0.22] sm:w-60 sm:h-84 md:w-[340px] md:h-[480px] md:left-[9%]">
-            <Image src="/images/story-5.jpg" alt="Memory 5" fill className="object-cover" />
+            <Image src="/images/story-5.jpeg" alt="Memory 5" fill className="object-cover" />
           </motion.div>
 
           {/* Photo 6: Right */}
           <motion.div style={{ y: y6 }} className="transform-gpu absolute right-[1%] top-[16%] h-[270px] w-[43vw] border border-[#F9F9F6]/10 opacity-[0.22] sm:w-60 sm:h-84 md:w-[340px] md:h-[480px] md:right-[5%]">
-            <Image src="/images/story-6.jpg" alt="Memory 6" fill className="object-cover" />
+            <Image src="/images/story--6.jpg" alt="Memory 6" fill className="object-cover" />
           </motion.div>
 
           {/* Photo 7: Left */}
           <motion.div style={{ y: y7 }} className="transform-gpu absolute left-[1%] top-[16%] h-[270px] w-[43vw] border border-[#F9F9F6]/10 opacity-[0.22] sm:w-60 sm:h-84 md:w-[340px] md:h-[480px] md:left-[5%]">
-            <Image src="/images/story-7.jpg" alt="Memory 7" fill className="object-cover" />
+            <Image src="/images/story-7.jpeg" alt="Memory 7" fill className="object-cover" />
           </motion.div>
 
           {/* Photo 8: Right */}
           <motion.div style={{ y: y8 }} className="transform-gpu absolute right-[3%] top-[16%] h-[270px] w-[43vw] border border-[#F9F9F6]/10 opacity-[0.22] sm:w-60 sm:h-84 md:w-[340px] md:h-[480px] md:right-[8%]">
-            <Image src="/images/story-8.jpg" alt="Memory 8" fill className="object-cover" />
+            <Image src="/images/story-8.jpeg" alt="Memory 8" fill className="object-cover" />
           </motion.div>
 
           {/* Photo 9: Left */}
           <motion.div style={{ y: y9 }} className="transform-gpu absolute left-[3%] top-[16%] h-[270px] w-[43vw] border border-[#F9F9F6]/10 opacity-[0.22] sm:w-60 sm:h-84 md:w-[340px] md:h-[480px] md:left-[7%]">
-            <Image src="/images/story-9.jpg" alt="Memory 9" fill className="object-cover" />
+            <Image src="/images/story-9.jpeg" alt="Memory 9" fill className="object-cover" />
           </motion.div>
 
           {/* Photo 10: Right */}
           <motion.div style={{ y: y10 }} className="transform-gpu absolute right-[2%] top-[16%] h-[270px] w-[43vw] border border-[#F9F9F6]/10 opacity-[0.22] sm:w-60 sm:h-84 md:w-[340px] md:h-[480px] md:right-[6%]">
-            <Image src="/images/story-10.jpg" alt="Memory 10" fill className="object-cover" />
+            <Image src="/images/story--10.JPG" alt="Memory 10" fill className="object-cover" />
           </motion.div>
 
           {/* Photo 11: Left */}
           <motion.div style={{ y: y11 }} className="transform-gpu absolute left-[2%] top-[16%] h-[270px] w-[43vw] border border-[#F9F9F6]/10 opacity-[0.22] sm:w-60 sm:h-84 md:w-[340px] md:h-[480px] md:left-[6%]">
-            <Image src="/images/story-11.jpg" alt="Memory 11" fill className="object-cover" />
+            <Image src="/images/story-11.jpeg" alt="Memory 11" fill className="object-cover" />
           </motion.div>
 
           {/* Photo 12: Right */}
           <motion.div style={{ y: y12 }} className="transform-gpu absolute right-[4%] top-[16%] h-[270px] w-[43vw] border border-[#F9F9F6]/10 opacity-[0.22] sm:w-60 sm:h-84 md:w-[340px] md:h-[480px] md:right-[8%]">
-            <Image src="/images/story-12.jpg" alt="Memory 12" fill className="object-cover" />
+            <Image src="/images/story--12.JPG" alt="Memory 12" fill className="object-cover" />
           </motion.div>
 
         </div>
@@ -163,7 +163,7 @@ export default function StorySection() {
                 exit={{ opacity: 0, y: -14 }}
                 transition={{ duration: 0.52, ease: "easeInOut" }}
                 className="absolute text-xl sm:text-2xl font-light leading-relaxed tracking-wide md:text-3xl lg:text-4xl drop-shadow-[0_2px_8px_rgba(43,50,34,0.4)]"
-                style={{ fontFamily: "var(--font-display)" }}
+                style={{ fontFamily: "var(--font-sans)" }}
               >
                 {stories[activeTrack]}
               </motion.p>
@@ -176,7 +176,7 @@ export default function StorySection() {
         <div className="absolute right-4 bottom-8 z-30 flex flex-col gap-2 sm:right-6 sm:bottom-10">
           
           <button
-            onClick={() => scrollToSection("hero")}
+            onClick={() => scrollToSection("invitation")}
             className="flex h-10 w-10 items-center justify-center border border-[#F9F9F6]/20 bg-[#2B3222]/80 pb-0.5 text-xl font-light text-[#F9F9F6]/80 backdrop-blur-md transition-all duration-300 hover:border-[#F9F9F6] hover:bg-[#F9F9F6] hover:text-[#2B3222] active:scale-95"
             aria-label="Scroll to Hero"
           >
@@ -184,7 +184,7 @@ export default function StorySection() {
           </button>
 
           <button
-            onClick={() => scrollToSection("rsvp")}
+            onClick={() => scrollToSection("venue")}
             className="flex h-10 w-10 items-center justify-center border border-[#F9F9F6]/20 bg-[#2B3222]/80 pt-0.5 text-xl font-light text-[#F9F9F6]/80 backdrop-blur-md transition-all duration-300 hover:border-[#F9F9F6] hover:bg-[#F9F9F6] hover:text-[#2B3222] active:scale-95"
             aria-label="Scroll to RSVP"
           >

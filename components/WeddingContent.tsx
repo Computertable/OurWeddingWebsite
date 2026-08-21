@@ -12,6 +12,15 @@ import { useGuests } from "../components/EntryGate";
 
 export default function WeddingContent() {
   const { guests } = useGuests();
+ const partyData = {
+    guests:
+      guests
+        ?.filter((g) => g.id !== undefined && g.id !== null)
+        .map((g) => ({
+          id: g.id!,
+          name: `${g.first_name} ${g.last_name}`.trim(),
+        })) ?? [],
+  };
 
   return (
     <main>
@@ -29,15 +38,7 @@ export default function WeddingContent() {
 
       <FAQ />
 
-      <RSVPSection
-        guest={{
-          id: guests[0]?.id || "",
-          names: guests.map(
-            (guest) =>
-              `${guest.first_name} ${guest.last_name}`
-          ),
-        }}
-      />
+      <RSVPSection party={partyData} />
     </main>
   );
 }

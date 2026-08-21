@@ -21,7 +21,7 @@ export default function Invitation() {
   const cardRotate = useTransform(scrollYProgress, [0, 0.75], ["2deg", "0deg"]);
 
   return (
-    <section ref={containerRef} className="relative h-[240vh] bg-[#e9e1d5]">
+    <section ref={containerRef} id="invitation" className="relative h-[240vh] bg-[#e9e1d5]">
       <div className="sticky top-0 flex h-[100svh] w-full items-center justify-center overflow-hidden px-5">
         <motion.article
           style={{
@@ -38,10 +38,6 @@ export default function Invitation() {
               <div>
                 <p className="font-sans text-[9px] uppercase tracking-[0.36em] text-[#8a7657]">
                   Postcard
-                </p>
-
-                <p className="mt-2 font-serif text-sm italic text-[#6f685d]">
-                  from our story to yours
                 </p>
               </div>
 
@@ -99,7 +95,7 @@ export default function Invitation() {
         >
           <div className="relative aspect-square w-full overflow-hidden bg-[#d8d0c4]">
             <Image
-              src="/images/invite.PNG"
+              src="/images/invite-pic.JPG"
               alt="Sofia and JJ"
               fill
               priority

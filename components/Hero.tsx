@@ -40,7 +40,7 @@ export default function Hero() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
         className="relative z-20 text-md uppercase tracking-[0.4em] text-white/90 sm:text-md"
-        style={{ fontFamily: "var(--font-display)" }}
+        style={{ fontFamily: "var(--font-sans)" }}
       >
         The Wedding Of
       </motion.div>
@@ -66,7 +66,7 @@ export default function Hero() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, delay: 0.9, ease: "easeOut" }}
         className="relative z-20 flex flex-col items-center gap-2 text-[14px] uppercase tracking-[0.35em] text-white/90 sm:text-sm"
-        style={{ fontFamily: "var(--font-display)" }}
+        style={{ fontFamily: "var(--font-sans)" }}
       >
         <span>Taguig, Philippines</span>
         <span className="text-[14px] opacity-40 tracking-normal">•</span>

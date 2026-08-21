@@ -5,17 +5,11 @@ export async function POST(request: Request) {
   try {
     const body = await request.json().catch(() => null);
 
-    const unique_code =
-      typeof body?.unique_code === "string"
-        ? body.unique_code.trim()
-        : "";
+    const uniqueCode = body?.unique_code?.trim();
 
-    if (!unique_code) {
+    if (!uniqueCode) {
       return NextResponse.json(
-        {
-          message:
-            "Please provide a valid invitation code.",
-        },
+        { message: "Invitation code is required." },
         { status: 400 }
       );
     }
@@ -25,30 +19,40 @@ export async function POST(request: Request) {
       .select(
         "id, first_name, last_name, rsvp_status"
       )
-      .eq("unique_code", unique_code)
-      .order("first_name", {
-        ascending: true,
-      });
+      .eq("unique_code", uniqueCode);
 
     if (error) {
-      console.error("Supabase error:", error);
+      console.error(
+        "Supabase guest lookup error:",
+        error
+      );
 
       return NextResponse.json(
-        {
-          message: error.message,
-        },
+        { message: "Unable to verify invitation." },
         { status: 500 }
       );
     }
 
-    return NextResponse.json(data ?? []);
-  } catch (error) {
-    console.error("API error:", error);
+    if (!data || data.length === 0) {
+      return NextResponse.json(
+        { message: "Invalid invitation code." },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json(data);
+
+  } catch (error: any) {
+    console.error(
+      "Invitation verification error:",
+      error
+    );
 
     return NextResponse.json(
       {
         message:
-          "Unable to load RSVP details.",
+          error?.message ||
+          "Unable to verify invitation.",
       },
       { status: 500 }
     );
