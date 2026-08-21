@@ -83,7 +83,7 @@ export default function EntryGate({
   ) {
     event.preventDefault();
 
-    const normalizedCode = code.trim().toUpperCase();
+    const normalizedCode = code.trim().toLowerCase();
 
     if (!normalizedCode) {
       setError(
