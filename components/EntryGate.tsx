@@ -83,7 +83,7 @@ export default function EntryGate({
   ) {
     event.preventDefault();
 
-    const normalizedCode = code.trim();
+    const normalizedCode = code.trim().toUpperCase();
 
     if (!normalizedCode) {
       setError(
@@ -304,13 +304,14 @@ export default function EntryGate({
             type="text"
             value={code}
             onChange={(event) => {
-              setCode(event.currentTarget.value);
+              setCode(event.currentTarget.value.toUpperCase());
               setError("");
             }}
             placeholder="Enter your code"
             disabled={isLoading}
             autoComplete="off"
             autoCorrect="off"
+            autoCapitalize="characters"
             spellCheck={false}
             className="h-12 w-full border border-[#fffaf0]/35 bg-[#fffaf0]/10 px-4 text-center font-sans text-sm uppercase tracking-[0.22em] text-[#fffaf0] outline-none backdrop-blur-md placeholder:text-[#fffaf0]/35 focus:border-[#f2dfbd]"
           />
