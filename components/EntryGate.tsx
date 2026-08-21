@@ -300,16 +300,18 @@ export default function EntryGate({
 
           <input
             id="guest-code"
+            name="guest-code"
+            type="text"
             value={code}
             onChange={(event) => {
-              setCode(
-                event.target.value
-              );
+              setCode(event.currentTarget.value);
               setError("");
             }}
             placeholder="Enter your code"
             disabled={isLoading}
             autoComplete="off"
+            autoCorrect="off"
+            spellCheck={false}
             className="h-12 w-full border border-[#fffaf0]/35 bg-[#fffaf0]/10 px-4 text-center font-sans text-sm uppercase tracking-[0.22em] text-[#fffaf0] outline-none backdrop-blur-md placeholder:text-[#fffaf0]/35 focus:border-[#f2dfbd]"
           />
 
