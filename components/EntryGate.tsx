@@ -250,7 +250,7 @@ export default function EntryGate({
               1,
             ],
           }}
-          className="font-script text-[5.8rem] leading-[0.7] text-[#fffaf0] sm:text-[8rem] md:text-[11rem]"
+          className="font-script text-[5.8rem] leading-24 text-[#fffaf0] sm:text-[8rem] md:text-[11rem]"
         >
           Sofia
 
@@ -293,7 +293,7 @@ export default function EntryGate({
         >
           <label
             htmlFor="guest-code"
-            className="mb-4 block font-serif text-lg text-[#fffaf0]/90"
+            className="mb-4 block font-display text-lg text-[#fffaf0]/90"
           >
             Enter your invitation code
           </label>
@@ -350,7 +350,7 @@ export default function EntryGate({
           </button>
         </motion.form>
 
-        <p className="mt-8 max-w-xs font-serif text-sm leading-6 text-[#fffaf0]/62">
+        <p className="mt-8 max-w-xs font-display text-md leading-6 text-[#fffaf0]/62">
           A small word from a shared memory
           will open the invitation.
         </p>
