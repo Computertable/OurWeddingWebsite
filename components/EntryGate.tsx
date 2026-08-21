@@ -304,7 +304,8 @@ export default function EntryGate({
             type="text"
             value={code}
             onChange={(event) => {
-              setCode(event.currentTarget.value.toLowerCase());
+              console.log(event.target.value.toLowerCase());
+              setCode(event.target.value.toLowerCase());
               setError("");
             }}
             placeholder="Enter your code"
