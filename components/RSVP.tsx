@@ -87,7 +87,7 @@ export default function RSVPSection({ party }: RSVPSectionProps) {
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="relative z-10 max-w-lg text-center"
         >
-          <p className="font-sans text-[9px] uppercase tracking-[0.4em] text-[#A8A696] sm:text-[10px] sm:tracking-[0.45em]">
+          <p className="font-sans text-[9px] uppercase tracking-[0.4em] sm:text-[10px] sm:tracking-[0.45em]">
             RSVP Received
           </p>
 
@@ -103,7 +103,7 @@ export default function RSVPSection({ party }: RSVPSectionProps) {
             this beautiful day with you.
           </p>
 
-          <p className="mt-7 font-sans text-[9px] uppercase tracking-[0.25em] text-[#A8A696] sm:mt-8 sm:text-[10px] sm:tracking-[0.3em]">
+          <p className="mt-7 font-sans text-[9px] uppercase tracking-[0.25em] sm:mt-8 sm:text-[10px] sm:tracking-[0.3em]">
             With love, Sofia & JJ
           </p>
 
@@ -130,7 +130,7 @@ export default function RSVPSection({ party }: RSVPSectionProps) {
           transition={{ duration: 0.8 }}
           className="text-center"
         >
-          <p className="font-sans text-[9px] uppercase tracking-[0.4em] text-[#A8A696] sm:text-[10px] sm:tracking-[0.5em]">
+          <p className="font-sans text-[9px] uppercase tracking-[0.4em] sm:text-[10px] sm:tracking-[0.5em]">
             Kindly Respond
           </p>
 
@@ -147,7 +147,7 @@ export default function RSVPSection({ party }: RSVPSectionProps) {
           <div className="mx-auto mt-7 flex items-center justify-center gap-3 sm:mt-8 sm:gap-4">
             <span className="hidden h-px w-8 bg-[#A8A696]/40 sm:block sm:w-10" />
 
-            <p className="font-sans text-[8px] uppercase tracking-[0.22em] text-[#A8A696] sm:text-[10px] sm:tracking-[0.3em]">
+            <p className="font-sans text-[8px] uppercase tracking-[0.22em] sm:text-[10px] sm:tracking-[0.3em]">
               Reply by November 7, 2026
             </p>
 
@@ -166,7 +166,7 @@ export default function RSVPSection({ party }: RSVPSectionProps) {
         >
           <div>
             <div className="mb-5 flex items-center justify-between sm:mb-6">
-              <p className="font-sans text-[9px] uppercase tracking-[0.3em] text-[#A8A696] sm:text-[10px] sm:tracking-[0.4em]">
+              <p className="font-sans text-[9px] uppercase tracking-[0.3em] sm:text-[10px] sm:tracking-[0.4em]">
                 Your Attendance
               </p>
 
@@ -197,7 +197,7 @@ export default function RSVPSection({ party }: RSVPSectionProps) {
                         {g.name}
                       </p>
 
-                      <p className="mt-2 font-sans text-[8px] uppercase tracking-[0.2em] text-[#A8A696] sm:text-[9px] sm:tracking-[0.25em]">
+                      <p className="mt-2 font-sans text-[8px] uppercase tracking-[0.2em] sm:text-[9px] sm:tracking-[0.25em]">
                         Kindly select your response
                       </p>
                     </div>
@@ -280,7 +280,7 @@ export default function RSVPSection({ party }: RSVPSectionProps) {
             </motion.button>
           </div>
 
-          <p className="mt-5 text-center font-serif text-sm italic text-[#A8A696]">
+          <p className="mt-5 text-center font-serif text-sm italic">
             We look forward to celebrating with you.
           </p>
         </motion.form>
