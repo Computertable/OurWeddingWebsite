@@ -4,8 +4,8 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 
 export default function Countdown() {
-  const [timeLeft, setTimeLeft] = useState({ 
-    days: 0, hours: 0, minutes: 0, seconds: 0 
+  const [timeLeft, setTimeLeft] = useState({
+    days: 0, hours: 0, minutes: 0, seconds: 0
   });
 
   useEffect(() => {
@@ -39,7 +39,7 @@ export default function Countdown() {
       Also updated fallback background color to match your dark olive green vibe (#2B3222).
     */
     <section className="relative flex h-[185px] w-full items-center justify-center overflow-hidden bg-[#2B3222] sm:h-[240px] md:h-[320px] lg:h-[380px]">
-      
+
       {/* Background Image Layer */}
       <div className="absolute inset-0 z-0">
         <Image
@@ -49,35 +49,33 @@ export default function Countdown() {
           priority
           className="object-cover"
         />
-        <div className="absolute inset-0 bg-black/45 md:bg-black/35" /> 
+        <div className="absolute inset-0 bg-black/45 md:bg-black/35" />
       </div>
 
       {/* Content Layer */}
       <div className="relative z-10 flex w-full flex-col items-center px-6">
-        
+
         {/* 
           FIX 2: Increased mobile max-width from 290px to 320px.
           This gives the text columns room to sit nicely without compressing labels.
         */}
-        <div className="w-full max-w-[320px] sm:max-w-[400px] md:max-w-[500px] lg:max-w-[600px]">
-          
-          {/* Numbers Grid */}
-          <div 
-            className="whitespace-nowrap text-center text-4xl font-light tracking-tight text-[#F9F9F6] sm:text-5xl md:text-7xl lg:text-8xl" 
+        {/* Countdown */}
+       <div className="w-full max-w-[250px] sm:max-w-[360px] md:max-w-[480px]">
+
+          {/* Numbers */}
+          <div
+            className="grid grid-cols-4 text-center text-3xl font-light tracking-tight text-[#F9F9F6] sm:text-5xl md:text-7xl lg:text-8xl"
             style={{ fontFamily: "var(--font-sans)" }}
           >
-            {String(timeLeft.days).padStart(2, '0')}:
-            {String(timeLeft.hours).padStart(2, '0')}:
-            {String(timeLeft.minutes).padStart(2, '0')}:
-            {String(timeLeft.seconds).padStart(2, '0')}
+            <span>{String(timeLeft.days).padStart(2, "0")}</span>
+            <span>{String(timeLeft.hours).padStart(2, "0")}</span>
+            <span>{String(timeLeft.minutes).padStart(2, "0")}</span>
+            <span>{String(timeLeft.seconds).padStart(2, "0")}</span>
           </div>
-          
-          {/* 
-            FIX 3: Polished alignment and added modern text-tracking.
-            Using text-center inside w-1/4 blocks guarantees labels line up directly beneath the numbers.
-          */}
-          <div 
-            className="mt-2 flex justify-center items-center sm:gap-10 md:gap-6 lg:gap-10 xl:gap-14 text-[10px] uppercase tracking-[0.15em] text-[#F9F9F6]/70 sm:text-xs md:text-base lg:text-lg" 
+
+          {/* Labels */}
+          <div
+            className="mt-1 grid grid-cols-4 text-center text-[8px] uppercase tracking-[0.08em] text-[#F9F9F6]/70 sm:text-xs md:text-base"
             style={{ fontFamily: "var(--font-display)" }}
           >
             <span>Days</span>

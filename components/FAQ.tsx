@@ -47,11 +47,11 @@ export default function FAQ() {
                   </p>
 
                   <div>
-                    <h3 className="font-display text-xl text-[#1f1d1a] md:text-2xl">
+                    <h3 className="font-sans text-lg text-[#1f1d1a] md:text-2xl">
                       {faq.question}
                     </h3>
 
-                    <p className="mt-5 max-w-2xl font-sans text-md leading-8 text-black">
+                    <p className="mt-5 max-w-2xl font-display text-xl leading-8 text-black">
                       {faq.answer}
                     </p>
                   </div>

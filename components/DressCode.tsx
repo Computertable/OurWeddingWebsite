@@ -39,7 +39,7 @@ export default function DressCode() {
               Dress Code
             </h2>
 
-            <p className="mt-3 font-display text-xl text-[#8a7657] md:text-5xl">
+            <p className="mt-3 font-sans text-lg text-[#8a7657] md:text-5xl">
               Strictly Formal
             </p>
 
@@ -72,7 +72,7 @@ export default function DressCode() {
               </div>
             </div>
 
-            <p className="mx-auto mt-10 max-w-sm font-serif text-sm italic leading-6 text-[#7a7569]">
+            <p className="mx-auto mt-10 max-w-sm font-display text-md italic leading-6 text-[#7a7569]">
               Kindly avoid white, ivory, and overly casual attire.
             </p>
           </div>

@@ -42,7 +42,7 @@ export default function Invitation() {
               </div>
 
               <div className="flex h-14 w-12 items-center justify-center border border-dashed border-[#8a7657]/45 text-center rotate-12">
-                <span className="font-serif text-[9px] uppercase leading-4 tracking-[0.18em] text-[#8a7657]">
+                <span className="font-display text-[12px] uppercase leading-4 tracking-[0.18em] text-[#8a7657]">
                   Feb
                   <br />
                   27
@@ -51,31 +51,31 @@ export default function Invitation() {
             </div>
 
             <div className="mt-10">
-              <p className="font-serif text-xl leading-7 text-[#2f2b26]">
+              <p className="font-display text-[18px] leading-7 text-[#2f2b26]">
                 Dear family and friends,
               </p>
 
-              <p className="mt-5 font-serif text-[15px] leading-7 text-[#5f594f]">
+              <p className="mt-5 font-display text-[18px] leading-7 text-[#5f594f]">
                 We are getting married, and it would mean the world to have you
                 with us as we begin this next chapter.
               </p>
 
-              <p className="mt-5 font-serif text-[15px] leading-7 text-[#5f594f]">
+              <p className="mt-5 font-display text-[18px] leading-7 text-[#5f594f]">
                 Come celebrate a day of love, music, laughter, and the little
                 moments we hope to remember for the rest of our lives.
               </p>
 
-              <p className="mt-6 font-script text-2xl text-[#8a7657]">
+              <p className="mt-6 font-script text-3xl text-[#8a7657]">
                 JJ & Pia
               </p>
             </div>
 
             <div className="mt-8 border-t border-[#2f2b26]/12 pt-5">
-              <p className="font-sans text-[9px] uppercase tracking-[0.32em] text-[#8a7657]">
+              <p className="font-display text-[12px] uppercase tracking-[0.32em] text-[#8a7657]">
                 Save the Date
               </p>
 
-              <p className="mt-3 font-serif text-xl tracking-[0.16em] text-[#2f2b26]">
+              <p className="mt-3 font-display text-xl tracking-[0.16em] text-[#2f2b26]">
                 02 . 27 . 2027
               </p>
 

@@ -91,13 +91,13 @@ export default function RSVPSection({ party }: RSVPSectionProps) {
             RSVP Received
           </p>
 
-          <h2 className="mt-5 font-serif text-5xl leading-none sm:mt-6 sm:text-6xl">
+          <h2 className="mt-5 font-display text-5xl leading-none sm:mt-6 sm:text-6xl">
             Thank You
           </h2>
 
           <div className="mx-auto my-7 h-px w-12 bg-[#6B705C]/40 sm:my-8 sm:w-16" />
 
-          <p className="font-serif text-lg leading-relaxed text-[#6B705C]">
+          <p className="font-display text-lg leading-relaxed text-[#6B705C]">
             We cannot wait to celebrate
             <br />
             this beautiful day with you.
@@ -134,11 +134,11 @@ export default function RSVPSection({ party }: RSVPSectionProps) {
             Kindly Respond
           </p>
 
-          <h2 className="mt-5 font-serif text-[2.8rem] leading-[0.95] sm:mt-6 sm:text-5xl md:text-6xl">
+          <h2 className="mt-5 font-script text-[2.8rem] leading-[0.95] sm:mt-6 sm:text-5xl md:text-6xl">
             Will You Join Us?
           </h2>
 
-          <p className="mx-auto mt-6 max-w-sm font-serif text-lg leading-relaxed text-[#6B705C] sm:mt-7 sm:max-w-md">
+          <p className="mx-auto mt-6 max-w-sm font-display text-lg leading-relaxed text-[#6B705C] sm:mt-7 sm:max-w-md">
             We would be delighted to celebrate
             <br className="hidden sm:block" />{" "}
             this special day with you.
@@ -170,7 +170,7 @@ export default function RSVPSection({ party }: RSVPSectionProps) {
                 Your Attendance
               </p>
 
-              <span className="font-serif text-sm italic text-[#6B705C]">
+              <span className="font-display text-sm italic text-[#6B705C]">
                 {party.guests.length}{" "}
                 {party.guests.length === 1 ? "guest" : "guests"}
               </span>
@@ -193,7 +193,7 @@ export default function RSVPSection({ party }: RSVPSectionProps) {
                 >
                   <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
                     <div className="min-w-0">
-                      <p className="break-words font-sans text-2xl leading-tight text-[#2C2B29] sm:text-2xl">
+                      <p className="break-words font-sans text-xl leading-tight text-[#2C2B29] sm:text-2xl">
                         {g.name}
                       </p>
 
@@ -236,11 +236,11 @@ export default function RSVPSection({ party }: RSVPSectionProps) {
           {/* Song Request */}
           <div className="mt-12 sm:mt-14">
             <div className="border-t border-[#2C2B29]/10 pt-9 sm:pt-10">
-              <h3 className="mt-4 font-serif text-2xl leading-tight sm:text-2xl">
+              <h3 className="mt-4 font-script text-3xl leading-tight sm:text-2xl">
                 Our evening's soundtrack
               </h3>
 
-              <p className="mt-3 max-w-lg font-serif text-sm leading-relaxed text-[#6B705C]">
+              <p className="mt-3 max-w-lg font-display text-md leading-5 text-[#6B705C]">
                 Our special day will be accompanied by live strings and
                 saxophone. If there's a song that holds a special place in
                 your heart, share it with us, and it may become part of our
@@ -252,7 +252,7 @@ export default function RSVPSection({ party }: RSVPSectionProps) {
                   value={songRequest}
                   onChange={(e) => setSongRequest(e.target.value)}
                   placeholder="Song title & artist"
-                  className="w-full border-b border-[#2C2B29]/20 bg-transparent py-4 font-serif text-base text-[#2C2B29] outline-none transition-colors placeholder:text-[#A8A696]/60 focus:border-[#6B705C] sm:text-lg"
+                  className="w-full border-b border-[#2C2B29]/20 bg-transparent py-4 font-display text-base text-[#2C2B29] outline-none transition-colors placeholder:text-[#A8A696]/60 focus:border-[#6B705C] sm:text-lg"
                 />
 
                 <div className="absolute bottom-0 left-0 h-px w-full bg-[#6B705C]/0 transition-colors focus-within:bg-[#6B705C]" />
@@ -262,7 +262,7 @@ export default function RSVPSection({ party }: RSVPSectionProps) {
 
           {/* Error Message */}
           {error && (
-            <p className="mt-6 text-center font-serif text-sm text-red-600">
+            <p className="mt-6 text-center font-display text-sm text-red-600">
               {error}
             </p>
           )}

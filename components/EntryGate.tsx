@@ -141,7 +141,7 @@ export default function EntryGate({
       if (!response.ok) {
         setError(
           result.message ||
-            "Unable to verify your invitation."
+          "Unable to verify your invitation."
         );
         return;
       }
@@ -243,18 +243,13 @@ export default function EntryGate({
           }}
           transition={{
             duration: 1.1,
-            ease: [
-              0.16,
-              1,
-              0.3,
-              1,
-            ],
+            ease: [0.16, 1, 0.3, 1],
           }}
-          className="font-script text-[5.8rem] leading-[0.7] text-[#fffaf0] sm:text-[8rem] md:text-[11rem]"
+          className="font-script text-[5.8rem] leading-[0.72] text-[#fffaf0] sm:text-[8rem] sm:leading-[0.72] md:text-[9rem] md:leading-[0.72] lg:text-[11rem]"
         >
           Sofia
 
-          <span className="-mt-5 block sm:-mt-8">
+          <span className="block">
             Joshua
           </span>
         </motion.h1>
@@ -293,7 +288,7 @@ export default function EntryGate({
         >
           <label
             htmlFor="guest-code"
-            className="mb-4 block font-serif text-lg text-[#fffaf0]/90"
+            className="mb-4 block font-display text-lg text-[#fffaf0]/90"
           >
             Enter your invitation code
           </label>
@@ -350,7 +345,7 @@ export default function EntryGate({
           </button>
         </motion.form>
 
-        <p className="mt-8 max-w-xs font-serif text-sm leading-6 text-[#fffaf0]/62">
+        <p className="mt-8 max-w-xs font-display text-md leading-6 text-[#fffaf0]/62">
           A small word from a shared memory
           will open the invitation.
         </p>
