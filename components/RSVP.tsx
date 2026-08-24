@@ -16,12 +16,13 @@ interface RSVPSectionProps {
 }
 
 export default function RSVPSection({ party }: RSVPSectionProps) {
-  // Track attendance by guest ID instead of string name
-  const [attendance, setAttendance] = useState<Record<string | number, boolean>>(
+  const [attendance, setAttendance] = useState<
+  Record<string | number, boolean | null>
+>(
     party.guests.reduce(
       (acc, guest) => ({
         ...acc,
-        [guest.id]: true,
+        [guest.id]: null,
       }),
       {}
     )
@@ -165,18 +166,6 @@ export default function RSVPSection({ party }: RSVPSectionProps) {
           className="mt-14 sm:mt-16"
         >
           <div>
-            <div className="mb-5 flex items-center justify-between sm:mb-6">
-              <p className="font-sans text-[9px] uppercase tracking-[0.3em] sm:text-[10px] sm:tracking-[0.4em]">
-                Your Attendance
-              </p>
-
-              <span className="font-display text-sm italic text-[#6B705C]">
-                {party.guests.length}{" "}
-                {party.guests.length === 1 ? "guest" : "guests"}
-              </span>
-            </div>
-
-            {/* Guest List */}
             <div className="overflow-hidden rounded-2xl border border-[#2C2B29]/10 bg-[#F8F4EE]/50">
               {party.guests.map((g, index) => (
                 <motion.div
@@ -203,29 +192,31 @@ export default function RSVPSection({ party }: RSVPSectionProps) {
                     </div>
 
                     <div className="flex w-full rounded-full border border-[#6B705C]/20 bg-[#EFEFE7] p-1 sm:w-auto sm:shrink-0">
-                      <button
-                        type="button"
-                        onClick={() => handleToggleAttendance(g.id, true)}
-                        className={`min-h-11 flex-1 rounded-full px-5 py-2.5 font-sans text-[9px] uppercase tracking-[0.15em] transition-all duration-300 sm:min-h-0 sm:flex-none sm:px-4 sm:tracking-[0.18em] ${
-                          attendance[g.id]
-                            ? "bg-[#6B705C] text-[#F8F4EE] shadow-sm"
-                            : "text-[#6B705C] hover:bg-[#6B705C]/10"
-                        }`}
-                      >
-                        See You There!
-                      </button>
+                     <div className="flex w-full rounded-full border border-[#6B705C]/20 bg-[#EFEFE7] p-1 sm:w-auto sm:shrink-0">
+                        <button
+                          type="button"
+                          onClick={() => handleToggleAttendance(g.id, true)}
+                          className={`min-h-11 flex-1 rounded-full px-5 py-2.5 font-sans text-[9px] uppercase tracking-[0.15em] transition-all duration-300 sm:min-h-0 sm:flex-none sm:px-4 sm:tracking-[0.18em] ${
+                            attendance[g.id] === true 
+                              ? "bg-[#6B705C] text-[#F8F4EE] shadow-sm"
+                              : "text-[#6B705C] hover:bg-[#6B705C]/10"
+                          }`}
+                        >
+                          See You There!
+                        </button>
 
-                      <button
-                        type="button"
-                        onClick={() => handleToggleAttendance(g.id, false)}
-                        className={`min-h-11 flex-1 rounded-full px-5 py-2.5 font-sans text-[9px] uppercase tracking-[0.15em] transition-all duration-300 sm:min-h-0 sm:flex-none sm:px-4 sm:tracking-[0.18em] ${
-                          !attendance[g.id]
-                            ? "bg-[#4A3B33] text-[#F8F4EE] shadow-sm"
-                            : "text-[#6B705C] hover:bg-[#6B705C]/10"
-                        }`}
-                      >
-                        Can't Make It
-                      </button>
+                        <button
+                          type="button"
+                          onClick={() => handleToggleAttendance(g.id, false)}
+                          className={`min-h-11 flex-1 rounded-full px-5 py-2.5 font-sans text-[9px] uppercase tracking-[0.15em] transition-all duration-300 sm:min-h-0 sm:flex-none sm:px-4 sm:tracking-[0.18em] ${
+                            attendance[g.id] === false 
+                              ? "bg-[#4A3B33] text-[#F8F4EE] shadow-sm"
+                              : "text-[#6B705C] hover:bg-[#6B705C]/10"
+                          }`}
+                        >
+                          Can't Make It
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </motion.div>
@@ -240,7 +231,7 @@ export default function RSVPSection({ party }: RSVPSectionProps) {
                 Our evening's soundtrack
               </h3>
 
-              <p className="mt-3 max-w-lg font-display text-md leading-5 text-[#6B705C]">
+              <p className="mt-3 max-w-lg font-display text-lg leading-5 text-[#6B705C]">
                 Our special day will be accompanied by live strings and
                 saxophone. If there's a song that holds a special place in
                 your heart, share it with us, and it may become part of our
@@ -274,15 +265,20 @@ export default function RSVPSection({ party }: RSVPSectionProps) {
               disabled={isSubmitting}
               whileHover={{ y: isSubmitting ? 0 : -2 }}
               whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
-              className="min-h-12 w-full max-w-xs rounded-full bg-[#6B705C] px-8 py-4 font-sans text-[9px] uppercase tracking-[0.3em] text-[#F8F4EE] transition-all duration-300 hover:bg-[#4A3B33] disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto sm:px-10 sm:text-[10px] sm:tracking-[0.35em]"
+              className="min-h-12 w-full max-w-xs rounded-full bg-[#6B705C] px-8 py-4 font-sans text-[11px] uppercase tracking-[0.3em] text-[#F8F4EE] transition-all duration-300 hover:bg-[#4A3B33] disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto sm:px-10 sm:text-[10px] sm:tracking-[0.35em]"
             >
-              {isSubmitting ? "Sending..." : "Send With Love"}
+              {isSubmitting ? "Sending..." : "SUBMIT RSVP"}
             </motion.button>
           </div>
 
-          <p className="mt-5 text-center font-serif text-sm italic">
+          <p className="mt-5 px-10 text-center font-sans text-[8px] uppercase tracking-[0.2em] text-[#6B705C]">
+            You can update your response anytime before November 7, 2026.
+          </p>
+
+          <p className="mt-10 text-center font-serif text-sm italic text-[#6B705C]/70">
             We look forward to celebrating with you.
           </p>
+         
         </motion.form>
       </div>
     </section>
