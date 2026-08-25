@@ -17,6 +17,7 @@ export type Guest = {
   first_name: string;
   last_name: string;
   rsvp_status: string | null;
+  song_request?: string | null;
 };
 
 type GuestContextType = {

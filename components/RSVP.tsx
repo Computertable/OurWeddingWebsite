@@ -6,6 +6,8 @@ import { motion } from "framer-motion";
 export interface GuestItem {
   id: number | string;
   name: string;
+  rsvp_status?: string | null;
+  song_request?: string | null;
 }
 
 interface RSVPSectionProps {
@@ -19,16 +21,22 @@ export default function RSVPSection({ party }: RSVPSectionProps) {
   const [attendance, setAttendance] = useState<
   Record<string | number, boolean | null>
 >(
-    party.guests.reduce(
-      (acc, guest) => ({
+   party.guests.reduce((acc, guest) => {
+      let initialStatus = null;
+      if (guest.rsvp_status === "attending") {
+        initialStatus = true;
+      } else if (guest.rsvp_status === "not_attending") {
+        initialStatus = false;
+      }
+
+      return {
         ...acc,
-        [guest.id]: null,
-      }),
-      {}
-    )
+        [guest.id]: initialStatus,
+      };
+    }, {})
   );
 
-  const [songRequest, setSongRequest] = useState("");
+  const [songRequest, setSongRequest] = useState(party.guests[0]?.song_request || "");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -46,9 +54,11 @@ export default function RSVPSection({ party }: RSVPSectionProps) {
     setError(null);
 
     // Format payload with exact IDs
-    const responses = party.guests.map((g) => ({
+    const responses = party.guests
+    .filter((g) => attendance[g.id] !== null)
+    .map((g) => ({
       id: g.id,
-      attending: attendance[g.id] ?? false,
+      attending: attendance[g.id],
     }));
 
     try {
@@ -167,7 +177,9 @@ export default function RSVPSection({ party }: RSVPSectionProps) {
         >
           <div>
             <div className="overflow-hidden rounded-2xl border border-[#2C2B29]/10 bg-[#F8F4EE]/50">
-              {party.guests.map((g, index) => (
+              {party.guests
+              .sort((a, b) => Number(a.id) - Number(b.id))
+              .map((g, index) => (
                 <motion.div
                   key={g.id}
                   initial={{ opacity: 0 }}
@@ -192,7 +204,6 @@ export default function RSVPSection({ party }: RSVPSectionProps) {
                     </div>
 
                     <div className="flex w-full rounded-full border border-[#6B705C]/20 bg-[#EFEFE7] p-1 sm:w-auto sm:shrink-0">
-                     <div className="flex w-full rounded-full border border-[#6B705C]/20 bg-[#EFEFE7] p-1 sm:w-auto sm:shrink-0">
                         <button
                           type="button"
                           onClick={() => handleToggleAttendance(g.id, true)}
@@ -217,7 +228,6 @@ export default function RSVPSection({ party }: RSVPSectionProps) {
                           Can't Make It
                         </button>
                       </div>
-                    </div>
                   </div>
                 </motion.div>
               ))}

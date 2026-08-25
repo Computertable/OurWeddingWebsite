@@ -73,7 +73,7 @@ export async function POST(request: Request) {
     const { data, error } = await supabaseService
       .from("WEDDING_RSVP")
       .select(
-        "id, first_name, last_name, rsvp_status"
+        "id, first_name, last_name, rsvp_status, song_request"
       )
       .eq("unique_code", uniqueCode);
 

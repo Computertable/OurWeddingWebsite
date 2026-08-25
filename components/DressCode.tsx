@@ -39,14 +39,14 @@ export default function DressCode() {
               Dress Code
             </h2>
 
-            <p className="mt-3 font-sans text-lg text-[#8a7657] md:text-5xl">
+            <p className="mt-3 font-sans text-md text-[#8a7657] md:text-5xl">
               Strictly Formal
             </p>
 
             <div className="mx-auto mt-8 h-px w-24 bg-[#b9976b]/70" />
 
             <div className="mx-auto mt-9 max-w-md space-y-4">
-              <p className="font-sans text-lg leading-8 text-[#4f493f]">
+              <p className="font-sans text-md leading-6 text-[#4f493f]">
                 We invite our guests to dress in formal attire, barong and black pants for gentlemen and long dress or formal attire for ladies.
               </p>
 

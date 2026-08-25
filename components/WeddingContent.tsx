@@ -19,6 +19,8 @@ export default function WeddingContent() {
         .map((g) => ({
           id: g.id!,
           name: `${g.first_name} ${g.last_name}`.trim(),
+          rsvp_status: g.rsvp_status,
+          song_request: g.song_request
         })) ?? [],
   };
 
