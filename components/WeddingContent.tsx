@@ -9,6 +9,7 @@ import StorySection from "../components/Story";
 import FAQ from "../components/FAQ";
 import DressCode from "../components/DressCode";
 import { useGuests } from "../components/EntryGate";
+import Footer from "./Footer";
 
 export default function WeddingContent() {
   const { guests } = useGuests();
@@ -34,13 +35,17 @@ export default function WeddingContent() {
 
       <Venue />
 
+      <Countdown />
+
       <DressCode />
 
-      <Countdown />
+     
 
       <FAQ />
 
       <RSVPSection party={partyData} />
+
+      <Footer />
     </main>
   );
 }

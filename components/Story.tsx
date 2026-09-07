@@ -51,14 +51,14 @@ export default function StorySection() {
   };
 
 const stories = [
-  "They say the sun shines on everyone, but for these two, it shone brightest at Sun Life, where their paths first crossed as colleagues.",
-  "It wasn't until Pia's final days with the company that deep conversations revealed an effortless connection neither expected.",
-  "When Pia took a leap of faith and moved to Malaysia to build a better future, JJ found himself beginning a new chapter in Singapore.",
-  "Suddenly, being together meant bus rides, border crossings, late-night video calls, and learning how to love across the miles.",
-  "But distance never stopped them from making memories together, turning every reunion into another adventure worth remembering.",
-  "Their love story became a whirlwind of new places, shared experiences, and memories made across the world.",
-  "Then came February 20, 2026. On Pia's birthday, beneath the winter skies of Seoul, JJ asked the question that would change everything.",
-  "And with one heartfelt 'Yes,' their story entered its most beautiful chapter yet, a lifetime of choosing each other wherever life may lead."
+  "Their story began at Sun Life, where a chance meeting sparked an unexpected connection.",
+  "As Pia was wrapping up her time at the company, deep conversations revealed a bond they couldn't ignore.",
+  "Pia soon embraced a new adventure in Malaysia, while JJ began his own chapter in Singapore.",
+  "Love became a journey of border crossings, late-night calls, and making every second count.",
+  "But distance couldn't stop them. Every reunion turned into an unforgettable adventure.",
+  "Their relationship became a whirlwind of shared experiences across the globe.",
+  "Then, on Pia's birthday beneath the winter skies of Seoul, JJ asked the ultimate question.",
+  "With one heartfelt 'Yes,' they chose a lifetime together, wherever life may lead."
 ];
 
   return (

@@ -23,7 +23,7 @@ const faqs = [
 export default function FAQ() {
   return (
     <section className="bg-[#e9e1d5] px-5 py-20 text-[#2f2b26] md:px-10 md:py-28">
-      <div className="mx-auto max-w-7xl border-[14px] border-[#666634] px-6 py-12 md:px-16 md:py-20">
+      <div className="mx-auto max-w-7xl border-[14px] border-[#444D33] px-6 py-12 md:px-16 md:py-20">
         <div className="grid gap-12 md:grid-cols-[260px_1fr] md:items-center">
           <div className="flex justify-center md:justify-start">
             <h2 className="font-script text-6xl leading-none text-[#2f2b13] md:-rotate-90 md:text-9xl">

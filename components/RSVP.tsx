@@ -149,13 +149,13 @@ export default function RSVPSection({ party }: RSVPSectionProps) {
             Will You Join Us?
           </h2>
 
-          <p className="mx-auto mt-6 max-w-sm font-display text-lg leading-relaxed text-[#6B705C] sm:mt-7 sm:max-w-md">
+          <p className="mx-auto mt-6 max-w-sm font-sans text-md leading-relaxed text-[#6B705C] sm:mt-7 sm:max-w-md">
             We would be delighted to celebrate
             <br className="hidden sm:block" />{" "}
             this special day with you.
           </p>
 
-          <div className="mx-auto mt-7 flex items-center justify-center gap-3 sm:mt-8 sm:gap-4">
+          {/* <div className="mx-auto mt-7 flex items-center justify-center gap-3 sm:mt-8 sm:gap-4">
             <span className="hidden h-px w-8 bg-[#A8A696]/40 sm:block sm:w-10" />
 
             <p className="font-sans text-[8px] uppercase tracking-[0.22em] sm:text-[10px] sm:tracking-[0.3em]">
@@ -163,7 +163,7 @@ export default function RSVPSection({ party }: RSVPSectionProps) {
             </p>
 
             <span className="hidden h-px w-8 bg-[#A8A696]/40 sm:block sm:w-10" />
-          </div>
+          </div> */}
         </motion.header>
 
         {/* RSVP Form */}
@@ -203,13 +203,13 @@ export default function RSVPSection({ party }: RSVPSectionProps) {
                       </p>
                     </div>
 
-                    <div className="flex w-full rounded-full border border-[#6B705C]/20 bg-[#EFEFE7] p-1 sm:w-auto sm:shrink-0">
+                    <div className="flex w-full rounded-full border border-[#6B705C]/20 bg-[#F5F0E6] p-1 sm:w-auto sm:shrink-0">
                         <button
                           type="button"
                           onClick={() => handleToggleAttendance(g.id, true)}
                           className={`min-h-11 flex-1 rounded-full px-5 py-2.5 font-sans text-[9px] uppercase tracking-[0.15em] transition-all duration-300 sm:min-h-0 sm:flex-none sm:px-4 sm:tracking-[0.18em] ${
                             attendance[g.id] === true 
-                              ? "bg-[#6B705C] text-[#F8F4EE] shadow-sm"
+                              ? "bg-[#444D33] text-[#F8F4EE] shadow-sm"
                               : "text-[#6B705C] hover:bg-[#6B705C]/10"
                           }`}
                         >
@@ -241,7 +241,7 @@ export default function RSVPSection({ party }: RSVPSectionProps) {
                 Our evening's soundtrack
               </h3>
 
-              <p className="mt-3 max-w-lg font-display text-lg leading-5 text-[#6B705C]">
+              <p className="mt-3 max-w-lg font-sans text-sm leading-5 text-[#6B705C]">
                 Our special day will be accompanied by live strings and
                 saxophone. If there's a song that holds a special place in
                 your heart, share it with us, and it may become part of our
@@ -275,7 +275,7 @@ export default function RSVPSection({ party }: RSVPSectionProps) {
               disabled={isSubmitting}
               whileHover={{ y: isSubmitting ? 0 : -2 }}
               whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
-              className="min-h-12 w-full max-w-xs rounded-full bg-[#6B705C] px-8 py-4 font-sans text-[11px] uppercase tracking-[0.3em] text-[#F8F4EE] transition-all duration-300 hover:bg-[#4A3B33] disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto sm:px-10 sm:text-[10px] sm:tracking-[0.35em]"
+              className="min-h-12 w-full max-w-xs rounded-full bg-[#444D33] px-8 py-4 font-sans text-[11px] uppercase tracking-[0.3em] text-[#F8F4EE] transition-all duration-300 hover:bg-[#4A3B33] disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto sm:px-10 sm:text-[10px] sm:tracking-[0.35em]"
             >
               {isSubmitting ? "Sending..." : "SUBMIT RSVP"}
             </motion.button>

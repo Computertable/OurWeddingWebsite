@@ -22,7 +22,7 @@ const venues = [
 
 export default function Venue() {
   return (
-    <section id="venue" className="relative w-full bg-[#EFEFE7] py-20 text-[#55544E] md:py-28">
+    <section id="venue" className="relative w-full bg-[#F5F0E6] py-20 text-[#444D33] md:py-28">
       <div className="mx-auto max-w-6xl px-6">
         
         <motion.h2 
@@ -78,7 +78,7 @@ export default function Venue() {
                 href={venue.mapLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-8 border border-[#55544E] px-8 py-2.5 text-xs uppercase tracking-[0.2em] transition-all duration-300 hover:bg-[#55544E] hover:text-[#EFEFE7]"
+                className="mt-8 border border-[#55544E] px-8 py-2.5 text-xs uppercase tracking-[0.2em] transition-all duration-300 hover:bg-[#55544E] hover:text-[#F5F0E6]"
                 style={{ fontFamily: "var(--font-sans)" }}
               >
                 Google Maps
