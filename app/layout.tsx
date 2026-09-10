@@ -22,8 +22,24 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: "Sofia & JJ",
+  title: "Sofia & Joshua",
   description: "Wedding Website",
+  openGraph: {
+    title: "Sofia & Joshua",
+    description: "Our Wedding • February 27, 2027",
+    url: "https://thegonzaleswedding.com",
+    siteName: "Sofia & Joshua",
+    images: [
+      {
+        url: "https://thegonzaleswedding.com/hero-couple.JPG",
+        width: 1200,
+        height: 630,
+        alt: "Sofia & Joshua Wedding",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
