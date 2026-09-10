@@ -10,6 +10,7 @@ import FAQ from "../components/FAQ";
 import DressCode from "../components/DressCode";
 import { useGuests } from "../components/EntryGate";
 import WeddingEntourage from "./WeddingEntourage";
+import Footer from "./Footer";
 
 export default function WeddingContent() {
   const { guests } = useGuests();
@@ -20,6 +21,8 @@ export default function WeddingContent() {
         .map((g) => ({
           id: g.id!,
           name: `${g.first_name} ${g.last_name}`.trim(),
+          rsvp_status: g.rsvp_status,
+          song_request: g.song_request
         })) ?? [],
   };
 
@@ -35,13 +38,17 @@ export default function WeddingContent() {
 
       <Venue />
 
+      <Countdown />
+
       <DressCode />
 
-      <Countdown />
+     
 
       <FAQ />
 
       <RSVPSection party={partyData} />
+
+      <Footer />
     </main>
   );
 }
