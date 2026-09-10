@@ -9,6 +9,7 @@ import StorySection from "../components/Story";
 import FAQ from "../components/FAQ";
 import DressCode from "../components/DressCode";
 import { useGuests } from "../components/EntryGate";
+import WeddingEntourage from "./WeddingEntourage";
 
 export default function WeddingContent() {
   const { guests } = useGuests();
@@ -29,6 +30,8 @@ export default function WeddingContent() {
       <Invitation />
 
       <StorySection />
+
+      <WeddingEntourage />
 
       <Venue />
 
