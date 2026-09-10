@@ -3,28 +3,28 @@
 import { motion } from "framer-motion";
 
 const principalSponsorsLeft = [
-  "MR. REY JUSTIN VELASCO",
-  "MR. GURUCHARAN SINGH SANDHU"
+  "REY JUSTIN VELASCO",
+  "GURUCHARAN SINGH SANDHU"
 ];
 
 const principalSponsorsRight = [
-  "MRS. MA. DULCE C. VELASCO",
-  "MRS. CHARMAINE T. SANDHU",
-  "MRS. ANDREA P. SAGALES",
+  "DRA. MA. DULCE C. VELASCO",
+  "CHARMAINE T. SANDHU",
+  "ANDREA P. SAGALES",
 ];
 
 const entourageLeft = [
-  "MR. IAN LAKSHMI CHUA",
-  "MR. MICO ADRIAN PEREZ",
-  "MR. MARVIN DACER RAMOS",
-  "MR. JOHN CEDRICK SOLTIS"
+  "IAN LAKSHMI CHUA",
+  "MICO ADRIAN PEREZ",
+  "MARVIN DACER RAMOS",
+  "JOHN CEDRICK SOLTIS"
 ];
 
 const entourageRight = [
-  "MS. ROSE DELA PAZ",
-  "MS. GENEVIEVE GONZALES",
-  "MS. BEATRICE REYES",
-  "MS. COLLEN SY"
+  "ROSE DELA PAZ",
+  "GENEVIEVE GONZALES",
+  "BEATRICE REYES",
+  "COLLEN SY"
 ];
 
 function NameColumn({ names }: { names: string[] }) {
@@ -156,7 +156,7 @@ export default function WeddingEntourage() {
                       fontFamily: "Montserrat, sans-serif",
                     }}
                   >
-                    MR. VICTOR R. GONZALES
+                    VICTOR R. GONZALES
                   </div>
 
                   <div
@@ -165,7 +165,7 @@ export default function WeddingEntourage() {
                       fontFamily: "Montserrat, sans-serif",
                     }}
                   >
-                    MRS. CYNTHIA T. GONZALES
+                    CYNTHIA T. GONZALES
                   </div>
                 </div>
 
@@ -189,7 +189,7 @@ export default function WeddingEntourage() {
                       fontFamily: "Montserrat, sans-serif",
                     }}
                   >
-                    MR. RANDY B. PEREZ
+                    RANDY B. PEREZ
                   </div>
 
                   <div
@@ -198,7 +198,7 @@ export default function WeddingEntourage() {
                       fontFamily: "Montserrat, sans-serif",
                     }}
                   >
-                    MRS. ROSALEA P. PEREZ
+                    ROSALEA P. PEREZ
                   </div>
                 </div>
               </div>
@@ -252,7 +252,7 @@ export default function WeddingEntourage() {
                       fontFamily: "Montserrat, sans-serif",
                     }}
                   >
-                    MR. MARK KENNETH P. CARLOS
+                    MARK KENNETH P. CARLOS
                   </div>
                 </div>
 
@@ -272,7 +272,7 @@ export default function WeddingEntourage() {
                       fontFamily: "Montserrat, sans-serif",
                     }}
                   >
-                    MRS. COLLEN ELIZABETH B. CATAROJA
+                    COLLEN ELIZABETH B. CATAROJA
                   </div>
                 </div>
 
@@ -353,7 +353,7 @@ export default function WeddingEntourage() {
                       fontFamily: "Montserrat, sans-serif",
                     }}
                   >
-                    
+                    GABUBOY MONTAS
                   </div>
                 </div>
 
@@ -412,9 +412,9 @@ export default function WeddingEntourage() {
                       fontFamily: "Montserrat, sans-serif",
                     }}
                   >
-                    MR. JUFFERSON D. VIERNES
+                    JUFFERSON D. VIERNES
                     <br/> 
-                    MRS. DENISE G. CONCEPCION - VIERNES
+                    DENISE G. CONCEPCION - VIERNES
                   </div>
                 </div>
 
@@ -436,9 +436,9 @@ export default function WeddingEntourage() {
                       fontFamily: "Montserrat, sans-serif",
                     }}
                   >
-                    MR. AARON JAMES T. GONZALES 
+                    AARON JAMES T. GONZALES 
                     <br/> 
-                    MRS. KAYCEE G. GONZALES
+                    KAYCEE G. GONZALES
                   </div>
                 </div>
 
@@ -460,9 +460,9 @@ export default function WeddingEntourage() {
                       fontFamily: "Montserrat, sans-serif",
                     }}
                   >
-                    MR. MARK CONRAD DEL VALLE
+                    MARK CONRAD DEL VALLE
                     <br/> 
-                    MS. LORNA CALINGACION
+                    LORNA CALINGACION
                   </div>
                 </div>
 

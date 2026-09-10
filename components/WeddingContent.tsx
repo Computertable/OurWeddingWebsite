@@ -42,8 +42,6 @@ export default function WeddingContent() {
 
       <DressCode />
 
-     
-
       <FAQ />
 
       <RSVPSection party={partyData} />
