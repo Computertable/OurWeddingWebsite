@@ -8,8 +8,9 @@ const parents = {
   bride: ["MR. RANDY B. PEREZ", "MRS. ROSALEA P. PEREZ"],
 };
 
-const principalSponsorsLeft = ["MR. REY JUSTIN VELASCO", "MR. GURUCHARAN SINGH SANDHU"];
+const principalSponsorsLeft = ["MR. MARVIN MANUEL", "MR. GURUCHARAN SINGH SANDHU", "MR. REY JUSTIN VELASCO"];
 const principalSponsorsRight = [
+  "MRS. MICHELLE MANUEL",
   "MRS. CHARMAINE T. SANDHU",
   "DRA. MARIA DULCE C. VELASCO",
   "MRS. ANDREA P. SAGALES",
