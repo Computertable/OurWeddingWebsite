@@ -1,25 +1,674 @@
 @import "tailwindcss";
 
-@source inline("text-7xl sm:text-8xl md:text-9xl lg:text-9xl");
 @source "../components/**/*.{js,ts,jsx,tsx}";
 @source "../app/**/*.{js,ts,jsx,tsx}";
 
-:root {
-  --background: #F8F4EE;
-  --espresso: #4A3B33;
-  --olive: #6B705C;
-  --dusty-rose: #D8A7A1;
-  --peach: #E8C6A7;
-}
-
-body {
-  background-color: var(--background);
-  color: var(--espresso);
-  font-family: var(--font-sans);
+/* Tailwind is used for layout only (flex, grid, spacing, breakpoints).
+   Its default palette is removed so no colour outside the design system can sneak in;
+   the only colour utilities available are the design-system tokens below. */
+@theme {
+  --color-*: initial;
 }
 
 @theme inline {
-  --font-sans: var(--font-sans);
-  --font-display: var(--font-display);
-  --font-script: var(--font-script);
+  --color-green-900: var(--green-900);
+  --color-green-800: var(--green-800);
+  --color-green-700: var(--green-700);
+  --color-green-600: var(--green-600);
+  --color-green-500: var(--green-500);
+  --color-olive-600: var(--olive-600);
+  --color-olive-500: var(--olive-500);
+  --color-sage-400: var(--sage-400);
+  --color-sage-300: var(--sage-300);
+  --color-sage-200: var(--sage-200);
+  --color-cream-50: var(--cream-50);
+  --color-cream-100: var(--cream-100);
+  --color-cream-200: var(--cream-200);
+  --color-cream-300: var(--cream-300);
+  --color-cream-400: var(--cream-400);
+  --color-gold-500: var(--gold-500);
+  --color-gold-300: var(--gold-300);
+  --color-rose-300: var(--rose-300);
+  --color-transparent: transparent;
+}
+
+/* =====================================================================
+   DESIGN SYSTEM TOKENS
+   Inlined here (not @import-ed): imports placed after @import "tailwindcss"
+   get dropped by the dev server, which left the whole site unstyled.
+   ===================================================================== */
+/* Sofia & Joshua Design System: tokens (copied from the design system package, tokens/*.css).
+   Only change: font families point at the next/font variables set in app/layout.tsx. */
+:root{
+/* Base — greens sampled from the wedding film stills */
+--green-900:#141d16;
+--green-800:#1d2a21;
+--green-700:#2f3322;
+--green-600:#3d4433;
+--green-500:#54594b;
+--olive-600:#5f643c;
+--olive-500:#767b52;
+--sage-400:#8a8f72;
+--sage-300:#a9ad95;
+--sage-200:#c9ccba;
+/* Base — creams */
+--cream-50:#fbfaf6;
+--cream-100:#f6f5f0;
+--cream-200:#efede3;
+--cream-300:#e4e1d3;
+--cream-400:#d3cfbd;
+/* Base — accent */
+--gold-500:#a58a58;
+--gold-300:#cdb68c;
+--rose-300:#c9a99c;
+
+/* Semantic — surfaces */
+--surface-page:var(--cream-100);
+--surface-raised:var(--cream-50);
+--surface-sunken:var(--cream-200);
+--surface-dark:var(--green-800);
+--surface-olive:var(--olive-600);
+--surface-card:var(--cream-50);
+--surface-overlay:rgba(20,29,22,.58);
+
+/* Semantic — ink */
+--text-body:var(--green-700);
+--text-display:var(--green-800);
+--text-muted:var(--green-500);
+--text-soft:var(--sage-400);
+--text-on-dark:var(--cream-100);
+--text-on-dark-muted:rgba(246,245,240,.72);
+--text-accent:var(--gold-500);
+
+/* Semantic — lines */
+--line-hairline:rgba(47,51,34,.18);
+--line-strong:rgba(47,51,34,.42);
+--line-on-dark:rgba(246,245,240,.28);
+
+/* Semantic — interactive */
+--action-fill:var(--green-800);
+--action-fill-hover:var(--green-700);
+--action-ink:var(--cream-100);
+--action-ghost-ink:var(--green-800);
+--focus-ring:var(--olive-500);
+}
+
+:root{
+--font-display:var(--font-playfair),"Playfair Display","Times New Roman",serif;
+--font-body:var(--font-garamond),"EB Garamond","Times New Roman",serif;
+
+/* Display — always italic, always optically loose leading */
+--display-1: clamp(44px,7vw,92px); /* @kind font */
+--display-2: clamp(34px,4.6vw,58px); /* @kind font */
+--display-3: clamp(26px,3vw,38px); /* @kind font */
+--leading-display: 1.12; /* @kind font */
+--tracking-display:-0.005em;
+
+/* Body */
+--body-lg:19px;
+--body-md:16px;
+--body-sm:14px;
+--leading-body: 1.72; /* @kind font */
+--tracking-body:0.005em;
+
+/* Eyebrow / label — small caps feel via uppercase + wide tracking */
+--label-md:12px;
+--label-sm:10.5px;
+--tracking-label:0.28em;
+
+/* Weights: the brand never uses bold. 400 for text, 500 only for labels. */
+--weight-text: 400; /* @kind font */
+--weight-label: 500; /* @kind font */
+}
+
+:root{
+--space-1:4px;
+--space-2:8px;
+--space-3:12px;
+--space-4:16px;
+--space-5:24px;
+--space-6:32px;
+--space-7:48px;
+--space-8:64px;
+--space-9:96px;
+--space-10:128px;
+/* Section rhythm: generous vertical air is the brand's main layout signal */
+--section-y: clamp(72px,11vw,144px); /* @kind spacing */
+--section-x: clamp(24px,7vw,96px); /* @kind spacing */
+--measure: 56ch; /* @kind spacing */
+--measure-narrow: 38ch; /* @kind spacing */
+--content-max: 1120px; /* @kind spacing */
+}
+
+:root{
+/* Near-square corners. Photographs are the only place a radius reads at all. */
+--radius-none:0px;
+--radius-xs:2px;
+--radius-sm:4px;
+--radius-photo:2px;
+--radius-pill:999px;
+/* Arch: portrait frames in the invitation block use a full semicircular top */
+--radius-arch:999px 999px 2px 2px;
+
+--border-hairline: 1px solid var(--line-hairline); /* @kind other */
+--border-on-dark: 1px solid var(--line-on-dark); /* @kind other */
+
+/* Shadows are almost absent; light never casts hard edges in this brand. */
+--shadow-none:none;
+--shadow-photo:0 18px 40px -28px rgba(20,29,22,.55);
+--shadow-raised:0 1px 0 var(--line-hairline);
+
+/* Protection gradients for text over photography */
+--scrim-hero: linear-gradient(180deg,rgba(20,29,22,.42) 0%,rgba(20,29,22,.18) 40%,rgba(20,29,22,.55) 100%); /* @kind color */
+--scrim-bottom: linear-gradient(0deg,rgba(20,29,22,.72) 0%,rgba(20,29,22,0) 62%); /* @kind color */
+--tint-olive: linear-gradient(0deg,rgba(47,51,34,.62),rgba(47,51,34,.62)); /* @kind color */
+}
+
+:root{
+/* Slow, filmic. Nothing bounces, nothing springs. */
+--ease-standard: cubic-bezier(.22,.61,.36,1); /* @kind other */
+--ease-entrance: cubic-bezier(.16,.84,.44,1); /* @kind other */
+--duration-fast: 180ms; /* @kind other */
+--duration-base: 320ms; /* @kind other */
+--duration-slow: 720ms; /* @kind other */
+--duration-reveal: 1100ms; /* @kind other */
+--transition-hover: color var(--duration-fast) var(--ease-standard),background-color var(--duration-fast) var(--ease-standard),border-color var(--duration-fast) var(--ease-standard),opacity var(--duration-fast) var(--ease-standard); /* @kind other */
+--reveal-offset: 18px; /* @kind other */
+--photo-hover-scale: 1.03; /* @kind other */
+}
+
+
+/* =====================================================================
+   DESIGN SYSTEM COMPONENTS
+   ===================================================================== */
+/* Sofia & Joshua Design System: component styles.
+   Ported from components/core, components/forms and components/content in the design
+   system package. Class-based so hover, focus and press states work (inline styles can't). */
+
+@layer components {
+
+/* ---------- Base ---------- */
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+body {
+  margin: 0;
+  background: var(--surface-page);
+  color: var(--text-body);
+  font-family: var(--font-body);
+  font-size: var(--body-md);
+  line-height: var(--leading-body);
+  letter-spacing: var(--tracking-body);
+  font-weight: var(--weight-text);
+  -webkit-font-smoothing: antialiased;
+}
+::selection {
+  background: var(--sage-200);
+  color: var(--green-800);
+}
+:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+[data-section] {
+  scroll-margin-top: 64px;
+}
+
+/* ---------- Layout ---------- */
+.ds-section {
+  padding: var(--section-y) var(--section-x);
+}
+.ds-container {
+  max-width: var(--content-max);
+  margin-inline: auto;
+}
+.ds-measure {
+  max-width: var(--measure);
+}
+.ds-measure-narrow {
+  max-width: var(--measure-narrow);
+}
+.ds-surface-page { background: var(--surface-page); }
+.ds-surface-sunken { background: var(--surface-sunken); }
+.ds-surface-raised { background: var(--surface-raised); }
+.ds-surface-dark { background: var(--surface-dark); color: var(--text-on-dark); }
+
+/* ---------- Type ---------- */
+.ds-eyebrow {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--label-md);
+  font-weight: var(--weight-label);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+.ds-eyebrow--sm { font-size: var(--label-sm); }
+.ds-eyebrow--soft { color: var(--text-soft); }
+.ds-eyebrow--accent { color: var(--text-accent); }
+.ds-eyebrow--on-dark { color: var(--text-on-dark-muted); }
+
+.ds-display {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: var(--weight-text);
+  font-style: italic;
+  line-height: var(--leading-display);
+  letter-spacing: var(--tracking-display);
+  color: var(--text-display);
+  text-wrap: pretty;
+}
+.ds-display--xl { font-size: var(--display-1); }
+.ds-display--lg { font-size: var(--display-2); }
+.ds-display--md { font-size: var(--display-3); }
+.ds-display--roman { font-style: normal; }
+.ds-display--on-dark { color: var(--text-on-dark); }
+
+.ds-body {
+  margin: 0;
+  text-wrap: pretty;
+  font-family: var(--font-body);
+  font-size: var(--body-md);
+  line-height: var(--leading-body);
+  color: var(--text-body);
+}
+.ds-body--lg { font-size: var(--body-lg); }
+.ds-body--sm { font-size: var(--body-sm); }
+.ds-body--muted { color: var(--text-muted); }
+.ds-body--italic { font-style: italic; }
+.ds-body--on-dark { color: var(--text-on-dark); }
+
+/* ---------- Button ---------- */
+.ds-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  font-family: var(--font-body);
+  font-size: var(--label-md);
+  font-weight: var(--weight-label);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  line-height: 1;
+  white-space: nowrap;
+  text-decoration: none;
+  padding: 13px 30px;
+  min-height: 44px;
+  border-radius: var(--radius-xs);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: var(--transition-hover);
+  -webkit-tap-highlight-color: transparent;
+}
+.ds-btn--sm { font-size: var(--label-sm); padding: 9px 20px; }
+.ds-btn--lg { padding: 17px 42px; min-height: 52px; }
+.ds-btn:active { opacity: 0.82; }
+.ds-btn:disabled,
+.ds-btn[aria-disabled="true"] { opacity: 0.42; cursor: not-allowed; }
+
+.ds-btn--solid { background: var(--action-fill); color: var(--action-ink); }
+.ds-btn--solid:hover:not(:disabled) { background: var(--action-fill-hover); }
+.ds-btn--outline { background: transparent; color: var(--action-ghost-ink); border-color: var(--line-strong); }
+.ds-btn--outline:hover:not(:disabled) { border-color: var(--action-ghost-ink); }
+.ds-btn--text {
+  background: transparent;
+  color: var(--text-muted);
+  padding: 4px 0;
+  min-height: 0;
+  border-radius: 0;
+  border-bottom-color: var(--line-strong);
+}
+.ds-btn--text:hover:not(:disabled) { color: var(--action-ghost-ink); border-bottom-color: var(--action-ghost-ink); }
+
+.ds-btn--on-dark.ds-btn--solid { background: var(--cream-100); color: var(--green-800); }
+.ds-btn--on-dark.ds-btn--solid:hover:not(:disabled) { background: var(--cream-200); }
+.ds-btn--on-dark.ds-btn--outline { color: var(--text-on-dark); border-color: var(--line-on-dark); }
+.ds-btn--on-dark.ds-btn--outline:hover:not(:disabled) { border-color: var(--text-on-dark); }
+.ds-btn--on-dark.ds-btn--text { color: var(--text-on-dark-muted); border-bottom-color: var(--line-on-dark); }
+.ds-btn--on-dark.ds-btn--text:hover:not(:disabled) { color: var(--text-on-dark); border-bottom-color: var(--text-on-dark); }
+
+/* ---------- Divider ---------- */
+.ds-divider {
+  border: 0;
+  border-top: 1px solid var(--line-hairline);
+  margin: 0;
+  width: 100%;
+}
+.ds-divider--on-dark { border-top-color: var(--line-on-dark); }
+.ds-ornament {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  color: var(--text-soft);
+}
+.ds-ornament::before,
+.ds-ornament::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--line-hairline);
+}
+.ds-ornament > span { font-family: var(--font-body); font-size: 13px; line-height: 1; }
+.ds-ornament--on-dark { color: var(--text-on-dark-muted); }
+.ds-ornament--on-dark::before,
+.ds-ornament--on-dark::after { background: var(--line-on-dark); }
+
+/* ---------- Image frame ---------- */
+.ds-frame {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-photo);
+  background: var(--surface-sunken);
+}
+.ds-frame--arch { border-radius: var(--radius-arch); }
+.ds-frame--float { box-shadow: var(--shadow-photo); }
+.ds-frame img { transition: transform var(--duration-base) var(--ease-standard); }
+.ds-frame--hover:hover img { transform: scale(var(--photo-hover-scale)); }
+
+/* ---------- Form: text field ---------- */
+.ds-field { display: flex; flex-direction: column; gap: var(--space-2); width: 100%; }
+.ds-field__label {
+  font-family: var(--font-body);
+  font-size: var(--label-sm);
+  font-weight: var(--weight-label);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.ds-field__control {
+  width: 100%;
+  box-sizing: border-box;
+  font-family: var(--font-body);
+  font-size: var(--body-lg);
+  color: var(--text-body);
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--line-hairline);
+  border-radius: 0;
+  padding: 10px 0;
+  outline: none;
+  transition: var(--transition-hover);
+}
+.ds-field__control::placeholder { color: var(--text-soft); opacity: 1; }
+.ds-field__control:hover { border-bottom-color: var(--line-strong); }
+.ds-field__control:focus-visible {
+  outline: none;
+  border-bottom-color: var(--focus-ring);
+  box-shadow: 0 1px 0 0 var(--focus-ring);
+}
+.ds-field__hint { font-family: var(--font-body); font-style: italic; font-size: var(--body-sm); color: var(--text-soft); }
+
+/* ---------- Form: choice group ---------- */
+.ds-choice { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.ds-choice__option {
+  flex: 1 1 auto;
+  font-family: var(--font-body);
+  font-size: var(--label-md);
+  font-weight: var(--weight-label);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  white-space: nowrap;
+  line-height: 1;
+  padding: 13px 24px;
+  min-height: 44px;
+  cursor: pointer;
+  border-radius: var(--radius-xs);
+  transition: var(--transition-hover);
+  background: transparent;
+  color: var(--text-muted);
+  border: 1px solid var(--line-hairline);
+}
+.ds-choice__option:hover { border-color: var(--line-strong); color: var(--text-display); }
+.ds-choice__option:active { opacity: 0.82; }
+.ds-choice__option[aria-checked="true"] {
+  background: var(--action-fill);
+  color: var(--action-ink);
+  border-color: transparent;
+}
+@media (min-width: 640px) {
+  .ds-choice__option { flex: 0 0 auto; }
+}
+
+/* ---------- Content: note panel & detail list ---------- */
+.ds-note {
+  padding: var(--space-7);
+  border-radius: var(--radius-xs);
+  font-family: var(--font-body);
+  font-size: var(--body-md);
+  line-height: var(--leading-body);
+}
+.ds-note--cream { background: var(--surface-raised); color: var(--text-body); border: var(--border-hairline); }
+.ds-note--olive { background: var(--surface-olive); color: var(--text-on-dark); }
+.ds-note--dark { background: var(--surface-dark); color: var(--text-on-dark); }
+.ds-note--outline { background: transparent; color: var(--text-body); border: var(--border-hairline); }
+@media (max-width: 639px) {
+  .ds-note { padding: var(--space-6) var(--space-5); }
+}
+
+.ds-details { margin: 0; display: flex; flex-direction: column; gap: var(--space-4); }
+.ds-details dt {
+  font-family: var(--font-body);
+  font-size: var(--label-sm);
+  font-weight: var(--weight-label);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--text-soft);
+}
+.ds-details dd { margin: 0; font-size: var(--body-md); line-height: var(--leading-body); color: var(--text-body); }
+
+/* ---------- Monogram (mask so it always takes a token colour) ---------- */
+.ds-monogram {
+  display: block;
+  aspect-ratio: 633 / 720;
+  background-color: var(--text-display);
+  -webkit-mask: url("/images/monogram.png") center / contain no-repeat;
+  mask: url("/images/monogram.png") center / contain no-repeat;
+}
+
+/* ---------- Motion: reveal ---------- */
+@keyframes ds-rise {
+  from { opacity: 0; transform: translateY(var(--reveal-offset)); }
+  to { opacity: 1; transform: none; }
+}
+.ds-rise { animation: ds-rise var(--duration-reveal) var(--ease-entrance) both; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+  }
+}
+
+} /* end @layer components */
+
+@layer components {
+/* ---------- Menu toggle (addition: the brief requires a hamburger; the design system has no
+   icons, so it is drawn from two hairline rules beside an uppercase label) ---------- */
+.ds-menu-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 44px;
+  padding: 0 var(--space-2);
+  margin-right: calc(var(--space-2) * -1);
+  background: transparent;
+  border: 0;
+  border-radius: var(--radius-xs);
+  cursor: pointer;
+  color: var(--text-display);
+}
+.ds-menu-toggle .ds-eyebrow { color: var(--text-muted); transition: var(--transition-hover); }
+.ds-menu-toggle:hover .ds-eyebrow { color: var(--text-display); }
+.ds-menu-toggle:active { opacity: 0.82; }
+.ds-menu-toggle__lines { display: inline-flex; flex-direction: column; gap: 7px; width: 26px; }
+.ds-menu-toggle__lines > span { display: block; height: 1px; background: currentColor; }
+.ds-menu-toggle__lines > span:last-child { width: 70%; margin-left: auto; transition: width var(--duration-base) var(--ease-standard); }
+.ds-menu-toggle:hover .ds-menu-toggle__lines > span:last-child { width: 100%; }
+
+.ds-menu-toggle--on-dark { color: var(--text-on-dark); }
+.ds-menu-toggle--on-dark .ds-eyebrow { color: var(--text-on-dark-muted); }
+.ds-menu-toggle--on-dark:hover .ds-eyebrow { color: var(--text-on-dark); }
+.ds-close-lines { position: relative; display: inline-block; width: 22px; height: 22px; }
+.ds-close-lines > span { position: absolute; left: 0; top: 50%; width: 100%; height: 1px; background: currentColor; }
+.ds-close-lines > span:first-child { transform: rotate(45deg); }
+.ds-close-lines > span:last-child { transform: rotate(-45deg); }
+
+/* ---------- Menu links ---------- */
+.ds-menu-link {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--space-4);
+  padding: 6px 0;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--display-2);
+  line-height: var(--leading-display);
+  color: var(--text-on-dark-muted);
+  text-decoration: none;
+  transition: var(--transition-hover);
+  border-radius: var(--radius-xs);
+}
+.ds-menu-link:hover,
+.ds-menu-link[aria-current="true"] { color: var(--text-on-dark); }
+.ds-menu-link__index {
+  font-family: var(--font-body);
+  font-style: normal;
+  font-size: var(--label-sm);
+  font-weight: var(--weight-label);
+  letter-spacing: var(--tracking-label);
+  color: var(--text-on-dark-muted);
+  min-width: 2.2em;
+  text-align: right;
+}
+@media (max-height: 640px) {
+  .ds-menu-link { font-size: var(--display-3); padding: 2px 0; }
+}
+}
+
+@layer components {
+/* Invitation-code field on the dark entry screen: TextField rules (underline only), on-dark ink */
+.ds-gate-input {
+  width: 100%;
+  height: 52px;
+  box-sizing: border-box;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--line-on-dark);
+  border-radius: 0;
+  text-align: center;
+  font-family: var(--font-body);
+  font-size: var(--body-lg);
+  font-weight: var(--weight-label);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--text-on-dark);
+  outline: none;
+  transition: var(--transition-hover);
+}
+.ds-gate-input::placeholder { color: var(--text-on-dark-muted); opacity: 0.7; }
+.ds-gate-input:hover { border-bottom-color: var(--text-on-dark-muted); }
+.ds-gate-input:focus-visible { border-bottom-color: var(--text-on-dark); box-shadow: 0 1px 0 0 var(--text-on-dark); }
+.ds-gate-input:disabled { opacity: 0.42; }
+}
+
+@layer components {
+/* RSVP answer switch: two halves in one hairline frame; the chosen half fills.
+   Replaces two separately boxed buttons per guest (less visual noise). */
+.ds-switch {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  box-sizing: border-box;
+  width: 100%;
+  border: var(--border-hairline);
+  border-radius: var(--radius-xs);
+  padding: 3px;
+  gap: 3px;
+}
+@media (min-width: 640px) {
+  .ds-switch { width: 300px; flex-shrink: 0; }
+}
+.ds-switch__option {
+  font-family: var(--font-body);
+  font-size: var(--label-sm);
+  font-weight: var(--weight-label);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  line-height: 1;
+  min-height: 40px;
+  padding: 0 var(--space-3);
+  background: transparent;
+  color: var(--text-soft);
+  border: 0;
+  border-radius: var(--radius-xs);
+  cursor: pointer;
+  transition: var(--transition-hover);
+}
+.ds-switch__option:hover { color: var(--text-display); }
+.ds-switch__option:active { opacity: 0.82; }
+/* Different colour per answer, lighter than the solid button green:
+   yes = olive (cream text, 5.6:1), no = dusty rose (green ink, 6.9:1). */
+.ds-switch__option--yes[aria-checked="true"] {
+  background: var(--olive-600);
+  color: var(--cream-100);
+}
+.ds-switch__option--no[aria-checked="true"] {
+  background: var(--rose-300);
+  color: var(--green-800);
+}
+}
+
+@layer components {
+/* Landing doorway to Entourage / Gifts: hairline between the two columns */
+.ds-guest-link--first { border-bottom: var(--border-on-dark); }
+@media (min-width: 768px) {
+  .ds-guest-link--first { border-bottom: 0; border-right: var(--border-on-dark); }
+}
+}
+
+/* =====================================================================
+   SITE FONTS (overrides the design system's Playfair Display + EB Garamond)
+   Two fonts only: Pinyon Script for every title/heading, Jost Light for everything else.
+   To go back to the design system fonts, delete this block and restore the
+   Playfair/EB Garamond fonts in app/layout.tsx.
+   ===================================================================== */
+:root {
+  --font-display: var(--font-pinyon), "Pinyon Script", cursive;
+  --font-body: var(--font-jost), "Jost", system-ui, sans-serif;
+  --font-script: var(--font-display);
+  /* Script has a small x-height, so headings are sized up */
+  --display-1: clamp(56px, 9vw, 120px);
+  --display-2: clamp(44px, 6vw, 76px);
+  --display-3: clamp(32px, 3.8vw, 48px);
+  --leading-display: 1.15;
+  --tracking-display: 0;
+  /* Jost Light: light weight for reading, regular for small uppercase labels */
+  --weight-text: 300;
+  --weight-label: 400;
+  --body-lg: 17px;
+  --body-md: 15.5px;
+  --body-sm: 13.5px;
+  --leading-body: 1.75;
+  --tracking-label: 0.26em;
+  /* Ink: visibly green instead of near-black.
+     Headings olive (5.6:1 on cream), body text deep grey-green (9:1). */
+  --text-display: var(--olive-600);
+  --text-body: var(--green-600);
+}
+@layer components {
+.ds-display,
+.ds-script {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-style: normal;
+  text-transform: none;
+  letter-spacing: 0;
+}
+.ds-menu-link { font-style: normal; text-transform: none; letter-spacing: 0; }
+/* Numbers (countdown, big date) stay in the body font: script numerals are hard to read */
+.ds-numerals { font-family: var(--font-body); font-style: normal; font-weight: 300; letter-spacing: 0; }
 }

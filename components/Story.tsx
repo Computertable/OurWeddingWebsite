@@ -1,201 +1,109 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { motion, useScroll, useTransform, useMotionValueEvent, AnimatePresence } from "framer-motion";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { Eyebrow, Reveal } from "./ds";
 
+const STORY =
+  "We met at Sun Life, as colleagues first, until our conversations started running long past the end of the workday. Soon after, Pia moved to Malaysia and JJ to Singapore, and for a while we lived on border crossings, late-night calls and weekends planned down to the hour. The distance never felt like a pause. Every reunion turned into a trip somewhere new, and the list of places we had seen together kept growing. Then, on Pia's birthday, under a winter sky in Seoul, JJ asked the question. She said yes, and we would love for you to be there for whatever comes next.";
+
+/**
+ * Our story — one paragraph over layered parallax.
+ * Layers move at different speeds: background photograph (slowest), text (slight counter-drift),
+ * two floating photographs (fastest, desktop only).
+ * Mobile: smaller travel and no floating photos. prefers-reduced-motion: no movement at all.
+ */
 export default function StorySection() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [activeTrack, setActiveTrack] = useState(0);
+  const ref = useRef<HTMLElement>(null);
+  const reduceMotion = useReducedMotion();
+  const isSmall = useMediaQuery("(max-width: 767px)");
 
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"],
-  });
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
 
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  };
+  const bgRange = isSmall ? ["-5%", "5%"] : ["-12%", "12%"];
+  const bgY = useTransform(scrollYProgress, [0, 1], bgRange);
+  const textY = useTransform(scrollYProgress, [0, 1], isSmall ? [16, -16] : [48, -48]);
+  const floatA = useTransform(scrollYProgress, [0, 1], [160, -160]);
+  const floatB = useTransform(scrollYProgress, [0, 1], [240, -220]);
 
-  useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    if (latest < 0.125) setActiveTrack(0);
-    else if (latest >= 0.125 && latest < 0.25) setActiveTrack(1);
-    else if (latest >= 0.25 && latest < 0.375) setActiveTrack(2);
-    else if (latest >= 0.375 && latest < 0.5) setActiveTrack(3);
-    else if (latest >= 0.5 && latest < 0.625) setActiveTrack(4);
-    else if (latest >= 0.625 && latest < 0.75) setActiveTrack(5);
-    else if (latest >= 0.75 && latest < 0.875) setActiveTrack(6);
-    else setActiveTrack(7);
-  });
-
-  const y1 = useTransform(scrollYProgress, [0.00, 0.16], ["0vh", "-120vh"]);
-  const y2 = useTransform(scrollYProgress, [0.00, 0.12, 0.26], ["100vh", "0vh", "-120vh"]);
-  const y3 = useTransform(scrollYProgress, [0.08, 0.22, 0.36], ["100vh", "0vh", "-120vh"]);
-  const y4 = useTransform(scrollYProgress, [0.18, 0.32, 0.46], ["100vh", "0vh", "-120vh"]);
-  const y5 = useTransform(scrollYProgress, [0.28, 0.42, 0.56], ["100vh", "0vh", "-120vh"]);
-  const y6 = useTransform(scrollYProgress, [0.38, 0.52, 0.66], ["100vh", "0vh", "-120vh"]);
-  const y7 = useTransform(scrollYProgress, [0.46, 0.60, 0.74], ["100vh", "0vh", "-120vh"]);
-  const y8 = useTransform(scrollYProgress, [0.54, 0.68, 0.82], ["100vh", "0vh", "-120vh"]);
-  const y9 = useTransform(scrollYProgress, [0.62, 0.76, 0.88], ["100vh", "0vh", "-120vh"]);
-  const y10 = useTransform(scrollYProgress, [0.70, 0.82, 0.94], ["100vh", "0vh", "-120vh"]);
-  const y11 = useTransform(scrollYProgress, [0.78, 0.88, 0.98], ["100vh", "0vh", "-120vh"]);
-  const y12 = useTransform(scrollYProgress, [0.84, 0.96], ["100vh", "0vh"]);
-
-  const arrowRotate = useTransform(scrollYProgress, [0, 0.88], [0, 180]);
-
-  const handleButtonClick = () => {
-    containerRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
-
-const stories = [
-  "Their story began at Sun Life, where a chance meeting sparked an unexpected connection.",
-  "As Pia was wrapping up her time at the company, deep conversations revealed a bond they couldn't ignore.",
-  "Pia soon embraced a new adventure in Malaysia, while JJ began his own chapter in Singapore.",
-  "Love became a journey of border crossings, late-night calls, and making every second count.",
-  "But distance couldn't stop them. Every reunion turned into an unforgettable adventure.",
-  "Their relationship became a whirlwind of shared experiences across the globe.",
-  "Then, on Pia's birthday beneath the winter skies of Seoul, JJ asked the ultimate question.",
-  "With one heartfelt 'Yes,' they chose a lifetime together, wherever life may lead."
-];
+  const still = reduceMotion ?? false;
 
   return (
-    <div ref={containerRef} className="relative h-[550vh] md:h-[700vh] bg-[#2B3222]">
-      
-      <div className="sticky top-0 flex h-[100dvh] w-full flex-col justify-between overflow-hidden py-10 px-6 text-[#F9F9F6]">
-        
-        <div className="relative z-30 flex justify-center">
-          <button
-            onClick={handleButtonClick}
-            className="group flex items-center gap-3 border border-[#F9F9F6]/20 bg-[#2B3222]/80 backdrop-blur-md px-6 py-3 text-xs uppercase tracking-[0.25em] text-[#F9F9F6]/80 transition-all hover:border-[#F9F9F6] hover:text-[#F9F9F6]"
-            style={{ fontFamily: "var(--font-sans)" }}
+    <section
+      ref={ref}
+      id="story"
+      data-section
+      aria-labelledby="story-label"
+      className="ds-surface-dark relative flex min-h-[110svh] items-center justify-center overflow-hidden"
+    >
+      {/* Layer 1 — background photograph (oversized by 30% so it never reveals an edge while moving) */}
+      <motion.div
+        aria-hidden="true"
+        className="absolute inset-x-0 -inset-y-[15%]"
+        style={{ y: still ? 0 : bgY }}
+      >
+        <Image
+          src="/images/story--10.JPG"
+          alt=""
+          fill
+          sizes="100vw"
+          quality={60}
+          className="object-cover"
+        />
+      </motion.div>
+      <div aria-hidden="true" className="absolute inset-0" style={{ background: "var(--tint-olive)" }} />
+      <div aria-hidden="true" className="absolute inset-0" style={{ background: "var(--scrim-bottom)" }} />
+
+      {/* Layer 3 — floating photographs, desktop only */}
+      {!isSmall && (
+        <>
+          <motion.div
+            aria-hidden="true"
+            className="ds-frame ds-frame--float absolute hidden md:block"
+            style={{ y: still ? 0 : floatA, left: "6%", top: "14%", width: "clamp(150px, 15vw, 220px)", aspectRatio: "3 / 4" }}
           >
-            <span>Our Story</span>
-            <motion.svg
-              width="12"
-              height="12"
-              viewBox="0 0 12 12"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              style={{ rotate: arrowRotate }}
-              className="stroke-current"
-            >
-              <path d="M2 4L6 8L10 4" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-            </motion.svg>
-          </button>
-        </div>
-
-        <div className="absolute inset-0 z-10 pointer-events-none select-none">
-          
-          {/* Photo 1: Left */}
-          <motion.div style={{ y: y1 }} className="transform-gpu absolute left-[3%] top-[16%] h-[270px] w-[43vw] border border-[#F9F9F6]/10 opacity-[0.22] sm:w-60 sm:h-84 md:w-[340px] md:h-[480px] md:left-[8%]">
-            <Image src="/images/story--1.JPG" alt="Memory 1" fill className="object-cover" />
+            <Image src="/images/story--1.JPG" alt="" fill sizes="220px" quality={70} className="object-cover" />
           </motion.div>
-
-          {/* Photo 2: Right */}
-          <motion.div style={{ y: y2 }} className="transform-gpu absolute right-[2%] top-[16%] h-[270px] w-[43vw] border border-[#F9F9F6]/10 opacity-[0.22] sm:w-60 sm:h-84 md:w-[340px] md:h-[480px] md:right-[6%]">
-            <Image src="/images/story--2.JPG" alt="Memory 2" fill className="object-cover" />
-          </motion.div>
-
-          {/* Photo 3: Left */}
-          <motion.div style={{ y: y3 }} className="transform-gpu absolute left-[2%] top-[16%] h-[270px] w-[43vw] border border-[#F9F9F6]/10 opacity-[0.22] sm:w-60 sm:h-84 md:w-[340px] md:h-[480px] md:left-[6%]">
-            <Image src="/images/story-3.jpeg" alt="Memory 3" fill className="object-cover" />
-          </motion.div>
-
-          {/* Photo 4: Right */}
-          <motion.div style={{ y: y4 }} className="transform-gpu absolute right-[4%] top-[16%] h-[270px] w-[43vw] border border-[#F9F9F6]/10 opacity-[0.22] sm:w-60 sm:h-84 md:w-[340px] md:h-[480px] md:right-[9%]">
-            <Image src="/images/story--4.jpg" alt="Memory 4" fill className="object-cover" />
-          </motion.div>
-
-          {/* Photo 5: Left */}
-          <motion.div style={{ y: y5 }} className="transform-gpu absolute left-[4%] top-[16%] h-[270px] w-[43vw] border border-[#F9F9F6]/10 opacity-[0.22] sm:w-60 sm:h-84 md:w-[340px] md:h-[480px] md:left-[9%]">
-            <Image src="/images/story-5.jpeg" alt="Memory 5" fill className="object-cover" />
-          </motion.div>
-
-          {/* Photo 6: Right */}
-          <motion.div style={{ y: y6 }} className="transform-gpu absolute right-[1%] top-[16%] h-[270px] w-[43vw] border border-[#F9F9F6]/10 opacity-[0.22] sm:w-60 sm:h-84 md:w-[340px] md:h-[480px] md:right-[5%]">
-            <Image src="/images/story--6.jpg" alt="Memory 6" fill className="object-cover" />
-          </motion.div>
-
-          {/* Photo 7: Left */}
-          <motion.div style={{ y: y7 }} className="transform-gpu absolute left-[1%] top-[16%] h-[270px] w-[43vw] border border-[#F9F9F6]/10 opacity-[0.22] sm:w-60 sm:h-84 md:w-[340px] md:h-[480px] md:left-[5%]">
-            <Image src="/images/story-7.jpeg" alt="Memory 7" fill className="object-cover" />
-          </motion.div>
-
-          {/* Photo 8: Right */}
-          <motion.div style={{ y: y8 }} className="transform-gpu absolute right-[3%] top-[16%] h-[270px] w-[43vw] border border-[#F9F9F6]/10 opacity-[0.22] sm:w-60 sm:h-84 md:w-[340px] md:h-[480px] md:right-[8%]">
-            <Image src="/images/story-8.jpeg" alt="Memory 8" fill className="object-cover" />
-          </motion.div>
-
-          {/* Photo 9: Left */}
-          <motion.div style={{ y: y9 }} className="transform-gpu absolute left-[3%] top-[16%] h-[270px] w-[43vw] border border-[#F9F9F6]/10 opacity-[0.22] sm:w-60 sm:h-84 md:w-[340px] md:h-[480px] md:left-[7%]">
-            <Image src="/images/story-9.jpeg" alt="Memory 9" fill className="object-cover" />
-          </motion.div>
-
-          {/* Photo 10: Right */}
-          <motion.div style={{ y: y10 }} className="transform-gpu absolute right-[2%] top-[16%] h-[270px] w-[43vw] border border-[#F9F9F6]/10 opacity-[0.22] sm:w-60 sm:h-84 md:w-[340px] md:h-[480px] md:right-[6%]">
-            <Image src="/images/story--10.JPG" alt="Memory 10" fill className="object-cover" />
-          </motion.div>
-
-          {/* Photo 11: Left */}
-          <motion.div style={{ y: y11 }} className="transform-gpu absolute left-[2%] top-[16%] h-[270px] w-[43vw] border border-[#F9F9F6]/10 opacity-[0.22] sm:w-60 sm:h-84 md:w-[340px] md:h-[480px] md:left-[6%]">
-            <Image src="/images/story-11.jpeg" alt="Memory 11" fill className="object-cover" />
-          </motion.div>
-
-          {/* Photo 12: Right */}
-          <motion.div style={{ y: y12 }} className="transform-gpu absolute right-[4%] top-[16%] h-[270px] w-[43vw] border border-[#F9F9F6]/10 opacity-[0.22] sm:w-60 sm:h-84 md:w-[340px] md:h-[480px] md:right-[8%]">
-            <Image src="/images/story--12.JPG" alt="Memory 12" fill className="object-cover" />
-          </motion.div>
-
-        </div>
-
-        {/* LOCKED CLEAN TEXT COLUMN */}
-        <div className="relative z-20 mx-auto flex w-full max-w-[320px] sm:max-w-xl items-center justify-center text-center my-auto px-1 h-[320px]">
-          <div className="relative w-full h-full flex items-center justify-center">
-            
-            <AnimatePresence mode="wait">
-              <motion.p
-                key={activeTrack}
-                initial={{ opacity: 0, y: 14 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -14 }}
-                transition={{ duration: 0.52, ease: "easeInOut" }}
-                className="absolute text-xl sm:text-2xl font-light leading-relaxed tracking-wide md:text-3xl lg:text-4xl drop-shadow-[0_2px_8px_rgba(43,50,34,0.4)]"
-                style={{ fontFamily: "var(--font-sans)" }}
-              >
-                {stories[activeTrack]}
-              </motion.p>
-            </AnimatePresence>
-
-          </div>
-        </div>
-
-
-        <div className="absolute right-4 bottom-8 z-30 flex flex-col gap-2 sm:right-6 sm:bottom-10">
-          
-          <button
-            onClick={() => scrollToSection("invitation")}
-            className="flex h-10 w-10 items-center justify-center border border-[#F9F9F6]/20 bg-[#2B3222]/80 pb-0.5 text-xl font-light text-[#F9F9F6]/80 backdrop-blur-md transition-all duration-300 hover:border-[#F9F9F6] hover:bg-[#F9F9F6] hover:text-[#2B3222] active:scale-95"
-            aria-label="Scroll to Hero"
+          <motion.div
+            aria-hidden="true"
+            className="ds-frame ds-frame--float absolute hidden md:block"
+            style={{ y: still ? 0 : floatB, right: "7%", bottom: "12%", width: "clamp(160px, 16vw, 240px)", aspectRatio: "3 / 4" }}
           >
-            ↑
-          </button>
+            <Image src="/images/story--12.JPG" alt="" fill sizes="240px" quality={70} className="object-cover" />
+          </motion.div>
+        </>
+      )}
 
-          <button
-            onClick={() => scrollToSection("venue")}
-            className="flex h-10 w-10 items-center justify-center border border-[#F9F9F6]/20 bg-[#2B3222]/80 pt-0.5 text-xl font-light text-[#F9F9F6]/80 backdrop-blur-md transition-all duration-300 hover:border-[#F9F9F6] hover:bg-[#F9F9F6] hover:text-[#2B3222] active:scale-95"
-            aria-label="Scroll to RSVP"
-          >
-            ↓
-          </button>
-
-        </div>
-
-        <div className="h-4 w-full" />
-
-      </div>
-    </div>
+      {/* Layer 2 — the words */}
+      <motion.div
+        className="relative text-center"
+        style={{ y: still ? 0 : textY, paddingInline: "var(--section-x)", paddingBlock: "var(--section-y)" }}
+      >
+        <Reveal className="mx-auto flex max-w-[34rem] flex-col items-center gap-6">
+          <Eyebrow id="story-label" as="h2" tone="onDark">
+            Our story
+          </Eyebrow>
+          <p className="ds-body ds-body--lg ds-body--italic ds-body--on-dark m-0">
+            {STORY}
+          </p>
+          <p className="ds-display ds-display--on-dark ds-script m-0" style={{ fontSize: "var(--display-3)" }}>
+            Pia &amp; JJ
+          </p>
+        </Reveal>
+      </motion.div>
+    </section>
   );
+}
+
+function useMediaQuery(query: string) {
+  const [matches, setMatches] = useState(false);
+  useEffect(() => {
+    const mql = window.matchMedia(query);
+    const update = () => setMatches(mql.matches);
+    update();
+    mql.addEventListener("change", update);
+    return () => mql.removeEventListener("change", update);
+  }, [query]);
+  return matches;
 }

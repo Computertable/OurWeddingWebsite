@@ -1,8 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { DisplayHeading, Divider, Eyebrow, Reveal } from "./ds";
 
+// Guest attire colours. These are content (what guests should wear), not UI colours,
+// so they intentionally sit outside the design-system palette.
 const palette = [
   { name: "Olive", color: "#7b8654" },
   { name: "Dusty Rose", color: "#c9938e" },
@@ -12,72 +14,56 @@ const palette = [
 
 export default function DressCode() {
   return (
-    <section className="bg-[#f8f1e7] px-5 py-24 text-[#2f2b26] md:px-10 md:py-32">
-      <div className="mx-auto max-w-6xl">
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="grid overflow-hidden border border-[#2f2b26]/15 bg-[#fffaf2] md:grid-cols-[0.95fr_1.05fr]"
-        >
-          <div className="relative min-h-[420px] bg-[#e9e1d5] md:min-h-[640px]">
-            <Image
-              src="/images/guest-color.jpg"
-              alt="Wedding guest dress code color guide"
-              fill
-              className="object-cover object-center"
-            />
-          </div>
+    <section id="dress-code" data-section aria-labelledby="dress-title" className="ds-surface-page ds-section">
+      <Reveal className="ds-container grid items-center gap-12 md:grid-cols-2 md:gap-20">
+        <div className="ds-frame relative aspect-[4/5] w-full">
+          <Image
+            src="/images/guest-color.jpg"
+            alt="Wedding guest dress code colour guide"
+            fill
+            sizes="(max-width: 768px) 100vw, 540px"
+            quality={75}
+            className="object-cover object-center"
+          />
+        </div>
 
-          <div className="flex flex-col justify-center px-7 py-12 text-center md:px-12 md:py-16">
-            <p className="font-sans text-[10px] uppercase tracking-[0.46em] text-[#8a7657]">
-              Attire
-            </p>
+        <div className="flex flex-col items-center text-center">
+          <Eyebrow>Attire</Eyebrow>
+          <DisplayHeading id="dress-title" size="lg" className="mt-4">
+            Dress code
+          </DisplayHeading>
+          <p className="ds-display ds-display--md ds-display--roman mt-3" style={{ color: "var(--text-muted)" }}>
+            Strictly formal
+          </p>
 
-            <h2 className="mt-6 font-script text-6xl leading-none text-[#2f2b26] md:text-8xl">
-              Dress Code
-            </h2>
+          <Divider className="my-8 max-w-[96px]" />
 
-            <p className="mt-3 font-sans text-md text-[#8a7657] md:text-5xl">
-              Strictly Formal
-            </p>
+          <p className="ds-body ds-body--lg ds-measure">
+            We invite our guests to dress in formal attire, barong and black pants for gentlemen and long
+            dress or formal attire for ladies.
+          </p>
 
-            <div className="mx-auto mt-8 h-px w-24 bg-[#b9976b]/70" />
+          <Eyebrow size="sm" tone="soft" className="mt-10">
+            Suggested colours
+          </Eyebrow>
+          <ul className="m-0 mt-5 flex list-none flex-wrap justify-center gap-6 p-0">
+            {palette.map((item) => (
+              <li key={item.name} className="flex flex-col items-center gap-2">
+                <span
+                  aria-hidden="true"
+                  className="block h-10 w-10 rounded-full"
+                  style={{ backgroundColor: item.color, border: "var(--border-hairline)" }}
+                />
+                <span className="ds-eyebrow ds-eyebrow--sm">{item.name}</span>
+              </li>
+            ))}
+          </ul>
 
-            <div className="mx-auto mt-9 max-w-md space-y-4">
-              <p className="font-sans text-md leading-6 text-[#4f493f]">
-                We invite our guests to dress in formal attire, barong and black pants for gentlemen and long dress or formal attire for ladies.
-              </p>
-
-            </div>
-
-            <div className="mt-10">
-              <p className="font-sans text-[10px] uppercase tracking-[0.34em] text-[#8a7657]">
-                Suggested Colors
-              </p>
-
-              <div className="mt-5 flex flex-wrap justify-center gap-3">
-                {palette.map((item) => (
-                  <div key={item.name} className="flex flex-col items-center gap-2">
-                    <span
-                      className="h-9 w-9 rounded-full border border-[#2f2b26]/10"
-                      style={{ backgroundColor: item.color }}
-                    />
-                    <span className="font-sans text-[9px] uppercase tracking-[0.18em] text-[#6f685d]">
-                      {item.name}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <p className="mx-auto mt-10 max-w-sm font-display text-md italic leading-6 text-[#7a7569]">
-              Kindly avoid white, ivory, and overly casual attire.
-            </p>
-          </div>
-        </motion.div>
-      </div>
+          <p className="ds-body ds-body--italic ds-body--muted mt-10">
+            Kindly avoid white, ivory, and overly casual attire.
+          </p>
+        </div>
+      </Reveal>
     </section>
   );
 }

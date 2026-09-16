@@ -1,24 +1,23 @@
 import type { Metadata } from "next";
-import { Montserrat } from "next/font/google";
+import { Jost } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 
-// Configure local fonts
-const cormorant = localFont({
-  src: "../public/fonts/CormorantGaramond-Regular.ttf",
-  variable: "--font-display",
-});
-
+// Site fonts (two only):
+// - Pinyon Script: every title and heading.
+// - Jost (Light): body text, labels, buttons, numbers.
 const pinyon = localFont({
   src: "../public/fonts/PinyonScript-Regular.ttf",
-  variable: "--font-script",
+  variable: "--font-pinyon",
+  display: "swap",
 });
 
-
-const montserrat = Montserrat({
+const jost = Jost({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
-  variable: "--font-sans",
+  style: ["normal", "italic"],
+  weight: ["300", "400", "500"],
+  variable: "--font-jost",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -48,10 +47,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html
-      lang="en"
-      className={`${cormorant.variable} ${montserrat.variable} ${pinyon.variable}`}
-    >
+    <html lang="en" className={`${pinyon.variable} ${jost.variable}`}>
       <body>{children}</body>
     </html>
   );

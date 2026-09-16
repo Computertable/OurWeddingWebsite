@@ -2,77 +2,70 @@
 
 import { useRef } from "react";
 import Image from "next/image";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { ButtonLink, DisplayHeading, Eyebrow, Reveal } from "./ds";
 
+/**
+ * Landing.
+ * 1. The seal screen: a quiet cream viewport. The seal itself is rendered by <SiteHeader/>
+ *    (fixed) so it can morph into the top bar; this section reserves its space.
+ * 2. The existing couple photograph, now a full-bleed film still with the design-system scrim.
+ */
 export default function Hero() {
-  const ref = useRef(null);
-  
-  // Subtle parallax effect for the background image
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start start", "end start"],
-  });
-  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
+  const photoRef = useRef<HTMLElement>(null);
+  const reduceMotion = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: photoRef, offset: ["start end", "end start"] });
+  const photoY = useTransform(scrollYProgress, [0, 1], ["-8%", "8%"]);
 
   return (
-    <section id="hero"
-      ref={ref} 
-      className="relative flex h-screen w-full flex-col justify-between overflow-hidden bg-stone-900 py-16 px-6 text-center text-white md:py-24"
-    >
-      {/* Background Image Layer */}
-      <motion.div 
-        style={{ y: backgroundY }} 
-        className="absolute inset-0 z-0 h-full w-full"
+    <>
+      <section
+        id="top"
+        data-section
+        aria-label="Sofia and Joshua"
+        className="ds-surface-page relative flex h-[100svh] min-h-[520px] flex-col items-center justify-end"
       >
-        <Image
-          src="/hero-couple.JPG"
-          alt="Sofia and Joshua"
-          fill
-          priority
-          className="object-cover opacity-75"
-        />
-        {/* Soft overlay gradient to ensure text readability */}
-        <div className="absolute inset-0 bg-black/25" />
-      </motion.div>
+        <h1 className="sr-only">Sofia &amp; Joshua — February 27, 2027</h1>
+        <div className="ds-rise flex flex-col items-center gap-3 pb-8" style={{ animationDelay: "600ms" }}>
+          <Eyebrow size="sm" tone="soft">
+            Scroll
+          </Eyebrow>
+          <span aria-hidden="true" className="block h-10 w-px" style={{ background: "var(--line-strong)" }} />
+        </div>
+      </section>
 
-      <motion.div
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
-        className="relative z-20 text-md uppercase tracking-[0.4em] text-white/90 sm:text-md"
-        style={{ fontFamily: "var(--font-sans)" }}
+      <section
+        ref={photoRef}
+        className="ds-surface-dark relative flex h-[88svh] min-h-[520px] items-center justify-center overflow-hidden"
       >
-        The Wedding Of
-      </motion.div>
-
-      {/* 2. CENTER SECTION: Flowing Cursive Names */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.98 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1.4, delay: 0.5, ease: "easeOut" }}
-        className="relative z-20 my-auto select-none"
-      >
-        <h1 
-          className="text-7xl font-light tracking-normal text-white drop-shadow-sm sm:text-7xl md:text-8xl lg:text-8xl" 
-          style={{ fontFamily: "var(--font-script)" }}
+        <motion.div
+          className="absolute inset-x-0 -inset-y-[10%]"
+          style={{ y: reduceMotion ? 0 : photoY }}
         >
-          Sofia & Joshua
-        </h1>
-      </motion.div>
+          <Image
+            src="/hero-couple.JPG"
+            alt="Sofia and Joshua"
+            fill
+            sizes="100vw"
+            quality={70}
+            className="object-cover"
+          />
+        </motion.div>
+        <div aria-hidden="true" className="absolute inset-0" style={{ background: "var(--scrim-hero)" }} />
 
-      {/* 3. BOTTOM SECTION: Tracked Location & Date */}
-      <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, delay: 0.9, ease: "easeOut" }}
-        className="relative z-20 flex flex-col items-center gap-2 text-[14px] uppercase tracking-[0.35em] text-white/90 sm:text-sm"
-        style={{ fontFamily: "var(--font-sans)" }}
-      >
-        <span>Taguig, Philippines</span>
-        <span className="text-[14px] opacity-40 tracking-normal">•</span>
-        <span>February 27, 2027</span>
-      </motion.div>
-      
-    </section>
+        <Reveal className="relative flex flex-col items-center gap-4 text-center" >
+          <Eyebrow tone="onDark">We&apos;re getting married</Eyebrow>
+          <DisplayHeading as="p" size="xl" tone="onDark" className="ds-script">
+            Sofia &amp; Joshua
+          </DisplayHeading>
+          <Eyebrow tone="onDark">02 · 27 · 2027 · Taguig, Philippines</Eyebrow>
+          <div className="mt-5">
+            <ButtonLink href="#rsvp" variant="outline" tone="onDark">
+              RSVP
+            </ButtonLink>
+          </div>
+        </Reveal>
+      </section>
+    </>
   );
 }
