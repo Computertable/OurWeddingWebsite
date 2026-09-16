@@ -27,7 +27,7 @@ const entourageLeft = [
   "MR. MICO ADRIAN PEREZ",
   "MR. JOHN CEDRICK SOLTIS",
 ];
-  const entourageRight = ["MS. GENEVIEVE GONZALES", "MS. ROSE ANN DELA PAZ" , "MS. BEATRICE REYES", "MS. COLLEEN SY"];
+  const entourageRight = ["MS. GENEVIEVE GONZALES", "MS. ROSE ANN DELA PAZ" , "MS. BEATRICE ANNE REYES", "MS. COLLEEN SY"];
 
 const bearers = [
   { role: "Ring Bearer", names: ["FRANCIS MATTEO C. VIERNES"] },
