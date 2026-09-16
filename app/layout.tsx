@@ -20,24 +20,25 @@ const jost = Jost({
   display: "swap",
 });
 
+// Link previews (Messenger, Facebook, Viber, iMessage…).
+// The preview image is app/opengraph-image.jpg (1200×630); Next.js adds the og:image tags for it
+// automatically. metadataBase makes those image URLs absolute, which Messenger requires.
 export const metadata: Metadata = {
+  metadataBase: new URL("https://thegonzaleswedding.com"),
   title: "Sofia & Joshua",
-  description: "Wedding Website",
+  description: "Join us as we say I do · February 27, 2027 · Taguig, Philippines",
   openGraph: {
     title: "Sofia & Joshua",
-    description: "Our Wedding • February 27, 2027",
-    url: "https://thegonzaleswedding.com",
+    description: "Join us as we say I do · February 27, 2027 · Taguig, Philippines",
+    url: "/",
     siteName: "Sofia & Joshua",
-    images: [
-      {
-        url: "https://thegonzaleswedding.com/hero-couple.JPG",
-        width: 1200,
-        height: 630,
-        alt: "Sofia & Joshua Wedding",
-      },
-    ],
     locale: "en_US",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Sofia & Joshua",
+    description: "Join us as we say I do · February 27, 2027 · Taguig, Philippines",
   },
 };
 
