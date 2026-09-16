@@ -6,7 +6,7 @@ import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion
 import { Eyebrow, Reveal } from "./ds";
 
 const STORY =
-  "We met at Sun Life, as colleagues first, until our conversations started running long past the end of the workday. Soon after, Pia moved to Malaysia and JJ to Singapore, and for a while we lived on border crossings, late-night calls and weekends planned down to the hour. The distance never felt like a pause. Every reunion turned into a trip somewhere new, and the list of places we had seen together kept growing. Then, on Pia's birthday, under a winter sky in Seoul, JJ asked the question. She said yes, and we would love for you to be there for whatever comes next.";
+  "We first met as colleagues at Sun Life, but our story really began when Pia moved to Malaysia for a new job, and the distance somehow brought us closer. A few months later, JJ tried to follow, but the closest he could get was a role in Singapore, and so our love story became a long-distance one. We learned to love across borders, through late-night calls, counting down to weekends and goodbyes that never got easier. Still, every reunion felt like coming home. Two years into our relationship, on Pia's birthday beneath a winter sky in Seoul, JJ got down on one knee, and Pia said yes without a second thought. Now we are ready to begin our next chapter, surrounded by the people we love most.";
 
 /**
  * Our story — one paragraph over layered parallax.
@@ -50,6 +50,8 @@ export default function StorySection() {
           sizes="100vw"
           quality={60}
           className="object-cover"
+          // Keeps both of us in frame on narrow (phone) screens
+          style={{ objectPosition: "43% center" }}
         />
       </motion.div>
       <div aria-hidden="true" className="absolute inset-0" style={{ background: "var(--tint-olive)" }} />

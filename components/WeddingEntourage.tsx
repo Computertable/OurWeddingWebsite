@@ -10,27 +10,27 @@ const parents = {
 
 const principalSponsorsLeft = ["MR. REY JUSTIN VELASCO", "MR. GURUCHARAN SINGH SANDHU"];
 const principalSponsorsRight = [
-  "MRS. MA. DULCE C. VELASCO",
   "MRS. CHARMAINE T. SANDHU",
+  "DRA. MARIA DULCE C. VELASCO",
   "MRS. ANDREA P. SAGALES",
 ];
 
 const honorAttendants = [
   { role: "Best Man", names: ["MR. MARK KENNETH P. CARLOS"] },
-  { role: "Matron of Honor", names: ["MRS. COLLEN ELIZABETH B. CATAROJA"] },
+  { role: "Matron of Honor", names: ["MRS. COLLEEN ELIZABETH B. CATARROJA"] },
 ];
 
 const entourageLeft = [
   "MR. IAN LAKSHMI CHUA",
+  "MR. JOHN DAVID LLAMANZARES",
   "MR. MICO ADRIAN PEREZ",
-  "MR. MARVIN DACER RAMOS",
   "MR. JOHN CEDRICK SOLTIS",
 ];
-const entourageRight = ["MS. ROSE DELA PAZ", "MS. GENEVIEVE GONZALES", "MS. BEATRICE REYES", "MS. COLLEN SY"];
+  const entourageRight = ["MS. GENEVIEVE GONZALES", "MS. ROSE ANN DELA PAZ" , "MS. BEATRICE REYES", "MS. COLLEEN SY"];
 
 const bearers = [
   { role: "Ring Bearer", names: ["FRANCIS MATTEO C. VIERNES"] },
-  { role: "Coin Bearer", names: ["—"] },
+  { role: "Coin Bearer", names: ["ALEXANDER GABRIEL T. MONTAS"] },
   { role: "Flower Girl", names: ["KHLOE MANZANO"], wide: true },
 ];
 
@@ -120,7 +120,7 @@ export default function WeddingEntourage() {
 
           <Divider ornament className="mx-auto w-full max-w-[220px]" />
 
-          <Group eyebrow="Bridal entourage" title="To guide our way ahead">
+          <Group eyebrow="Bridesmaids & Groomsmen" title="To celebrate beside us">
             <div className="grid grid-cols-1 gap-2 md:grid-cols-2 md:gap-12">
               <Names names={entourageLeft} />
               <Names names={entourageRight} />

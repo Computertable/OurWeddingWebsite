@@ -19,14 +19,14 @@ const SCHEDULE_PHOTO: string | null = "/images/prenup-2.jpg";
 // Which part of the photo stays in view when it's cropped.
 // First value is horizontal: "0%" = far left edge, "50%" = centre, "100%" = far right.
 // Lower it to show more of the left side; raise it to show more of the right.
-const PHOTO_POSITION = "20% center";
+const PHOTO_POSITION = "24% center";
 
 const EVENTS = [
   { time: "3:30 PM", title: "Wedding ceremony", place: "Saint Anne Parish, Taguig" },
-  { time: "5:00 PM", title: "Photo session" }, // placeholder
-  { time: "6:00 PM", title: "Cocktail hour", place: "The Blue Leaf" }, // placeholder
-  { time: "7:00 PM", title: "Dinner reception" }, // placeholder
-  { time: "9:30 PM", title: "Party time" }, // placeholder
+  { time: "4:30 PM", title: "Photo session" }, // placeholder
+  { time: "5:00 PM", title: "Cocktail hour", place: "The Blue Leaf" }, // placeholder
+  { time: "6:30 PM", title: "Dinner reception" }, // placeholder
+  { time: "8:00 PM", title: "Party time" }, // placeholder
 ];
 
 export default function Schedule() {

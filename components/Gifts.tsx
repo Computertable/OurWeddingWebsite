@@ -23,8 +23,8 @@ export default function Gifts() {
         </DisplayHeading>
         <Divider ornament className="my-8 w-full max-w-[220px]" />
         <p className="ds-body ds-body--lg ds-measure">
-          Having you with us is all we could ask for. Should you wish to mark the day with something more,
-          a contribution towards our first home together would be warmly received.
+          Your presence on our wedding day is truly the greatest gift. But if you would like to bless us with something, a monetary gift would be warmly
+          appreciated as we begin our life together.
         </p>
 
         {GIFT_DETAILS.length > 0 && (
