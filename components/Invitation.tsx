@@ -1,108 +1,51 @@
 "use client";
 
-import { useRef } from "react";
 import Image from "next/image";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { DisplayHeading, Divider, Reveal } from "./ds";
 
+/** Invitation — cream band: arch portrait left, right-aligned display stanza, copy below. */
 export default function Invitation() {
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"],
-  });
-
-  const photoY = useTransform(scrollYProgress, [0, 1], ["0vh", "-82vh"]);
-  const photoX = useTransform(scrollYProgress, [0, 1], ["-2vw", "-10vw"]);
-  const photoRotate = useTransform(scrollYProgress, [0, 1], ["-6deg", "-14deg"]);
-  const photoOpacity = useTransform(scrollYProgress, [0, 0.62, 0.86], [1, 1, 0]);
-
-  const cardScale = useTransform(scrollYProgress, [0, 0.75], [0.96, 1]);
-  const cardRotate = useTransform(scrollYProgress, [0, 0.75], ["2deg", "0deg"]);
-
   return (
-    <section ref={containerRef} id="invitation" className="relative h-[240vh] bg-[#e9e1d5]">
-      <div className="sticky top-0 flex h-[100svh] w-full items-center justify-center overflow-hidden px-5">
-        <motion.article
-          style={{
-            scale: cardScale,
-            rotate: cardRotate,
-            boxShadow: "0 28px 80px rgba(44, 43, 41, 0.12)",
-          }}
-          className="relative z-10 w-full max-w-[360px] overflow-hidden bg-[#fffaf2] p-6 text-[#2f2b26] ring-1 ring-[#2f2b26]/10 sm:max-w-[460px] sm:p-8 md:aspect-[4/5.25]"
-        >
-          <div className="pointer-events-none absolute inset-0 opacity-[0.045] bg-[linear-gradient(rgba(47,43,38,0.8)_1px,transparent_1px),linear-gradient(90deg,rgba(47,43,38,0.8)_1px,transparent_1px)] bg-[size:5px_5px]" />
-
-          <div className="relative flex h-full min-h-[500px] flex-col justify-between md:min-h-0">
-            <div className="flex items-start justify-between gap-4">
-              <div>
-                <p className="font-sans text-[9px] uppercase tracking-[0.36em] text-[#8a7657]">
-                  Postcard
-                </p>
-              </div>
-
-              <div className="flex h-14 w-12 items-center justify-center border border-dashed border-[#8a7657]/45 text-center rotate-12">
-                <span className="font-display text-[12px] uppercase leading-4 tracking-[0.18em] text-[#8a7657]">
-                  Feb
-                  <br />
-                  27
-                </span>
-              </div>
-            </div>
-
-            <div className="mt-10">
-              <p className="font-display text-[18px] leading-7 text-[#2f2b26]">
-                Dear family and friends,
-              </p>
-
-              <p className="mt-5 font-display text-[18px] leading-7 text-[#5f594f]">
-                We are getting married, and it would mean the world to have you
-                with us as we begin this next chapter.
-              </p>
-
-              <p className="mt-5 font-display text-[18px] leading-7 text-[#5f594f]">
-                Come celebrate a day of love, music, laughter, and the little
-                moments we hope to remember for the rest of our lives.
-              </p>
-
-              <p className="mt-6 font-script text-3xl text-[#8a7657]">
-                JJ & Pia
-              </p>
-            </div>
-
-            <div className="mt-8 border-t border-[#2f2b26]/12 pt-5">
-              <p className="font-display text-[12px] uppercase tracking-[0.32em] text-[#8a7657]">
-                Save the Date
-              </p>
-
-              <p className="mt-3 font-display text-xl tracking-[0.16em] text-[#2f2b26]">
-                02 . 27 . 2027
-              </p>
-
-            </div>
-          </div>
-        </motion.article>
-
-        <motion.div
-          style={{
-            y: photoY,
-            x: photoX,
-            rotate: photoRotate,
-            opacity: photoOpacity,
-            boxShadow: "0 26px 70px rgba(44, 43, 41, 0.18)",
-          }}
-          className="absolute z-20 w-full max-w-[310px] bg-[#fffaf2] p-4 pb-12 ring-1 ring-[#2f2b26]/10 sm:max-w-[360px] sm:p-5 sm:pb-14"
-        >
-          <div className="relative aspect-square w-full overflow-hidden bg-[#d8d0c4]">
+    <section id="invitation" className="ds-surface-page ds-section">
+      <div className="ds-container grid items-center gap-12 md:grid-cols-[5fr_7fr] md:gap-20">
+        <Reveal className="flex justify-center md:justify-start">
+          <div className="ds-frame ds-frame--arch relative aspect-[3/4] w-full max-w-[300px]">
             <Image
-              src="/images/invite-pic.JPG"
-              alt="Sofia and JJ"
+              src="/images/footer-2.PNG"
+              alt="Pia and JJ"
               fill
-              priority
+              sizes="(max-width: 768px) 80vw, 300px"
+              quality={75}
               className="object-cover"
             />
           </div>
-        </motion.div>
+        </Reveal>
+
+        <div>
+          <Reveal>
+            <DisplayHeading size="lg" className="text-center md:text-right">
+              A day filled with love,
+              <br />
+              shaped by our story
+            </DisplayHeading>
+          </Reveal>
+
+          <Reveal delay={0.12} className="mt-10 md:mt-12 md:pl-16">
+            <Divider className="mb-8 max-w-[120px]" />
+            <div className="ds-measure flex flex-col gap-4 text-center md:text-left">
+              <p className="ds-body ds-body--lg ds-body--italic">
+                We&apos;re so happy to celebrate this day with you.
+              </p>
+              <p className="ds-body ds-body--lg">
+                This space offers a little insight into our ceremony and the details that make it
+                meaningful to us.
+              </p>
+              <p className="ds-body ds-body--lg">
+                Thank you for being here and for sharing in the joy of this chapter of our lives.
+              </p>
+            </div>
+          </Reveal>
+        </div>
       </div>
     </section>
   );

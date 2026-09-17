@@ -11,6 +11,7 @@ import {
   motion,
   AnimatePresence,
 } from "framer-motion";
+import { Button, Divider, ENTRANCE, Eyebrow, Monogram } from "./ds";
 
 export type Guest = {
   id?: string;
@@ -197,99 +198,55 @@ export default function EntryGate({
   }
 
   return (
-    <main className="relative min-h-[100svh] overflow-hidden bg-[#182015] text-[#fffaf0]">
+    <main className="ds-surface-dark relative min-h-[100svh] overflow-hidden">
       <Image
         src="/hero-couple.JPG"
-        alt="Sofia and Joshua"
+        alt=""
         fill
         priority
+        sizes="100vw"
+        quality={70}
         className="object-cover object-center"
       />
 
-      <div className="absolute inset-0 bg-[#182015]/65" />
+      <div aria-hidden="true" className="absolute inset-0" style={{ background: "var(--surface-overlay)" }} />
+      <div aria-hidden="true" className="absolute inset-0" style={{ background: "var(--scrim-hero)" }} />
 
-      <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(24,32,21,0.2),rgba(24,32,21,0.88))]" />
-
-      <div className="absolute inset-x-5 bottom-5 top-5 border border-[#fffaf0]/20 md:inset-x-10 md:bottom-8 md:top-8" />
-
-      <section className="relative z-10 mx-auto flex min-h-[100svh] max-w-4xl flex-col items-center justify-center px-6 py-16 text-center">
-
-        <motion.p
-          initial={{
-            opacity: 0,
-            y: 14,
-          }}
-          animate={{
-            opacity: 1,
-            y: 0,
-          }}
-          transition={{
-            duration: 0.8,
-          }}
-          className="mb-5 font-sans text-[10px] uppercase tracking-[0.42em] text-[#f2dfbd]"
-        >
-          Private Invitation
-        </motion.p>
-
-        <motion.h1
-          initial={{
-            opacity: 0,
-            y: 24,
-            scale: 0.98,
-          }}
-          animate={{
-            opacity: 1,
-            y: 0,
-            scale: 1,
-          }}
-          transition={{
-            duration: 1.1,
-            ease: [0.16, 1, 0.3, 1],
-          }}
-          className="font-script text-[5.8rem] leading-[0.72] text-[#fffaf0] sm:text-[8rem] sm:leading-[0.72] md:text-[9rem] md:leading-[0.72] lg:text-[11rem]"
-        >
-          Sofia
-
-          <span className="block">
-            Joshua
-          </span>
-        </motion.h1>
-
+      <section
+        className="relative z-10 mx-auto flex min-h-[100svh] max-w-4xl flex-col items-center justify-center text-center"
+        style={{ padding: "var(--space-8) var(--section-x)" }}
+      >
         <motion.div
-          initial={{
-            opacity: 0,
-            scaleX: 0,
-          }}
-          animate={{
-            opacity: 1,
-            scaleX: 1,
-          }}
-          transition={{
-            duration: 0.9,
-            delay: 0.25,
-          }}
-          className="my-7 h-px w-24 bg-[#f2dfbd]/70"
-        />
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.1, ease: ENTRANCE }}
+          className="flex flex-col items-center"
+        >
+          <Monogram
+            decorative
+            style={{ height: 88, backgroundColor: "var(--text-on-dark)" }}
+          />
+          <Eyebrow tone="onDark" className="mt-8">
+            Private invitation
+          </Eyebrow>
+          <h1 className="ds-display ds-display--xl ds-display--on-dark ds-script mt-3">
+            Sofia &amp; Joshua
+          </h1>
+        </motion.div>
+
+        <Divider tone="onDark" ornament className="my-8 w-full max-w-[220px]" />
 
         <motion.form
           onSubmit={handleSubmit}
-          initial={{
-            opacity: 0,
-            y: 18,
-          }}
-          animate={{
-            opacity: 1,
-            y: 0,
-          }}
-          transition={{
-            duration: 0.8,
-            delay: 0.35,
-          }}
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.1, delay: 0.25, ease: ENTRANCE }}
           className="w-full max-w-sm"
+          noValidate
         >
           <label
             htmlFor="guest-code"
-            className="mb-4 block font-display text-lg text-[#fffaf0]/90"
+            className="ds-body ds-body--lg ds-body--italic ds-body--on-dark mb-4 block"
           >
             Enter your invitation code
           </label>
@@ -300,57 +257,44 @@ export default function EntryGate({
             type="text"
             value={code}
             onChange={(event) => {
-              console.log(event.target.value.toLowerCase());
               setCode(event.target.value.toLowerCase());
               setError("");
             }}
-            placeholder="Enter your code"
+            placeholder="Your code"
             disabled={isLoading}
             autoComplete="off"
             autoCorrect="off"
             autoCapitalize="characters"
             spellCheck={false}
-            className="h-12 w-full border border-[#fffaf0]/35 bg-[#fffaf0]/10 px-4 text-center font-sans text-sm uppercase tracking-[0.22em] text-[#fffaf0] outline-none backdrop-blur-md placeholder:text-[#fffaf0]/35 focus:border-[#f2dfbd]"
+            aria-invalid={error ? true : undefined}
+            aria-describedby={error ? "guest-code-error" : undefined}
+            className="ds-gate-input"
           />
 
           <AnimatePresence>
             {error && (
               <motion.p
-                initial={{
-                  opacity: 0,
-                  y: -4,
-                }}
-                animate={{
-                  opacity: 1,
-                  y: 0,
-                }}
-                exit={{
-                  opacity: 0,
-                  y: -4,
-                }}
-                className="mt-3 text-xs text-[#f2dfbd]"
+                id="guest-code-error"
+                role="alert"
+                initial={{ opacity: 0, y: -4 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -4 }}
+                className="ds-body ds-body--sm mt-3"
+                style={{ color: "var(--gold-300)" }}
               >
                 {error}
               </motion.p>
             )}
           </AnimatePresence>
 
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="mt-6 inline-flex min-h-11 items-center justify-center border border-[#f2dfbd]/70 px-8 font-sans text-[10px] uppercase tracking-[0.3em] text-[#fffaf0] transition hover:bg-[#f2dfbd] hover:text-[#182015] disabled:opacity-50"
-          >
-            {isLoading
-              ? "Checking..."
-              : "Enter"}
-          </button>
+          <Button type="submit" tone="onDark" disabled={isLoading} className="mt-8">
+            {isLoading ? "Checking…" : "Enter"}
+          </Button>
         </motion.form>
 
-        <p className="mt-8 max-w-xs font-display text-md leading-6 text-[#fffaf0]/62">
-          A small word from a shared memory
-          will open the invitation.
+        <p className="ds-body ds-body--italic mt-8 max-w-[30ch]" style={{ color: "var(--text-on-dark-muted)" }}>
+          A small word from a shared memory will open the invitation.
         </p>
-
       </section>
     </main>
   );

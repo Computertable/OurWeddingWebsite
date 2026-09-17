@@ -1,7 +1,16 @@
 "use client";
 
-import { useState } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import {
+  Button,
+  DisplayHeading,
+  ENTRANCE,
+  Eyebrow,
+  NotePanel,
+  Reveal,
+  TextField,
+} from "./ds";
 
 export interface GuestItem {
   id: number | string;
@@ -17,11 +26,14 @@ interface RSVPSectionProps {
   };
 }
 
+/**
+ * RSVP — visual refresh only.
+ * Same fields (attendance per guest + one song request), same state, same POST to /api/guests
+ * with the same payload, same thank-you → edit flow.
+ */
 export default function RSVPSection({ party }: RSVPSectionProps) {
-  const [attendance, setAttendance] = useState<
-  Record<string | number, boolean | null>
->(
-   party.guests.reduce((acc, guest) => {
+  const [attendance, setAttendance] = useState<Record<string | number, boolean | null>>(
+    party.guests.reduce((acc, guest) => {
       let initialStatus = null;
       if (guest.rsvp_status === "attending") {
         initialStatus = true;
@@ -55,11 +67,11 @@ export default function RSVPSection({ party }: RSVPSectionProps) {
 
     // Format payload with exact IDs
     const responses = party.guests
-    .filter((g) => attendance[g.id] !== null)
-    .map((g) => ({
-      id: g.id,
-      attending: attendance[g.id],
-    }));
+      .filter((g) => attendance[g.id] !== null)
+      .map((g) => ({
+        id: g.id,
+        attending: attendance[g.id],
+      }));
 
     try {
       const response = await fetch("/api/guests", {
@@ -79,217 +91,201 @@ export default function RSVPSection({ party }: RSVPSectionProps) {
 
       setIsSubmitted(true);
     } catch (err) {
-      setError(
-        err instanceof Error
-          ? err.message
-          : "Something went wrong. Please try again."
-      );
+      setError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  if (isSubmitted) {
-    return (
-      <section className="flex min-h-[50vh] items-center justify-center px-4 py-24 sm:py-32">
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="relative z-10 max-w-lg text-center"
-        >
-          <p className="font-sans text-[9px] uppercase tracking-[0.4em] sm:text-[10px] sm:tracking-[0.45em]">
-            RSVP Received
-          </p>
+  const guests = [...party.guests].sort((a, b) => Number(a.id) - Number(b.id));
 
-          <h2 className="mt-5 font-display text-5xl leading-none sm:mt-6 sm:text-6xl">
-            Thank You
-          </h2>
-
-          <div className="mx-auto my-7 h-px w-12 bg-[#6B705C]/40 sm:my-8 sm:w-16" />
-
-          <p className="font-display text-lg leading-relaxed text-[#6B705C]">
-            We cannot wait to celebrate
-            <br />
-            this beautiful day with you.
-          </p>
-
-          <p className="mt-7 font-sans text-[9px] uppercase tracking-[0.25em] sm:mt-8 sm:text-[10px] sm:tracking-[0.3em]">
-            With love, Sofia & JJ
-          </p>
-
-          <motion.button
-            onClick={() => setIsSubmitted(false)}
-            whileHover={{ y: -1 }}
-            className="mt-10 font-sans text-[9px] uppercase tracking-[0.2em] text-[#6B705C] underline decoration-[#6B705C]/30 underline-offset-4 transition-colors hover:text-[#4A3B33]"
-          >
-            Edit Response
-          </motion.button>
-        </motion.div>
-      </section>
-    );
-  }
+  // Move focus to the confirmation so screen-reader and keyboard users land on it.
+  const confirmationRef = useRef<HTMLHeadingElement>(null);
+  const formTopRef = useRef<HTMLDivElement>(null);
+  const hasSubmittedOnce = useRef(false);
+  useEffect(() => {
+    if (isSubmitted) {
+      hasSubmittedOnce.current = true;
+      confirmationRef.current?.focus();
+    } else if (hasSubmittedOnce.current) {
+      formTopRef.current?.focus();
+    }
+  }, [isSubmitted]);
 
   return (
-    <section className="px-4 py-24 sm:px-6 sm:py-32 lg:px-8">
-      <div className="mx-auto max-w-3xl">
+    <section id="rsvp" data-section aria-labelledby="rsvp-title" className="ds-surface-sunken ds-section">
+      <div className="mx-auto max-w-[760px]">
         {/* Header */}
-        <motion.header
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="text-center"
-        >
-          <p className="font-sans text-[9px] uppercase tracking-[0.4em] sm:text-[10px] sm:tracking-[0.5em]">
-            Kindly Respond
+        <Reveal className="flex flex-col items-center text-center">
+          <Eyebrow>Kindly respond</Eyebrow>
+          <DisplayHeading id="rsvp-title" size="lg" className="mt-4">
+            Will you join us?
+          </DisplayHeading>
+          <p className="ds-body ds-body--lg ds-body--muted ds-measure-narrow mt-5">
+            We would be delighted to celebrate this special day with you.
           </p>
+        </Reveal>
 
-          <h2 className="mt-5 font-script text-[2.8rem] leading-[0.95] sm:mt-6 sm:text-5xl md:text-6xl">
-            Will You Join Us?
-          </h2>
-
-          <p className="mx-auto mt-6 max-w-sm font-sans text-md leading-relaxed text-[#6B705C] sm:mt-7 sm:max-w-md">
-            We would be delighted to celebrate
-            <br className="hidden sm:block" />{" "}
-            this special day with you.
-          </p>
-
-          {/* <div className="mx-auto mt-7 flex items-center justify-center gap-3 sm:mt-8 sm:gap-4">
-            <span className="hidden h-px w-8 bg-[#A8A696]/40 sm:block sm:w-10" />
-
-            <p className="font-sans text-[8px] uppercase tracking-[0.22em] sm:text-[10px] sm:tracking-[0.3em]">
-              Reply by November 7, 2026
-            </p>
-
-            <span className="hidden h-px w-8 bg-[#A8A696]/40 sm:block sm:w-10" />
-          </div> */}
-        </motion.header>
-
-        {/* RSVP Form */}
-        <motion.form
-          onSubmit={handleSubmit}
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.15 }}
-          className="mt-14 sm:mt-16"
-        >
-          <div>
-            <div className="overflow-hidden rounded-2xl border border-[#2C2B29]/10 bg-[#F8F4EE]/50">
-              {party.guests
-              .sort((a, b) => Number(a.id) - Number(b.id))
-              .map((g, index) => (
-                <motion.div
-                  key={g.id}
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.08 }}
-                  className={`px-5 py-6 sm:px-8 sm:py-7 ${
-                    index !== party.guests.length - 1
-                      ? "border-b border-[#2C2B29]/10"
-                      : ""
-                  }`}
+        <AnimatePresence mode="wait" initial={false}>
+          {isSubmitted ? (
+            <motion.div
+              key="done"
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.72, ease: ENTRANCE }}
+              className="mt-12 sm:mt-16"
+            >
+              <NotePanel tone="olive" className="text-center" role="status">
+                <Eyebrow tone="onDark">RSVP received</Eyebrow>
+                <h3
+                  ref={confirmationRef}
+                  tabIndex={-1}
+                  className="ds-display ds-display--lg ds-display--on-dark ds-script mt-4 outline-none"
                 >
-                  <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
-                    <div className="min-w-0">
-                      <p className="break-words font-sans text-xl leading-tight text-[#2C2B29] sm:text-2xl">
+                  Thank you
+                </h3>
+                <p className="ds-body ds-body--lg ds-body--on-dark mx-auto mt-4 max-w-[30ch]">
+                  We cannot wait to celebrate this beautiful day with you.
+                </p>
+
+                <ul className="mx-auto mt-8 flex max-w-sm list-none flex-col gap-3 p-0">
+                  {guests.map((g) => (
+                    <li
+                      key={g.id}
+                      className="flex items-baseline justify-between gap-4 pb-3 text-left"
+                      style={{ borderBottom: "var(--border-on-dark)" }}
+                    >
+                      <span className="ds-body ds-body--on-dark">{g.name}</span>
+                      <span className="ds-eyebrow ds-eyebrow--sm ds-eyebrow--on-dark whitespace-nowrap">
+                        {attendance[g.id] === true
+                          ? "Attending"
+                          : attendance[g.id] === false
+                            ? "Not attending"
+                            : "No reply"}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+
+                <Eyebrow tone="onDark" size="sm" className="mt-8">
+                  With love, Sofia &amp; JJ
+                </Eyebrow>
+                <div className="mt-6">
+                  <Button variant="text" tone="onDark" onClick={() => setIsSubmitted(false)}>
+                    Edit response
+                  </Button>
+                </div>
+              </NotePanel>
+            </motion.div>
+          ) : (
+            <motion.form
+              key="form"
+              onSubmit={handleSubmit}
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.72, ease: ENTRANCE }}
+              className="mt-12 sm:mt-16"
+              aria-busy={isSubmitting}
+              noValidate
+            >
+              <div ref={formTopRef} tabIndex={-1} className="outline-none" />
+
+
+              <ul className="m-0 mt-6 list-none p-0" style={{ borderTop: "var(--border-hairline)" }}>
+                {guests.map((g) => {
+                  const nameId = `rsvp-guest-${g.id}`;
+                  const value = attendance[g.id] ?? null;
+                  return (
+                    <li
+                      key={g.id}
+                      className="flex flex-col gap-3 py-5 sm:flex-row sm:items-center sm:justify-between sm:gap-6"
+                      style={{ borderBottom: "var(--border-hairline)" }}
+                    >
+                      <p id={nameId} className="ds-body ds-body--lg ds-body--italic m-0 break-words">
                         {g.name}
                       </p>
-
-                      <p className="mt-2 font-sans text-[8px] uppercase tracking-[0.2em] sm:text-[9px] sm:tracking-[0.25em]">
-                        Kindly select your response
-                      </p>
-                    </div>
-
-                    <div className="flex w-full rounded-full border border-[#6B705C]/20 bg-[#F5F0E6] p-1 sm:w-auto sm:shrink-0">
-                        <button
-                          type="button"
-                          onClick={() => handleToggleAttendance(g.id, true)}
-                          className={`min-h-11 flex-1 rounded-full px-5 py-2.5 font-sans text-[9px] uppercase tracking-[0.15em] transition-all duration-300 sm:min-h-0 sm:flex-none sm:px-4 sm:tracking-[0.18em] ${
-                            attendance[g.id] === true 
-                              ? "bg-[#444D33] text-[#F8F4EE] shadow-sm"
-                              : "text-[#6B705C] hover:bg-[#6B705C]/10"
-                          }`}
-                        >
-                          See You There!
-                        </button>
-
-                        <button
-                          type="button"
-                          onClick={() => handleToggleAttendance(g.id, false)}
-                          className={`min-h-11 flex-1 rounded-full px-5 py-2.5 font-sans text-[9px] uppercase tracking-[0.15em] transition-all duration-300 sm:min-h-0 sm:flex-none sm:px-4 sm:tracking-[0.18em] ${
-                            attendance[g.id] === false 
-                              ? "bg-[#4A3B33] text-[#F8F4EE] shadow-sm"
-                              : "text-[#6B705C] hover:bg-[#6B705C]/10"
-                          }`}
-                        >
-                          Can't Make It
-                        </button>
+                      <div
+                        role="radiogroup"
+                        aria-labelledby={nameId}
+                        aria-describedby="rsvp-reply-hint"
+                        className="ds-switch"
+                      >
+                        {[
+                          { v: true, label: "See you there", tone: "yes" },
+                          { v: false, label: "Can't make it", tone: "no" },
+                        ].map((opt) => (
+                          <button
+                            key={opt.label}
+                            type="button"
+                            role="radio"
+                            aria-checked={value === opt.v}
+                            onClick={() => handleToggleAttendance(g.id, opt.v)}
+                            className={`ds-switch__option ds-switch__option--${opt.tone}`}
+                          >
+                            {opt.label}
+                          </button>
+                        ))}
                       </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
+                    </li>
+                  );
+                })}
+              </ul>
 
-          {/* Song Request */}
-          <div className="mt-12 sm:mt-14">
-            <div className="border-t border-[#2C2B29]/10 pt-9 sm:pt-10">
-              <h3 className="mt-4 font-script text-3xl leading-tight sm:text-2xl">
-                Our evening's soundtrack
-              </h3>
-
-              <p className="mt-3 max-w-lg font-sans text-sm leading-5 text-[#6B705C]">
-                Our special day will be accompanied by live strings and
-                saxophone. If there's a song that holds a special place in
-                your heart, share it with us, and it may become part of our
-                evening's soundtrack.
-              </p>
-
-              <div className="relative mt-6 sm:mt-7">
-                <input
+              {/* Song request */}
+              <div className="mt-12">
+                <TextField
+                  label="A song for the evening"
+                  hint="Live strings and saxophone will play through the night. Optional."
                   value={songRequest}
                   onChange={(e) => setSongRequest(e.target.value)}
                   placeholder="Song title & artist"
-                  className="w-full border-b border-[#2C2B29]/20 bg-transparent py-4 font-display text-base text-[#2C2B29] outline-none transition-colors placeholder:text-[#A8A696]/60 focus:border-[#6B705C] sm:text-lg"
+                  autoComplete="off"
                 />
-
-                <div className="absolute bottom-0 left-0 h-px w-full bg-[#6B705C]/0 transition-colors focus-within:bg-[#6B705C]" />
               </div>
-            </div>
-          </div>
 
-          {/* Error Message */}
-          {error && (
-            <p className="mt-6 text-center font-display text-sm text-red-600">
-              {error}
-            </p>
+              {/* Send */}
+              <div className="mt-12 flex flex-col items-center text-center sm:mt-14">
+                <AnimatePresence>
+                  {error && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.32 }}
+                      className="mb-8 w-full"
+                    >
+                      <NotePanel
+                        tone="outline"
+                        role="alert"
+                        className="py-5 text-left"
+                        style={{ borderColor: "var(--rose-300)" }}
+                      >
+                        <Eyebrow tone="accent" size="sm">
+                          We couldn&apos;t send that
+                        </Eyebrow>
+                        <p className="ds-body mt-1">{error}</p>
+                      </NotePanel>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+
+                <Button type="submit" size="lg" disabled={isSubmitting} className="w-full max-w-xs sm:w-auto">
+                  {isSubmitting ? "Sending…" : "Submit RSVP"}
+                </Button>
+
+                <Eyebrow size="sm" tone="soft" className="mt-6 max-w-[36ch]">
+                  You can update your response anytime before November 7, 2026.
+                </Eyebrow>
+
+                <p className="ds-body ds-body--italic ds-body--muted mt-10">
+                  We look forward to celebrating with you.
+                </p>
+              </div>
+            </motion.form>
           )}
-
-          {/* Submit Button */}
-          <div className="mt-12 flex justify-center sm:mt-14">
-            <motion.button
-              type="submit"
-              disabled={isSubmitting}
-              whileHover={{ y: isSubmitting ? 0 : -2 }}
-              whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
-              className="min-h-12 w-full max-w-xs rounded-full bg-[#444D33] px-8 py-4 font-sans text-[11px] uppercase tracking-[0.3em] text-[#F8F4EE] transition-all duration-300 hover:bg-[#4A3B33] disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto sm:px-10 sm:text-[10px] sm:tracking-[0.35em]"
-            >
-              {isSubmitting ? "Sending..." : "SUBMIT RSVP"}
-            </motion.button>
-          </div>
-
-          <p className="mt-5 px-10 text-center font-sans text-[8px] uppercase tracking-[0.2em] text-[#6B705C]">
-            You can update your response anytime before November 7, 2026.
-          </p>
-
-          <p className="mt-10 text-center font-serif text-sm italic text-[#6B705C]/70">
-            We look forward to celebrating with you.
-          </p>
-         
-        </motion.form>
+        </AnimatePresence>
       </div>
     </section>
   );
