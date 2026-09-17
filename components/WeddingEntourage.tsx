@@ -36,7 +36,7 @@ const bearers = [
 ];
 
 const secondarySponsors = [
-  { role: "Candle", names: ["MR. JUFFERSON D. VIERNES", "MRS. DENISE G. CONCEPCION - VIERNES"] },
+  { role: "Candle", names: ["ATTY. JUFFERSON D. VIERNES", "ATTY. DENISE G. CONCEPCION - VIERNES"] },
   { role: "Cord", names: ["MR. AARON JAMES T. GONZALES", "MRS. KAYCEE G. GONZALES"] },
   { role: "Veil", names: ["MR. MARK CONRAD DEL VALLE", "MS. LORNA CALINGACION"], wide: true },
 ];
