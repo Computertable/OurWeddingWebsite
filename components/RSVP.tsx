@@ -276,7 +276,7 @@ export default function RSVPSection({ party }: RSVPSectionProps) {
                 </Button>
 
                 <Eyebrow size="sm" tone="soft" className="mt-6 max-w-[36ch]">
-                  You can update your response anytime before November 7, 2026.
+                  You can update your response anytime before December 7, 2026.
                 </Eyebrow>
 
                 <p className="ds-body ds-body--italic ds-body--muted mt-10">
